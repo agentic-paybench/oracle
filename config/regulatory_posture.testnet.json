@@ -1,0 +1,16 @@
+{
+  "config_id": "testnet",
+  "regulatory_posture": "FIRST_PARTY_DEMO",
+  "gates": {
+    "G_AUTH": "closed",
+    "G_QF": "closed",
+    "G_S21": "closed",
+    "G_CUSTODY": "open"
+  },
+  "audit": {
+    "adopted": "2026-07-03",
+    "adr": "ADR-009",
+    "flip_requires": "config value + redeploy + audit record",
+    "note": "testnet/demo deployment: scored-query exposed for the demo against non-live rails; no live emission; named-rail table stays G_S21-closed."
+  }
+}

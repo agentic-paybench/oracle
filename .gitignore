@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / TypeScript
+node_modules/
+dist/
+build/
+.npm/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+.next/
+out/
+*.tsbuildinfo
+
+# Cloudflare Workers
+.wrangler/
+.dev.vars
+.dev.vars.local
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.jwk
+
+# Signer dev keys + build intermediates (never committed)
+**/.dev-keys/
+ingest/build/
+
+# Assembled Cloudflare Pages deploy copies (built by docs/site/build-site.sh)
+docs/site/schema/
+docs/site/adr/
+docs/site/methodology/
+
+# Logs / temp
+*.log
+.tmp/
+.cache/
+
+# Internal Claude Code session config (not shipped)
+worker/.claude/
+# stray wrangler r2-object-get outputs (never shipped)
+worker/pending/
+worker/probe/
