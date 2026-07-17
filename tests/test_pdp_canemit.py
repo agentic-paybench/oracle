@@ -1,4 +1,4 @@
-"""ADR-009 canEmit PDP: fail-closed, gate-keyed, mechanic-aware (M3)."""
+"""ADR-009 canEmit PDP: fail-closed, gate-keyed, mechanic-aware."""
 
 from dataclasses import replace
 

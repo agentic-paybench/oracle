@@ -1,4 +1,4 @@
-"""ADR-007 Intent-Free Oracle: CI property test against the LIVE posture (M4).
+"""ADR-007 Intent-Free Oracle: CI property test against the LIVE posture.
 
 Proves the live oracle (1) refuses every intent param, (2) never emits a
 score/rank/recommendation in any served credential, the schema, or under

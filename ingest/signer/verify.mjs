@@ -1,5 +1,5 @@
 // Verify every enveloped VC-JOSE credential in docs/site/capabilities against
-// the published DID document's P-256 public key. Used by CI (M9). Exits non-zero
+// the published DID document's P-256 public key. Used by CI. Exits non-zero
 // on any failure.
 
 import { jwtVerify, importJWK } from 'jose';

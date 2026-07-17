@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * L3 draft step (draft-only; never publishes).
+ * Draft step (draft-only; never publishes).
  *
  * Reads a pending submission record (as written by the capture endpoint into R2
  * pending/), selects the axis response template, fills its placeholders, and
  * writes a DRAFT reply record with `signed_off_by: null`. It does NOT create the
- * published record; a human must sign it (sign-reply.mjs). This is the L3
+ * published record; a human must sign it (sign-reply.mjs). This is the
  * "draft-only, human-sign" boundary of the Path C-tight ladder.
  *
  * Usage: node draft-reply.mjs <pending-record.json> <out-dir> [--result MR-000]

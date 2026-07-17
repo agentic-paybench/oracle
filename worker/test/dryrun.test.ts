@@ -1,8 +1,8 @@
 /**
- * M7 dry-run: the 10 numbered pass criteria from the plan happy-path, exercised
+ * Right-of-reply dry-run: the 10 numbered pass criteria, exercised
  * end-to-end at the handler level (worker.fetch) with an in-memory R2 and the real
  * ops scripts. CI-safe and deterministic; the companion live `wrangler dev` smoke
- * run is recorded in docs/devlog.md.
+ *
  *
  * Posture = "testnet": G_S21 is still closed (so the banner stays armed-idle and
  * the named-rail table stays omitted), but the non-live posture accepts the
@@ -91,7 +91,7 @@ beforeAll(() => {
   e = env(r2.bucket);
 });
 
-describe("M7 right-of-reply dry-run (10 criteria)", () => {
+describe("right-of-reply dry-run (10 criteria)", () => {
   it("[1] serves the form at / using only canonical names", async () => {
     const res = await worker.fetch(new Request("https://x/"), e);
     expect(res.status).toBe(200);

@@ -1,20 +1,16 @@
 """The ``regulatory_posture`` gate — load-bearing, do not soften.
 
-Encodes the session's regulatory guardrail directly:
-
 - Draft **PERG 19.8** reads venue/price-finding + order-assistance as *likely
-  arranging*. So R0 (a ranked advisory list) is **not** a safe harbour; the rungs
-  are degrees of arranging *intensity*, not in-vs-out. The gate therefore applies
-  the SAME test to every rung — ``Rung`` only labels intensity, it never relaxes
-  the gate.
-- The gate for emitting **any** rung on a live qualifying cryptoasset is
-  *authorisation-or-advised-out*. Default posture is the most restrictive.
-- This is the same perimeter axis as ``cryptoasset_perimeter_facts.md`` (SI
-  2026/102; arranging regime commences 25 Oct 2027; s.21 financial-promotion is a
-  separate, already-live axis since 8 Oct 2023).
+  arranging*, so even an inform-only ranked list is **not** a safe harbour. The
+  gate therefore applies the SAME test to every output tier — ``Rung`` only
+  labels the tier, it never relaxes the gate.
+- The gate for emitting **any** tier against a live qualifying cryptoasset is
+  *authorisation-or-advised-out* (SI 2026/102; the s.21 financial-promotion
+  regime is a separate, already-live axis). Default posture is the most
+  restrictive.
 
-The engine computes regardless; nothing reaches the outside world except through
-:meth:`RegulatoryGate.check`. If a build step would emit live, it raises.
+Nothing reaches the outside world except through :meth:`RegulatoryGate.check`.
+If an emission would breach the posture, it raises.
 """
 
 from __future__ import annotations
@@ -27,12 +23,11 @@ from pdp.schema import RailRecord
 
 
 class Rung(IntEnum):
-    """Axis A — arranging *intensity*. Higher = more arranging, NOT more permitted."""
+    """Output-tier label. Higher tiers are MORE arranging-intense, never more
+    permitted; every tier passes the identical gate test. Only the inform-only
+    tier is defined here; any future tier gates identically."""
 
     R0_INFORM = 0  # ranked advisory list (still likely arranging — PERG 19.8)
-    R1_RECOMMEND = 1  # single best-rail pick
-    R2_PREPARE = 2  # construct/pre-fill the executable instruction
-    R3_ORCHESTRATE = 3  # delegated cross-rail routing + initiation (end-state)
 
 
 class Posture(IntEnum):
@@ -87,7 +82,7 @@ class RegulatoryGate:
                 rationale=(
                     f"{rung.name}: no live qualifying cryptoasset in target set "
                     f"({len(rail_ids)} rail(s), all non-live testnet/first-party) — "
-                    "cleared. PERG 19.8 applies equally to all rungs; none tripped here."
+                    "cleared. PERG 19.8 applies equally to all tiers; none tripped here."
                 ),
             )
 
@@ -96,7 +91,7 @@ class RegulatoryGate:
             raise RegulatoryGateError(
                 f"{rung.name} blocked: targets live qualifying cryptoasset(s) {list(live)} "
                 f"under posture {self.posture.name} (need LIVE_AUTHORISED). PERG 19.8: even "
-                f"R0 is arranging — no rung is a safe harbour. This session must not emit live."
+                f"an inform-only list is arranging — no tier is a safe harbour. This deployment must not emit live."
             )
         if not (self.authorised or self.advised_out):
             raise RegulatoryGateError(

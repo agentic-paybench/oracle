@@ -1,4 +1,4 @@
-"""Tier-2 VCDM capability credentials: schema, no-ranking, P-256, no key leak (M5)."""
+"""Tier-2 VCDM capability credentials: schema, no-ranking, P-256, no key leak (capability builder)."""
 
 import base64
 import json
@@ -47,7 +47,7 @@ def _deep_keys(obj):
 
 def test_capabilities_exist():
     files = _enveloped_files()
-    assert files, "no signed capability VCs found (run the M5 signer)"
+    assert files, "no signed capability VCs found (run the signer)"
 
 
 def test_capability_vc_validates_against_schema():

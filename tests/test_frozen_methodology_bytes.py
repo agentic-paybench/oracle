@@ -1,4 +1,4 @@
-"""Vendored frozen v1.2 public subset: byte-identical to anchor, ranking withheld (M6)."""
+"""Vendored frozen v1.2 public subset: byte-identical to anchor, ranking withheld."""
 
 import hashlib
 from pathlib import Path

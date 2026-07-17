@@ -29,7 +29,7 @@ export function makeSlackNotifier(
   if (!webhookUrl) return async () => {};
   return async (n) => {
     const text =
-      `:incoming_envelope: New right-of-reply submission awaiting L3 review\n` +
+      `:incoming_envelope: New right-of-reply submission awaiting review\n` +
       `• id: \`${n.id}\`\n` +
       `• axis: ${n.axis}\n` +
       `• rail: ${n.rail_name}\n` +

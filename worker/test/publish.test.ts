@@ -49,7 +49,7 @@ beforeAll(() => {
   pubDir = join(work, "published", "MR-000");
 });
 
-describe("L3 draft-only + human-sign publish path", () => {
+describe("draft-only + human-sign publish path", () => {
   it("draft-reply produces an UNSIGNED draft and does NOT publish", () => {
     const { code } = run("draft-reply.mjs", [pendingPath, pubDir, "--result", "MR-000"]);
     expect(code).toBe(0);

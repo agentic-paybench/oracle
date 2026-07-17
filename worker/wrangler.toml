@@ -2,7 +2,7 @@
 #
 # Serves the static reply form + policy (Workers static-assets binding) and one
 # POST /reply endpoint that writes an append-only, non-public record into R2.
-# Nothing auto-publishes; publication is a separate human-gated (L3) step.
+# Nothing auto-publishes; publication is a separate human-gated step.
 #
 # Gate model (ADR-009): the named-rail surfaces consult canEmit('published-rankings')
 # against the shared config/regulatory_posture.<POSTURE_CONFIG>.json. Default

@@ -1,4 +1,4 @@
-"""The two shared PDP gate configs are valid and default-closed (M3)."""
+"""The two shared PDP gate configs are valid and default-closed."""
 
 from pdp import GATE_KEYS, load_named
 

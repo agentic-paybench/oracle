@@ -28,7 +28,7 @@ export interface Env {
   TURNSTILE_SITEKEY?: string;
   /** Cloudflare Turnstile secret. Operator-supplied at go-live; never committed. */
   TURNSTILE_SECRET?: string;
-  /** Slack incoming-webhook URL for the L3-review notification. Secret; never committed. */
+  /** Slack incoming-webhook URL for the review notification. Secret; never committed. */
   SLACK_WEBHOOK_URL?: string;
 }
 

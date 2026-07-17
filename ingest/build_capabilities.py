@@ -1,4 +1,4 @@
-"""Assemble Tier-2 RailCapability credentials from the de-ranked facts file (M5).
+"""Assemble Tier-2 RailCapability credentials from the de-ranked facts file (capability builder).
 
 Reads ``ingest/data/rail-facts.json`` (Tier-2 facts only: railId, railName,
 settlesIndependently; no finality medians or ranks), maps each to an intent-free
@@ -35,7 +35,7 @@ def _issuer() -> str:
 
 
 def capability_subject(rail: dict) -> dict:
-    """Map a Tier-2 facts row to the N6 Tier-2 credentialSubject. Unknowns -> "pending"."""
+    """Map a Tier-2 facts row to the Tier-2 credentialSubject. Unknowns -> "pending"."""
     return {
         "id": f"urn:agentic-paybench:rail:{rail['railId']}",
         "railId": rail["railId"],

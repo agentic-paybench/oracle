@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * L3 human-sign step: promote a DRAFT reply to a published record.
+ * Human-sign step: promote a DRAFT reply to a published record.
  *
  * A human reviews the draft, then runs this to set `signed_off_by` and write the
  * published record (`<reply-id>.json` + `.md`) alongside the draft. Only signed

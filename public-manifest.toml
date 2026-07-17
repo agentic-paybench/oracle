@@ -1,4 +1,4 @@
-# public-manifest.toml - ADR-011 admission manifest.
+# public-manifest.toml - the admission manifest for this repository.
 # Every tracked file appears here with its reason tag; CI fails default-deny
 # on any tracked file absent from this manifest (mirrors the ADR-009 PDP posture).
 

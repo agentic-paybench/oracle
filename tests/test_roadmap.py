@@ -1,4 +1,4 @@
-"""Tier-3 roadmap: labelled, carries no measurements (M8)."""
+"""Tier-3 roadmap: labelled, carries no measurements."""
 
 import re
 from pathlib import Path

@@ -14,7 +14,7 @@ function stubEnv(overrides: Partial<Env> = {}): Env {
   };
 }
 
-describe("worker routing (M0/M3)", () => {
+describe("worker routing", () => {
   it("serves the health route", async () => {
     const res = await worker.fetch(new Request("https://x/healthz"), stubEnv());
     expect(res.status).toBe(200);

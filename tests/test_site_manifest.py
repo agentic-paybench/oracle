@@ -1,4 +1,4 @@
-"""Static site manifest + published posture (M7)."""
+"""Static site manifest + published posture."""
 
 import json
 from pathlib import Path

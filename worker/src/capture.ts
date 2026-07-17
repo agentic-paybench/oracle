@@ -2,7 +2,7 @@
  * POST /reply capture. Validates the 12-field submission, checks the honeypot,
  * verifies Turnstile, then writes ONE write-once record into the append-only
  * pending store. Nothing here publishes; publication is a separate human-gated
- * (L3) step. The endpoint is always live regardless of the G_S21 gate.
+ * step. The endpoint is always live regardless of the G_S21 gate.
  *
  * Runtime-agnostic: the store, the Turnstile verifier, and the clock are injected,
  * so this unit-tests with an in-memory fake and no network (the thin R2 glue is

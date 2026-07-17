@@ -65,7 +65,7 @@ docs/site/methodology/
 .tmp/
 .cache/
 
-# Internal Claude Code session config (not shipped)
+# Local editor/agent config (not shipped)
 worker/.claude/
 # stray wrangler r2-object-get outputs (never shipped)
 worker/pending/
