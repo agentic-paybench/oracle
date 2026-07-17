@@ -1,0 +1,54 @@
+name: ci
+
+# Gate: pytest (ADR-007 intent-free property test, ADR-009 PDP + mutation
+# drill, public-manifest default-deny check) + frozen-methodology byte check
+# + VC-JOSE signature verify + the right-of-reply Worker suite.
+# The deploy-pages workflow runs only if this is green.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test deps
+        run: python -m pip install pytest 'jsonschema>=4'
+      - name: Pytest
+        run: python -m pytest tests -q
+      - name: Verify vendored frozen methodology (byte -> manifest -> anchor)
+        run: docs/methodology/verify-vendored-freeze.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify signed capability VCs (VC-JOSE ES256 / P-256)
+        run: |
+          cd ingest/signer && npm ci
+          cd "$GITHUB_WORKSPACE" && node ingest/signer/verify.mjs
+
+  worker:
+    # Right-of-reply channel Worker: lint / typecheck / test / bundle-dry-run.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+      - name: Bundle (dry-run, no deploy)
+        run: npm run build
