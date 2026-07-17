@@ -6,9 +6,9 @@ appear here or are implied. Tier-1 measured dimensions land on their own schedul
 with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 
 ## Tier-1 measured dimensions (pre-registered, phased)
-- Settlement finality: live at Day-0 (methodology plus frozen harness plus fixtures; no league table on the public surface).
-- Authorization latency: roadmap (no measurement); Day-30 target, pre-registered separately.
-- Fee predictability: roadmap (no measurement); Day-60 target.
+- Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface).
+- Authorization latency: pre-registered (methodology frozen and anchored); measurement in progress; no results on the public surface.
+- Additional measured dimensions: under methodology development; each is pre-registered before any measurement publishes.
 
 ## Tier-2 factual coverage (fills in as sourced; "pending" until then)
 - Supported assets per rail: roadmap (no measurement).

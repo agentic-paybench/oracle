@@ -2,8 +2,8 @@
   "@context": {
     "@version": 1.1,
     "@protected": true,
-    "RailCapabilityCredential": "https://agentic-paybench.example/schema#RailCapabilityCredential",
-    "cap": "https://agentic-paybench.example/schema#",
+    "RailCapabilityCredential": "https://oracle.agentic-paybench.dev/schema#RailCapabilityCredential",
+    "cap": "https://oracle.agentic-paybench.dev/schema#",
     "railId": "cap:railId",
     "railName": "cap:railName",
     "settlesIndependently": "cap:settlesIndependently",

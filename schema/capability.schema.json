@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://agentic-paybench.example/schema/capability.schema.json",
+  "$id": "https://oracle.agentic-paybench.dev/schema/capability.schema.json",
   "title": "RailCapabilityCredential (Tier-2, ADR-007 intent-free)",
   "description": "A VCDM 2.0 Verifiable Credential carrying the Tier-2 factual set for one rail. Forbids scored/ranked output at any level (additionalProperties false).",
   "type": "object",

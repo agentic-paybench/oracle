@@ -4,7 +4,8 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
 Capability oracle for agentic payment rails: schema, ingestion, methodology,
-and the static read surface.
+and the static read surface. Live at
+[oracle.agentic-paybench.dev](https://oracle.agentic-paybench.dev/).
 
 ## Quickstart
 

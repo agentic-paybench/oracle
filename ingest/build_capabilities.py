@@ -23,7 +23,7 @@ DID_DOC = REPO_ROOT / "docs" / "site" / ".well-known" / "did.json"
 
 # Deterministic Day-0 issuance instant (byte-stable outputs; no wall-clock).
 VALID_FROM = "2026-07-17T00:00:00Z"
-CONTEXT_URL = "https://agentic-paybench.example/schema/capability.context.jsonld"
+CONTEXT_URL = "https://oracle.agentic-paybench.dev/schema/capability.context.jsonld"
 PLACEHOLDER_ISSUER = "did:jwk:PLACEHOLDER"
 
 
