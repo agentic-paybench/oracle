@@ -1,0 +1,88 @@
+{
+  "_source": "Canonical right-of-reply form definition.",
+  "title": "Right-of-reply submission",
+  "intro": "For a named benchmark subject (a rail operator) to respond to a published result. Structured, publisher-controlled, and not a public comment surface. File a separate form for each axis.",
+  "fields": [
+    {
+      "id": "rail_name",
+      "label": "Rail name and legal entity",
+      "type": "text",
+      "required": true,
+      "maxLength": 200
+    },
+    {
+      "id": "submitter",
+      "label": "Submitter (name, role, email)",
+      "type": "text",
+      "required": true,
+      "maxLength": 200
+    },
+    {
+      "id": "authorised_signatory",
+      "label": "Authorised-signatory confirmation (must be on the rail's published authorised-signatory list)",
+      "type": "checkbox",
+      "required": true
+    },
+    {
+      "id": "publication_url",
+      "label": "Benchmark publication URL and date",
+      "type": "text",
+      "required": true,
+      "maxLength": 500
+    },
+    {
+      "id": "challenged_passage",
+      "label": "Exact passage, chart, or row challenged (300 words or fewer)",
+      "type": "textarea",
+      "required": true,
+      "maxWords": 300
+    },
+    {
+      "id": "axis",
+      "label": "Axis (tick ONE; file separate forms for separate axes)",
+      "type": "axis-select",
+      "required": true,
+      "options": ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"]
+    },
+    {
+      "id": "grounds",
+      "label": "Statement of grounds (500 words or fewer)",
+      "type": "textarea",
+      "required": true,
+      "maxWords": 500
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence (URLs, hashes, on-chain references; PDFs 25 MB or smaller)",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 4000
+    },
+    {
+      "id": "requested_remedy",
+      "label": "Requested remedy (correction, re-run, annotated reply, or withdrawal)",
+      "type": "text",
+      "required": true,
+      "maxLength": 500
+    },
+    {
+      "id": "public_reply",
+      "label": "Public reply text to publish verbatim (500 words or fewer; markdown allowed; no scripts or images larger than 1 MB)",
+      "type": "textarea",
+      "required": true,
+      "maxWords": 500
+    },
+    {
+      "id": "good_faith",
+      "label": "Good-faith declaration: I confirm the information above is accurate and complete to the best of my knowledge. Signed, dated.",
+      "type": "checkbox",
+      "required": true
+    },
+    {
+      "id": "consent",
+      "label": "Consent to publication of the rail name, challenged passage, axis, requested remedy, and public reply text.",
+      "type": "checkbox",
+      "required": true
+    }
+  ]
+}

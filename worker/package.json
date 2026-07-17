@@ -1,0 +1,34 @@
+{
+  "name": "@agentic-paybench/right-of-reply-worker",
+  "version": "0.0.0",
+  "description": "Right-of-reply channel Worker for the capability oracle: serves the static reply form + policy, captures a named subject's reply into an append-only non-public store, and gates the named-rail surfaces on the ADR-009 G_S21 gate. Non-custodial, publisher-controlled, no human-UGC.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "wrangler deploy --dry-run --outdir dist"
+  },
+  "dependencies": {
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250101.0",
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.15.21",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.6",
+    "wrangler": "^4.0.0"
+  }
+}

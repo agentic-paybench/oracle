@@ -1,0 +1,57 @@
+{
+  "_source": "Canonical response-cap and visibility policy.",
+  "title": "Response cap and visibility policy",
+  "framing": "The operator publishes its own editorial content (methodology and league tables) as a publisher, not a hosting platform. It voluntarily mirrors DSA Articles 16, 17, and 20 inside this right-of-reply channel only. UK Defamation Act 2013 s.4 (publication on a matter of public interest) is the primary shield; seeking a subject's comment before publication is part of that defence, not a courtesy.",
+  "points": [
+    {
+      "n": 1,
+      "title": "One reply per axis per publication",
+      "text": "File separate forms for distinct axes; one revision per axis."
+    },
+    {
+      "n": 2,
+      "title": "Length cap",
+      "text": "500 words for the public reply; 300 words for the quoted passage."
+    },
+    {
+      "n": 3,
+      "title": "Visibility timing",
+      "text": "A1, A2, A6, A7, and A8 are pre-moderated before publication. A3, A4, and A5 publish immediately with a 'reply pending review' badge and are confirmed within target."
+    },
+    {
+      "n": 4,
+      "title": "Annotate, do not delete",
+      "text": "A disputed claim is retained with strikethrough plus a dated correction note; corrections are logged in a public changelog."
+    },
+    {
+      "n": 5,
+      "title": "Six-month complaint window",
+      "text": "From publication or from the last decision by the operator (DSA Article 20(2) analogue)."
+    },
+    {
+      "n": 6,
+      "title": "Anti-misuse",
+      "text": "Suspension after warning for manifestly unfounded or repeat duplicative replies (DSA Article 23 analogue)."
+    },
+    {
+      "n": 7,
+      "title": "Human review on every reply",
+      "text": "No fully automated rejection (DSA Article 20(6) analogue)."
+    },
+    {
+      "n": 8,
+      "title": "Statement of reasons",
+      "text": "Issued whenever a reply is declined, edited, or de-published (DSA Article 17 analogue)."
+    },
+    {
+      "n": 9,
+      "title": "Rate limit",
+      "text": "Five replies per rail per rolling 30 days."
+    },
+    {
+      "n": 10,
+      "title": "Out-of-court escalation pointer",
+      "text": "To a certified DSA Article 21 out-of-court dispute-settlement body for EU rails; otherwise the UK courts."
+    }
+  ]
+}

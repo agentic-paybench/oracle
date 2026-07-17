@@ -1,0 +1,48 @@
+# Right-of-reply channel Worker.
+#
+# Serves the static reply form + policy (Workers static-assets binding) and one
+# POST /reply endpoint that writes an append-only, non-public record into R2.
+# Nothing auto-publishes; publication is a separate human-gated (L3) step.
+#
+# Gate model (ADR-009): the named-rail surfaces consult canEmit('published-rankings')
+# against the shared config/regulatory_posture.<POSTURE_CONFIG>.json. Default
+# POSTURE_CONFIG = "live" (most restrictive; G_S21 closed => channel armed-idle).
+# A gate flip is a config-value change + redeploy, never a code change.
+
+name = "right-of-reply"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# Dedicated Worker Custom Domain on the research-framed POC zone. Cloudflare
+# auto-creates the DNS record + TLS cert and routes the whole hostname to this
+# Worker. Zone agentic-paybench.dev is in-account (verified). Takes effect on
+# deploy; robots:noindex keeps the armed-but-idle surface out of search.
+routes = [
+  { pattern = "reply.agentic-paybench.dev", custom_domain = true },
+]
+
+# Static form + policy + templates served from ./public (single origin).
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Append-only, non-public pending store. Bucket is operator-provisioned at go-live;
+# the build + dry-run use wrangler dev / an in-memory fake, so no account is needed.
+[[r2_buckets]]
+binding = "REPLY_PENDING"
+bucket_name = "reply-pending"
+
+[vars]
+# The deployment discriminator (ADR-009 "two posture configs"). "live" is the
+# most restrictive posture and the deployed default; the dry-run/tests drive
+# "testnet" and throwaway open-gate configs to exercise the open path.
+POSTURE_CONFIG = "live"
+# Public Turnstile sitekey (safe to embed; scoped to reply.agentic-paybench.dev).
+# The matching TURNSTILE_SECRET is a wrangler secret (encrypted, not in the repo).
+# For local `wrangler dev`, use --var POSTURE_CONFIG:testnet (Turnstile is not
+# enforced off "live", so this domain-scoped sitekey does not need to resolve).
+TURNSTILE_SITEKEY = "0x4AAAAAADwItcSg0lHzyKXM"
+
+# TURNSTILE_SECRET is a operator-supplied secret at go-live (wrangler secret put),
+# never committed. When unset the capture endpoint treats Turnstile as unconfigured
+# and (in non-live/dev only) accepts the documented test token.

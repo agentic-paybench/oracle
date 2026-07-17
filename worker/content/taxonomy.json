@@ -1,0 +1,78 @@
+{
+  "_source": "Canonical dispute taxonomy (8 axes). Editorial copy; do not re-derive the axes.",
+  "visibility_rule": "A1, A2, A6, A7, A8 are pre-moderated before publication; A3, A4, A5 publish immediately with a 'reply pending review' badge.",
+  "axes": [
+    {
+      "id": "A1",
+      "name": "Factual data error",
+      "trigger": "A specific number, date, fee, latency, or label is objectively wrong.",
+      "required_evidence": "Source ledger or explorer URL, timestamp, on-chain or PSP receipt, signed engineer statement.",
+      "remedy": "Inline correction plus a dated note; recompute affected rankings.",
+      "target_response": "5 working days",
+      "visibility": "pre-moderated"
+    },
+    {
+      "id": "A2",
+      "name": "Methodology bug (code or sampling)",
+      "trigger": "A published formula or sampler has a defect (off-by-one, unit error, biased window).",
+      "required_evidence": "Pointer to the commit or line in the open-source benchmark repo, plus a reproducible counter-run.",
+      "remedy": "Patch, re-run, and republish with a changelog; the original is archived with strikethrough.",
+      "target_response": "10 working days",
+      "visibility": "pre-moderated"
+    },
+    {
+      "id": "A3",
+      "name": "Methodology fairness or framing",
+      "trigger": "Metric selection, weighting, a missing confidence interval, or chart framing materially mischaracterises (an opinion, not a bug).",
+      "required_evidence": "An argument plus at least one alternative metric with its computation.",
+      "remedy": "A published rebuttal alongside the chart, plus an editorial note; no obligation to alter the ranking.",
+      "target_response": "15 working days",
+      "visibility": "immediate-pending-badge"
+    },
+    {
+      "id": "A4",
+      "name": "Performance changed since measurement",
+      "trigger": "The rail was patched or upgraded after the measurement window.",
+      "required_evidence": "Release-notes URL, deploy timestamp, signed re-measurement request.",
+      "remedy": "Re-benchmark next cycle; a 'patched on [date]' badge on the historical row.",
+      "target_response": "next cycle (90 days or fewer)",
+      "visibility": "immediate-pending-badge"
+    },
+    {
+      "id": "A5",
+      "name": "Scope objection (testnet or sandbox vs production)",
+      "trigger": "The operator tested an environment unrepresentative of production.",
+      "required_evidence": "Endpoint URLs, network IDs, SDK version diff.",
+      "remedy": "Relabel as a scoped result, or rerun on production endpoints.",
+      "target_response": "10 working days",
+      "visibility": "immediate-pending-badge"
+    },
+    {
+      "id": "A6",
+      "name": "Mischaracterisation or attribution",
+      "trigger": "A claim attributed to or implied of the rail was not made by the rail (for example an SLA or a compliance claim).",
+      "required_evidence": "The original rail-published statement (URL or PDF), plus the operator quote being challenged.",
+      "remedy": "Edit the attribution; a published apology note if defamatory.",
+      "target_response": "5 working days (priority)",
+      "visibility": "pre-moderated"
+    },
+    {
+      "id": "A7",
+      "name": "Confidentiality or NDA",
+      "trigger": "The underlying datum is contractually confidential (for example an enterprise-tier rate).",
+      "required_evidence": "Reference to the NDA clause plus the rail's confidentiality-officer attestation.",
+      "remedy": "Either redact and label 'withheld at the rail's request', or retain with a disclaimer that the rail asserts an NDA. The operator never acknowledges the contents of any NDA it has not signed.",
+      "target_response": "10 working days",
+      "visibility": "pre-moderated"
+    },
+    {
+      "id": "A8",
+      "name": "Jurisdictional or compliance",
+      "trigger": "Publication risks breaching an EU, UK, or US rule (PSD2 SCA mischaracterisation, MiCA, OFAC, FCA Principle 7).",
+      "required_evidence": "The specific regulation and clause.",
+      "remedy": "A targeted geo-fence of the disputed claim, or a footnoted regulatory caveat; escalate to the operator's legal function.",
+      "target_response": "5 working days",
+      "visibility": "pre-moderated"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+:root {
+  --fg: #1a1a1a;
+  --muted: #555;
+  --line: #d0d0d0;
+  --accent: #234;
+  --idle-bg: #fff8e6;
+  --idle-line: #e0b000;
+  --active-bg: #eaf5ea;
+  --active-line: #3a8a3a;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--fg);
+  margin: 0;
+  background: #fff;
+}
+main {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+h1 {
+  font-size: 1.6rem;
+}
+.intro,
+.framing {
+  color: var(--muted);
+}
+.banner {
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+.banner-idle {
+  background: var(--idle-bg);
+  border-left-color: var(--idle-line);
+}
+.banner-active {
+  background: var(--active-bg);
+  border-left-color: var(--active-line);
+}
+form {
+  margin-top: 1.5rem;
+}
+.field {
+  margin: 1rem 0;
+}
+.field label,
+.field legend {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.field-check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.field-check label {
+  font-weight: 400;
+}
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+fieldset.field-axis {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.axis-opt {
+  display: block;
+  font-weight: 400;
+  margin: 0.15rem 0;
+}
+.req {
+  color: #b00;
+}
+button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+table.axes {
+  border-collapse: collapse;
+  width: 100%;
+}
+table.axes th,
+table.axes td {
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+/* Honeypot: kept in the DOM for bots, removed from the visual + a11y tree. */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

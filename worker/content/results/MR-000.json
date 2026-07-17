@@ -1,0 +1,8 @@
+{
+  "_note": "MOCK benchmark result used only for the right-of-reply dry-run. Not a real rail, not a real measurement. Its sole purpose is to give a published result for a mock subject to reply to, so the channel can be exercised end-to-end while every real named-rail result stays G_S21-gated.",
+  "id": "MR-000",
+  "title": "Mock settlement-finality result (dry-run only)",
+  "subject_rail": "Rail X (mock)",
+  "finding": "Illustrative finding for the dry-run: a placeholder finality figure attributed to a mock rail. Carries no real measurement.",
+  "published": "2026-07-05"
+}
