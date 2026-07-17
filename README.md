@@ -1,7 +1,28 @@
 # oracle
 
+[![ci](https://github.com/agentic-paybench/oracle/actions/workflows/ci.yml/badge.svg)](https://github.com/agentic-paybench/oracle/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+
 Capability oracle for agentic payment rails: schema, ingestion, methodology,
 and the static read surface.
+
+## Quickstart
+
+Prerequisites: Python 3.12+ and Node 22+.
+
+```sh
+# run the Python suite (schema, PDP gates, mutation drill, manifest check)
+python -m pytest tests -q
+
+# verify the frozen methodology bytes against the anchored manifest
+docs/methodology/verify-vendored-freeze.sh
+
+# verify the already-published capability credentials (no keys needed)
+cd ingest/signer && npm ci && node verify.mjs && cd ../..
+
+# run the right-of-reply Worker suite
+cd worker && npm ci && npx vitest run
+```
 
 ## Scope
 
@@ -13,6 +34,9 @@ surface of agentic payment rails. The day-one schema is hybrid-tiered:
   is vendored here and byte-verifiable against its external anchors.
 - **Tier 2**: factual lookup (fees, supported assets, custody model,
   auth/dispute/refund/sanctions bundle), served as signed static credentials.
+  Tier-2 field values are seeded `pending` at launch and fill in as sourced
+  (see `docs/site/roadmap.md`); the credential envelope and its signature
+  chain are live from day one.
 - **Tier 3**: declared roadmap items, clearly labelled, no measurements.
 
 The live surface carries no rail rankings and accepts no payment-intent
@@ -36,6 +60,8 @@ mutation drill.
 - `docs/site/`: the static oracle read surface as deployed.
 - `worker/`: the right-of-reply Worker (reply capture; human-signed
   publication; see `worker/README.md`).
+- `tests/`: the Python suite enforcing the ADR-007/ADR-009 properties, the
+  mutation drill, and the manifest check.
 - `public-manifest.toml`: every tracked file mapped to its reason for being
   public; CI fails default-deny on any unmapped file.
 

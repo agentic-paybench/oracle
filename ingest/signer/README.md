@@ -10,7 +10,16 @@ library (`jose`); no hand-rolled crypto.
 - **Securing mechanism:** VCDM 2.0 Enveloped Verifiable Credentials (VC-JOSE).
   Data Integrity (`ecdsa-rdfc-2019`) is the alternative for the hardware ceremony.
 
-## Flow
+## Verify what is published (no keys needed)
+
+The committed credentials under `docs/site/capabilities/` verify against the
+published DID key as-is; you do not need to generate anything:
+
+```
+npm ci && node verify.mjs
+```
+
+## Maintainer build flow (rebuilding and re-signing)
 
 ```
 npm install

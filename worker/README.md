@@ -8,4 +8,6 @@ notice) consult the shared ADR-009 posture config via `src/posture.ts`
 (fail-closed; see `docs/PDP-CONSUMPTION.md`).
 
 Cloudflare Workers (TypeScript); no Durable Objects on critical paths.
-Dev: `npm ci && npx vitest run`; local serve via `wrangler dev`.
+Dev: `npm ci && npx vitest run`; local serve via `wrangler dev` (defaults to
+the most-restrictive `live` posture; pass `--var POSTURE_CONFIG:testnet` to
+exercise the open path locally).
