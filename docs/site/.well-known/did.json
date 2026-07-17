@@ -1,0 +1,25 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:jwk:eyJrdHkiOiJFQyIsIngiOiIyVkd2eGFmSXhtOGpWYmJ3VXkwWXlMOVM4UHhqVF9HOWNpX3dHdVg3cmg4IiwieSI6IkFRX01aOEdHMnhyeE0yOHhtRjZJbkpRWjBNRktEbFpjVmtlSHNvYVM0ZTQiLCJjcnYiOiJQLTI1NiJ9",
+  "verificationMethod": [
+    {
+      "id": "did:jwk:eyJrdHkiOiJFQyIsIngiOiIyVkd2eGFmSXhtOGpWYmJ3VXkwWXlMOVM4UHhqVF9HOWNpX3dHdVg3cmg4IiwieSI6IkFRX01aOEdHMnhyeE0yOHhtRjZJbkpRWjBNRktEbFpjVmtlSHNvYVM0ZTQiLCJjcnYiOiJQLTI1NiJ9#0",
+      "type": "JsonWebKey2020",
+      "controller": "did:jwk:eyJrdHkiOiJFQyIsIngiOiIyVkd2eGFmSXhtOGpWYmJ3VXkwWXlMOVM4UHhqVF9HOWNpX3dHdVg3cmg4IiwieSI6IkFRX01aOEdHMnhyeE0yOHhtRjZJbkpRWjBNRktEbFpjVmtlSHNvYVM0ZTQiLCJjcnYiOiJQLTI1NiJ9",
+      "publicKeyJwk": {
+        "kty": "EC",
+        "x": "2VGvxafIxm8jVbbwUy0YyL9S8PxjT_G9ci_wGuX7rh8",
+        "y": "AQ_MZ8GG2xrxM28xmF6InJQZ0MFKDlZcVkeHsoaS4e4",
+        "crv": "P-256"
+      }
+    }
+  ],
+  "assertionMethod": [
+    "did:jwk:eyJrdHkiOiJFQyIsIngiOiIyVkd2eGFmSXhtOGpWYmJ3VXkwWXlMOVM4UHhqVF9HOWNpX3dHdVg3cmg4IiwieSI6IkFRX01aOEdHMnhyeE0yOHhtRjZJbkpRWjBNRktEbFpjVmtlSHNvYVM0ZTQiLCJjcnYiOiJQLTI1NiJ9#0"
+  ],
+  "x-alg": "ES256",
+  "x-note": "DEV key (non-production). Rotate to hardware PIV P-256 at the maintainer key ceremony."
+}

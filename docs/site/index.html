@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>agentic-paybench capability oracle</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.6 system-ui, sans-serif; max-width: 46rem; margin: 3rem auto; padding: 0 1rem; }
+    code { font-family: ui-monospace, monospace; }
+    h1 { margin-bottom: 0.2rem; }
+    .sub { opacity: 0.7; margin-top: 0; }
+    ul { padding-left: 1.2rem; }
+    .note { opacity: 0.7; font-size: 0.9rem; border-top: 1px solid rgba(128,128,128,0.3); padding-top: 1rem; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>agentic-paybench capability oracle</h1>
+  <p class="sub">A research data layer over agentic payment rails. Factual, intent-free.</p>
+
+  <h2>Live surfaces</h2>
+  <ul>
+    <li><strong>Tier-2 capabilities</strong> (factual lookup per rail): <code><a href="capabilities/index.json">capabilities/index.json</a></code></li>
+    <li><strong>Tier-1 settlement-finality methodology</strong> (method, harness, fixtures; no league table): <code><a href="methodology/">methodology/</a></code></li>
+    <li><strong>Schema</strong>: <code><a href="schema/capability.context.jsonld">capability.context.jsonld</a></code>, <code><a href="schema/capability.schema.json">capability.schema.json</a></code></li>
+    <li><strong>Decision records</strong>: <code><a href="adr/">adr/</a></code></li>
+    <li><strong>Roadmap</strong> (Tier-3, declared, not measured): <code><a href="roadmap.md">roadmap.md</a></code></li>
+    <li><strong>Signing key</strong>: <code><a href=".well-known/did.json">.well-known/did.json</a></code></li>
+    <li><strong>Regulatory posture</strong>: <code><a href="posture.json">posture.json</a></code></li>
+  </ul>
+
+  <p class="note">The oracle answers "what is true about rail X", never "what should I do for this payment".
+  It carries no scored, ranked, or recommended output on this live surface (ADR-007, ADR-009). Named-rail
+  results and the scored query are built but gated off by default.</p>
+</body>
+</html>

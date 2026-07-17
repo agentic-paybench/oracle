@@ -1,0 +1,29 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "RailCapabilityCredential": "https://agentic-paybench.example/schema#RailCapabilityCredential",
+    "cap": "https://agentic-paybench.example/schema#",
+    "railId": "cap:railId",
+    "railName": "cap:railName",
+    "settlesIndependently": "cap:settlesIndependently",
+    "fees": {
+      "@id": "cap:fees",
+      "@context": {
+        "model": "cap:feeModel",
+        "headlineFee": "cap:headlineFee"
+      }
+    },
+    "supportedAssets": "cap:supportedAssets",
+    "custodyModel": "cap:custodyModel",
+    "bundle": {
+      "@id": "cap:bundle",
+      "@context": {
+        "authorizationModel": "cap:authorizationModel",
+        "disputeMechanism": "cap:disputeMechanism",
+        "refundSupport": "cap:refundSupport",
+        "sanctionsScreening": "cap:sanctionsScreening"
+      }
+    }
+  }
+}

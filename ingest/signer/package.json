@@ -1,0 +1,15 @@
+{
+  "name": "oracle-capability-signer",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Day-0 offline VC signer: dev ECDSA P-256 (ES256), VC-JOSE enveloped credentials. NON-PRODUCTION dev key; rotate to hardware PIV P-256 at the maintainer key ceremony.",
+  "dependencies": {
+    "jose": "^5.9.6"
+  },
+  "scripts": {
+    "keygen": "node keygen.mjs",
+    "sign": "node sign.mjs",
+    "verify": "node verify.mjs"
+  }
+}

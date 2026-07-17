@@ -1,0 +1,12 @@
+# Cloudflare Pages response headers.
+#
+# Content-removal-sensitive static site: force edge revalidation so a removed or
+# changed file propagates immediately instead of lingering in edge cache. On
+# 2026-07-17 two removed ADRs stayed served from edge cache for up to 7 days
+# because static assets (.md/.json) defaulted to `s-maxage=604800`, while the
+# HTML pages (which used the policy below) did not linger. Applying the
+# revalidating policy site-wide closes that class.
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer

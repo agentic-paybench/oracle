@@ -1,0 +1,21 @@
+{
+  "oracle": "agentic-paybench capability oracle",
+  "brand": "agentic-paybench",
+  "posture": "posture.json",
+  "surfaces": {
+    "tier2_capabilities": "capabilities/index.json",
+    "tier1_methodology": "methodology/",
+    "schema": {
+      "context": "schema/capability.context.jsonld",
+      "credential": "schema/capability.schema.json"
+    },
+    "adr": "adr/",
+    "roadmap": "roadmap.md",
+    "did": ".well-known/did.json"
+  },
+  "gated_off": {
+    "named_rail_results_table": "withheld: G_S21 closed (s.21 financial-promotion clearance pending)",
+    "scored_query": "withheld: inert on live (9Y not open)"
+  },
+  "note": "Intent-free Tier-2 factual lookup plus de-ranked Tier-1 methodology. No scored, ranked, or recommended output on the live surface."
+}

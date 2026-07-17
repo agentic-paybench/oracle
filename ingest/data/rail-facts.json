@@ -1,0 +1,34 @@
+{
+  "rails": [
+    {
+      "railId": "R1",
+      "railName": "R1 x402-Base",
+      "settlesIndependently": true
+    },
+    {
+      "railId": "R10",
+      "railName": "R10 MPP-on-Tempo (Machine Payments Protocol)",
+      "settlesIndependently": true
+    },
+    {
+      "railId": "R11",
+      "railName": "R11 MPP-on-Lightning (Machine Payments Protocol, via Lightspark/Spark)",
+      "settlesIndependently": true
+    },
+    {
+      "railId": "R2",
+      "railName": "R2 x402-Stellar",
+      "settlesIndependently": true
+    },
+    {
+      "railId": "R6",
+      "railName": "R6 GCP-AP2",
+      "settlesIndependently": false
+    },
+    {
+      "railId": "R9",
+      "railName": "R9 x402-Solana",
+      "settlesIndependently": true
+    }
+  ]
+}

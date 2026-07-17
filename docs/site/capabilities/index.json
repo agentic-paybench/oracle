@@ -1,0 +1,38 @@
+{
+  "issuer": "did:jwk:eyJrdHkiOiJFQyIsIngiOiIyVkd2eGFmSXhtOGpWYmJ3VXkwWXlMOVM4UHhqVF9HOWNpX3dHdVg3cmg4IiwieSI6IkFRX01aOEdHMnhyeE0yOHhtRjZJbkpRWjBNRktEbFpjVmtlSHNvYVM0ZTQiLCJjcnYiOiJQLTI1NiJ9",
+  "alg": "ES256",
+  "validFrom": "2026-07-17T00:00:00Z",
+  "note": "dev-key signed (ES256/P-256), non-production",
+  "rails": [
+    {
+      "railId": "R1",
+      "railName": "R1 x402-Base",
+      "vc": "capabilities/R1.vc.json"
+    },
+    {
+      "railId": "R10",
+      "railName": "R10 MPP-on-Tempo (Machine Payments Protocol)",
+      "vc": "capabilities/R10.vc.json"
+    },
+    {
+      "railId": "R11",
+      "railName": "R11 MPP-on-Lightning (Machine Payments Protocol, via Lightspark/Spark)",
+      "vc": "capabilities/R11.vc.json"
+    },
+    {
+      "railId": "R2",
+      "railName": "R2 x402-Stellar",
+      "vc": "capabilities/R2.vc.json"
+    },
+    {
+      "railId": "R6",
+      "railName": "R6 GCP-AP2",
+      "vc": "capabilities/R6.vc.json"
+    },
+    {
+      "railId": "R9",
+      "railName": "R9 x402-Solana",
+      "vc": "capabilities/R9.vc.json"
+    }
+  ]
+}

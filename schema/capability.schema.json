@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-paybench.example/schema/capability.schema.json",
+  "title": "RailCapabilityCredential (Tier-2, ADR-007 intent-free)",
+  "description": "A VCDM 2.0 Verifiable Credential carrying the N6 Tier-2 factual set for one rail. Forbids scored/ranked output at any level (additionalProperties false).",
+  "type": "object",
+  "required": ["@context", "type", "issuer", "credentialSubject"],
+  "additionalProperties": true,
+  "properties": {
+    "type": {
+      "type": "array",
+      "contains": { "const": "RailCapabilityCredential" }
+    },
+    "credentialSubject": {
+      "type": "object",
+      "required": ["railId", "railName", "settlesIndependently", "fees", "supportedAssets", "custodyModel", "bundle"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "railId": { "type": "string" },
+        "railName": { "type": "string" },
+        "settlesIndependently": { "type": "boolean" },
+        "fees": {
+          "type": "object",
+          "required": ["model", "headlineFee"],
+          "additionalProperties": false,
+          "properties": {
+            "model": { "type": "string" },
+            "headlineFee": { "type": "string" }
+          }
+        },
+        "supportedAssets": {
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" } },
+            { "const": "pending" }
+          ]
+        },
+        "custodyModel": {
+          "enum": ["custodial", "non_custodial", "hybrid", "pending"]
+        },
+        "bundle": {
+          "type": "object",
+          "required": ["authorizationModel", "disputeMechanism", "refundSupport", "sanctionsScreening"],
+          "additionalProperties": false,
+          "properties": {
+            "authorizationModel": { "type": "string" },
+            "disputeMechanism": { "type": "string" },
+            "refundSupport": { "type": "string" },
+            "sanctionsScreening": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
