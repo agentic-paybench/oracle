@@ -1,0 +1,38 @@
+# PayBench calibration provenance — R2 x402-Stellar settlement-finality
+# Updated 2026-06-04 with first-party n=30 (MANUAL direct-payment path; spec/facilitator run pending OZ key).
+
+rail: "R2 x402-Stellar"
+dimension: settlement-finality
+unit: seconds
+
+distribution:
+  family: lognormal
+  parameters: {median_s: 2.74, sigma_log: 0.116}   # EMPIRICAL n=30, manual direct-payment (no facilitator)
+  approach: first-party-empirical
+
+sources:
+  - type: first-party
+    ref: "poc/rail-stellar-x402 measure-finality-manual.ts, n=30 testnet; samples/R2-x402-stellar.samples.jsonl"
+    date: "2026-06-04"
+    sample_size: 30
+    note: >
+      0 failures. Manual direct classic-USDC payment buyer->seller via Horizon submitTransaction
+      (resolves at ledger close = finality). median 2.74s, sigma_log 0.116, p50 2.73, p90 3.17, p99 3.48.
+      MANUAL path: no x402 facilitator, no Soroban auth-entry — omits the facilitator round-trip.
+  - type: documentation
+    ref: "Stellar ledger close ~5.8s (Q3 2025 report / dashboard)"
+    date: "2026-06-04"
+    sample_size: 0
+    note: "Deterministic finality at ledger close, no reorg. submit->inclusion averages ~half a ledger interval -> ~2.7s observed."
+
+calibration_date: "2026-06-04"
+confidence: high
+fixture_content_hash: "sha256:b002e83280933bfebd0aa2b35e3b8610b489c6130c55e5a62f99c095d2a0b38c"
+notes: >
+  First-party n=30 supersedes the doc seed (6.0 / 0.26), which over-estimated the median (it assumed a
+  full ledger close + facilitator; real submit->inclusion averages ~2.7s). This is the MANUAL
+  direct-payment path -> a LOWER BOUND on spec x402-on-Stellar finality, which adds the OZ facilitator
+  round-trip (verify+settle API + facilitator rebuild/submit). Spec path is wired (server.ts via
+  @x402/stellar + OZ facilitator, createAuthHeaders) and pending the free OZ testnet key
+  (https://channels.openzeppelin.com/testnet/gen). Re-measure on the spec path once keyed; expect the
+  median to rise by the facilitator round-trip.

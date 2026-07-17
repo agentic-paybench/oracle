@@ -1,0 +1,35 @@
+# public-manifest.toml - ADR-011 admission manifest.
+# Every tracked file appears here with its reason tag; CI fails default-deny
+# on any tracked file absent from this manifest (mirrors the ADR-009 PDP posture).
+
+[reasons]
+R0 = "Infrastructure and dependencies"
+R1 = "Resolvable, auditable factual layer"
+R2 = "Verifiable methodology chain"
+R3 = "Provable gating"
+R4 = "Verifiable right-of-reply fairness"
+
+[files]
+"public-manifest.toml" = "R0"
+"docs/methodology/README.md" = "R2"
+"docs/methodology/frozen/calibration/calibration-plan.md" = "R2"
+"docs/methodology/frozen/calibration/provenance/R1-x402-base-finality.provenance.yaml" = "R2"
+"docs/methodology/frozen/calibration/provenance/R10-mpp-tempo-finality.provenance.yaml" = "R2"
+"docs/methodology/frozen/calibration/provenance/R11-mpp-lightning-finality.provenance.yaml" = "R2"
+"docs/methodology/frozen/calibration/provenance/R2-x402-stellar-finality.provenance.yaml" = "R2"
+"docs/methodology/frozen/calibration/provenance/R9-x402-solana-finality.provenance.yaml" = "R2"
+"docs/methodology/frozen/fixtures/R1-finality.fixture.json" = "R2"
+"docs/methodology/frozen/fixtures/R10-finality.fixture.json" = "R2"
+"docs/methodology/frozen/fixtures/R11-finality.fixture.json" = "R2"
+"docs/methodology/frozen/fixtures/R2-finality.fixture.json" = "R2"
+"docs/methodology/frozen/fixtures/R9-finality.fixture.json" = "R2"
+"docs/methodology/frozen/methodology/methodology.md" = "R2"
+"docs/methodology/frozen/mockbench/__init__.py" = "R2"
+"docs/methodology/frozen/mockbench/bench.py" = "R2"
+"docs/methodology/frozen/mockbench/cli.py" = "R2"
+"docs/methodology/frozen/mockbench/fixtures.py" = "R2"
+"docs/methodology/frozen/mockbench/paths.py" = "R2"
+"docs/methodology/frozen/mockbench/stats.py" = "R2"
+"docs/methodology/frozen/prereg-manifest.sha256" = "R2"
+"docs/methodology/verify-vendored-freeze.sh" = "R2"
+"public-manifest.toml.tmp" = "R2"

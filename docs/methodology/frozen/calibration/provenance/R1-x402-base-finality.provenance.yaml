@@ -1,0 +1,44 @@
+# PayBench calibration provenance — R1 x402-Base settlement-finality
+# Updated 2026-06-04 with first-party n=30 Base Sepolia run (supersedes doc-derived seed).
+
+rail: "R1 x402-Base"
+dimension: settlement-finality
+unit: seconds
+
+distribution:
+  family: lognormal
+  parameters: {median_s: 2.05, sigma_log: 0.082}   # EMPIRICAL n=30; supersedes the doc seed (3.0 / 0.45)
+  approach: first-party-empirical
+
+sources:
+  - type: first-party
+    ref: "poc/rail-x402-base measure_finality.py, n=30 Base Sepolia run; samples/R1-x402-base.samples.jsonl"
+    date: "2026-06-04"
+    sample_size: 30
+    note: >
+      0 failures. median 2.05s, sigma_log 0.082, p50 1.96, p90 2.29, p99 2.61. Wall-clock
+      request -> HTTP 200 (in-process facilitator settle on Base Sepolia ~= 1 block soft finality
+      + x402 facilitator envelope). Tight + stable, consistent with Base 2s block time + ~0 reorg.
+  - type: first-party
+    ref: "poc/rail-x402-base reference runs 2026-05-22 (n=2: 2.521s single-org, 6.781s two-org)"
+    date: "2026-05-22"
+    sample_size: 2
+    note: >
+      Superseded by the n=30 run. The 6.781s two-org outlier included per-call overhead the n=30
+      harness hoists out of the loop (key export is one-time setup); n=30 reflects per-payment time.
+  - type: documentation
+    ref: "Base docs Transaction Finality https://docs.base.org/base-chain/network-information/transaction-finality"
+    date: "2026-06-04"
+    sample_size: 0
+    note: "Block time 2s; soft finality ~2s; reorg ~0. Hard L1 finality ~20min (NOT used; payment waits on soft)."
+
+calibration_date: "2026-06-04"
+confidence: high
+fixture_content_hash: "sha256:05099bcb1ffe15a94946c46b0703506df1e8eacda93ae178850e329774d446af"
+notes: >
+  First-party n=30 supersedes the doc-derived seed, which over-estimated BOTH the median (3.0 ->
+  2.05) and the spread (sigma_log 0.45 -> 0.082). Base soft finality is genuinely ~2s and tight
+  (stable 2s blocks, ~0 reorg). Measures soft finality (request -> 200 incl. facilitator settle),
+  NOT hard L1 finality (~20min, excluded). Base Sepolia testnet; mainnet expected similar (same
+  2s block time). Lower tail-risk than R9 (Base finality is tight by design, unlike Solana's
+  congestion-sensitive 32-slot finalized).

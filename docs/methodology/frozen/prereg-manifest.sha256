@@ -1,0 +1,25 @@
+# PayBench settlement-finality pre-registration manifest — methodology v1.2
+# v1.2 is an editorial revision of v1.1 with no methodological change: method, rails, metrics,
+# seed, fixture hashes, and the mock-pipeline verification hash are byte-identical to v1.1; only
+# methodology.md's bytes changed, so the manifest hash changes. Frozen 2026-06-06.
+# Paths are relative to paybench/. Verify with:  cd paybench && sha256sum -c methodology/prereg-manifest.sha256
+# This manifest is the byte-set the §9 anchors commit to. The adversarial-review companion is EXCLUDED (it accrues cross-LLM dispositions by design).
+340dad208a3553e40457be38290ba36d5bbbd873df2e0b342d49726153ae8d44  methodology/methodology.md
+86dbeb52fd22d901022e1e4784b77164cdf7f992d720f15dba5f930f722f8c8d  calibration/calibration-plan.md
+12e391a751bcc21ce98f646201af66bd433baa27d0f83b0acc9d6f2c2a483f7e  calibration/provenance/R1-x402-base-finality.provenance.yaml
+0fa68e0e4ee0f673881d4b0153de965a34d41bd9db82d5cf448a4280bc2cab2a  calibration/provenance/R2-x402-stellar-finality.provenance.yaml
+4eef7c208a4c71819dd5e70c8cdc8771f74fd329dbac4a69cfa275c96b6c2786  calibration/provenance/R9-x402-solana-finality.provenance.yaml
+479e433ec9471ffd99878fd873c7356ac4c02b8c82a37688e0776184eb7937b3  calibration/provenance/R10-mpp-tempo-finality.provenance.yaml
+2735d71b04175a26ca1b131b4dda45da4637ad620445a655e5e4cdf7b3cedde8  calibration/provenance/R11-mpp-lightning-finality.provenance.yaml
+5e0383b7177bdbf8ec06e15fdd6004fce43c7bf5a4bc1146a8d4562f3a37e194  fixtures/R1-finality.fixture.json
+46afd5c0c13d2d913e07f3226471788f9baba40b51da5d6065455bec8ff3b206  fixtures/R2-finality.fixture.json
+0659647cfa9aa4bf440cbf0a94527eef5af3f5c5f240f2a561def5d8b985b2fc  fixtures/R9-finality.fixture.json
+0798d250cfc4b0351ad7170e2ce6a4f9c0af533281a3513fb9fc3bdbdbbb51ee  fixtures/R10-finality.fixture.json
+af5c8917a763caf8590fc5c7041ab9b8242c4ab74089a38dffc56161916e8c9d  fixtures/R11-finality.fixture.json
+7e8705d9f6f8f618cb63554ddffdf4a20d9cfcbf717e821642c6da1975e4c8a0  runs/finality-run.json
+071c86af9ab485bc03d40760a56820d626a5bc27cbdd3298d65639809b099367  mockbench/__init__.py
+19b32695c692e6f92527cbe1f21f211684fb62f254b26c5f74f6cb9ce78d749f  mockbench/fixtures.py
+7b3a11ed35f152bb5c3ed62fdee51f0a493938a4e253e2f988c8eb575a45c16e  mockbench/bench.py
+695b5206920ebe40fa18b9df5c783e63892137f8af0db4981a6fade9d5d2d57e  mockbench/stats.py
+18fdee303f62fdca803e3e2f571fac0ef4a618877deb2227982561edb17a6588  mockbench/cli.py
+3810b6d8da302e606c0afdd52edf5ad21f5ffe34683e34b166144e4ec15c6e39  mockbench/paths.py

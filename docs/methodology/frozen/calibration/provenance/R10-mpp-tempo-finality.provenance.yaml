@@ -1,0 +1,36 @@
+# PayBench calibration provenance — R10 MPP-on-Tempo settlement-finality
+# Updated 2026-06-04 with first-party n=30 (REAL-RAIL — supersedes the doc-proxy LOW estimate).
+
+rail: "R10 MPP-on-Tempo (Machine Payments Protocol)"
+dimension: settlement-finality
+unit: seconds
+
+distribution:
+  family: lognormal
+  parameters: {median_s: 1.75, sigma_log: 0.177}   # EMPIRICAL n=30, real-rail Moderato testnet
+  approach: first-party-empirical
+
+sources:
+  - type: first-party
+    ref: "poc/rail-tempo-mpp measure-finality.ts, n=30 Moderato testnet (chain 42431); samples/R10-mpp-tempo.samples.jsonl"
+    date: "2026-06-04"
+    sample_size: 30
+    note: >
+      0 failures. Real-rail MPP (Machine Payments Protocol) via the mppx SDK, pure-Tempo path, pathUSD
+      TIP-20. request->200 wall-clock (full MPP flow: 402 + signed TIP-20 authorization + on-chain settle
+      + 200). median 1.75s, sigma_log 0.177, p50 1.85, p90 1.90, p99 2.66.
+  - type: documentation
+    ref: "Tempo / mpp.dev — ~500ms block finality target"
+    date: "2026-06-04"
+    sample_size: 0
+    note: "Underlying TIP-20 settlement ~sub-second; measured request->200 ~1.75s adds MPP protocol + HTTP overhead."
+
+calibration_date: "2026-06-04"
+confidence: high
+fixture_content_hash: "sha256:2d77a6cb955b37d2818b1da0251caa48c900df937ea945ebdd020b5179c785f4"
+notes: >
+  REAL-RAIL — supersedes the doc-proxy 1.0s LOW estimate AND the "Partial / mock per Variant E" status.
+  MPP-on-Tempo is buildable today: mppx SDK + Moderato testnet, keyless tempo_fundAddress faucet, NO Stripe,
+  NO API key, non-custodial (buyer signs TIP-20). Only the Stripe-mediated MPP *acceptance* leg stays
+  Variant-E (US-only; settles only simulated on testnet). MPP = Machine Payments Protocol (same protocol as
+  R11, different settlement rail). Measured request->200 (full flow); underlying Tempo settlement ~500ms.

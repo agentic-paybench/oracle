@@ -1,0 +1,43 @@
+# PayBench calibration provenance — R9 x402-Solana settlement-finality
+# Updated 2026-06-04 with first-party n=30 devnet run. CRITICAL: `finalized`, NOT `confirmed`.
+
+rail: "R9 x402-Solana"
+dimension: settlement-finality
+unit: seconds
+
+distribution:
+  family: lognormal
+  parameters: {median_s: 14.63, sigma_log: 0.057}   # EMPIRICAL devnet n=30; see tail caveat in notes
+  approach: hybrid                                   # first-party central tendency + doc-informed tail
+
+sources:
+  - type: first-party
+    ref: "poc/rail-solana-x402 measure-finality.ts, n=30 devnet run; samples/R9-x402-solana.samples.jsonl"
+    date: "2026-06-04"
+    sample_size: 30
+    note: >
+      0 failures. Finalized: median 14.63s, sigma_log 0.057, p50 14.37, p90 15.27, p99 19.46
+      (one tail excursion, trial 29: confirmed 7.26s -> finalized 19.46s). Confirmed-level
+      (Day-30 auth-latency input, captured for free): median 2.27s, sigma_log 0.267, p99 7.26s.
+      Measured submission(paid-fetch) -> getSignatureStatuses == finalized.
+  - type: documentation
+    ref: "Helius Solana Commitment Levels https://www.helius.dev/blog/solana-commitment-levels"
+    date: "2026-06-04"
+    sample_size: 0
+    note: "finalized = 32 slots x ~400ms ~= 13s; 10-20s normal; congestion extends. confirmed ~0.6s (NOT used)."
+  - type: documentation
+    ref: "Anza/Agave Commitment Status https://docs.anza.xyz/consensus/commitments"
+    date: "2026-06-04"
+    sample_size: 0
+    note: "finalized = supermajority + >=31 additional confirmed blocks (rooted); irreversible level."
+
+calibration_date: "2026-06-04"
+confidence: high          # central tendency high (n=30 first-party); tail is an estimate (see notes)
+fixture_content_hash: "sha256:b0765414c4d731db6c92fd4576b4d9e4fccf68e65d1222187601f1c809b348fd"
+notes: >
+  LOAD-BEARING: PayBench measures `finalized`, NOT `confirmed`. First-party n=30 confirmed the doc
+  estimate (13.5s) — empirical median 14.63s. CENTRAL TENDENCY is now high-confidence empirical.
+  TAIL CAVEAT: sigma_log 0.057 is from QUIET DEVNET and understates mainnet congestion. The doc
+  range (10-20s+) and the single devnet excursion (19.46s) indicate the real tail is heavier. For
+  the published fixture, widen sigma_log toward ~0.15-0.25 (doc-informed) until a mainnet or
+  congested-period run is captured. Devnet finality math == mainnet; only the congestion tail differs.
