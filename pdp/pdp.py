@@ -41,7 +41,7 @@ def can_emit(mechanic_id: str, context: EmitContext, config: PostureConfig) -> D
         gate = RegulatoryGate(
             posture=config.posture,
             authorised=config.gate_open("G_AUTH"),
-            advised_out=config.gate_open("G_QF"),
+            secondary_clearance=config.gate_open("G_QF"),
         )
         try:
             gate.check(Rung.R0_INFORM, context.rails)

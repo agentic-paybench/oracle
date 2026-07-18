@@ -26,7 +26,7 @@ class Rung(IntEnum):
     passes the identical gate test. Only the inform-only tier is defined here;
     any future tier gates identically."""
 
-    R0_INFORM = 0  # ranked advisory list (gated identically to every other tier)
+    R0_INFORM = 0  # ranked comparison list (gated identically to every other tier)
 
 
 class Posture(IntEnum):
@@ -57,7 +57,7 @@ class RegulatoryGate:
 
     posture: Posture = Posture.OFFLINE_TESTNET_ONLY  # most restrictive default
     authorised: bool = False  # FCA authorisation held for the relevant activity
-    advised_out: bool = False  # secondary clearance condition for the relevant activity
+    secondary_clearance: bool = False  # secondary clearance condition for the relevant activity
 
     def check(self, rung: Rung, rails: Iterable[RailRecord]) -> EmissionClearance:
         """Authorise (or refuse) emitting ``rung`` over ``rails``.
@@ -92,7 +92,7 @@ class RegulatoryGate:
                 f"under posture {self.posture.name} (need LIVE_AUTHORISED). The same "
                 f"precautionary test applies to every tier. This deployment must not emit live."
             )
-        if not (self.authorised or self.advised_out):
+        if not (self.authorised or self.secondary_clearance):
             raise RegulatoryGateError(
                 f"{rung.name} blocked: LIVE_AUTHORISED posture but neither FCA authorisation "
                 f"nor the secondary clearance condition is set for live targets {list(live)}. "
