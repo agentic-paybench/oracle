@@ -49,9 +49,9 @@ def _requires_s21(cfg) -> bool:
 
 
 def _scored_9y(cfg) -> bool:
-    # The scored query is testnet/demo only until the 9Y crossing (authorisation
-    # G_AUTH or the self-deploy gate G_QF). s.21 (G_S21) does NOT unlock it, so it is
-    # deliberately not consulted here.
+    # The scored query is testnet/demo only until G_AUTH (authorisation) or
+    # G_QF (self-deploy) opens. G_S21 (financial promotion) does NOT unlock it,
+    # so it is deliberately not consulted here.
     return cfg.is_testnet() or cfg.gate_open("G_AUTH") or cfg.gate_open("G_QF")
 
 
@@ -83,7 +83,7 @@ MECHANICS = {
         ),
         Mechanic(
             "scored-query", "posture-gated", _scored_9y, posture_governed=True,
-            description="Scored/ranked query; testnet/demo only until 9Y (G_AUTH or G_QF).",
+            description="Scored/ranked query; testnet/demo only unless G_AUTH or G_QF opens.",
         ),
     )
 }
