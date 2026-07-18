@@ -6,8 +6,8 @@ appear here or are implied. Tier-1 measured dimensions land on their own schedul
 with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 
 ## Tier-1 measured dimensions (pre-registered, phased)
-- Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface).
-- Authorization latency: pre-registered (methodology frozen and anchored); measurement in progress; no results on the public surface.
+- Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface). Pre-registration: <https://doi.org/10.17605/OSF.IO/XGFUJ>.
+- Authorization latency: pre-registered (methodology frozen and anchored); measurement in progress; no results on the public surface. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
 - Additional measured dimensions: under methodology development; each is pre-registered before any measurement publishes.
 
 ## Tier-2 factual coverage (fills in as sourced; "pending" until then)

@@ -18,5 +18,7 @@ def test_roadmap_has_no_measurements():
     text = ROADMAP.read_text(encoding="utf-8").lower()
     for term in _FORBIDDEN:
         assert term not in text, f"roadmap contains measurement term: {term!r}"
-    # No calibrated (decimal) numbers.
-    assert not re.search(r"\d+\.\d+", text), "roadmap contains a decimal measurement"
+    # No calibrated (decimal) numbers. Resolvable identifiers (DOIs inside
+    # URLs) are provenance pointers, not measurements; strip them first.
+    scrubbed = re.sub(r"<?https?://\S+>?", "", text)
+    assert not re.search(r"\d+\.\d+", scrubbed), "roadmap contains a decimal measurement"

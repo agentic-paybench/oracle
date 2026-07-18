@@ -25,8 +25,9 @@ local maintainer step against the tag itself:
     payhelm/paybench/methodology/verify-freeze.sh paybench-prereg-v1.2
 
 The manifest's own sha256 is the anchored value
-`a5f6feb46819dc3926012a8a38ac519cd0d5df33c20734516dca4b32d30d3a6f` (OSF DOI plus
-Bitcoin block 952636 plus Rekor logIndex 1740328355).
+`a5f6feb46819dc3926012a8a38ac519cd0d5df33c20734516dca4b32d30d3a6f`
+(OSF pre-registration <https://doi.org/10.17605/OSF.IO/XGFUJ> plus Bitcoin
+block 952636 plus Rekor logIndex 1740328355).
 
 The frozen files are vendored byte-exact, so working references inside them
 (file paths, planning labels) refer to the pre-registration's source
