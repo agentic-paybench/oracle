@@ -5,7 +5,7 @@
     "G_AUTH": "closed",
     "G_QF": "closed",
     "G_S21": "closed",
-    "G_CUSTODY": "open"
+    "G_CUSTODY": "closed"
   },
   "audit": {
     "adopted": "2026-07-03",

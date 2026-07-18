@@ -5,7 +5,7 @@
     "G_AUTH": "closed",
     "G_QF": "closed",
     "G_S21": "closed",
-    "G_CUSTODY": "open"
+    "G_CUSTODY": "closed"
   },
   "surfaces_live": ["tier2_capabilities", "tier1_methodology"],
   "surfaces_inert": {
