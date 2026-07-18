@@ -15,7 +15,7 @@
   },
   "gated_off": {
     "named_rail_results_table": "withheld: G_S21 closed (s.21 financial-promotion clearance pending)",
-    "scored_query": "withheld: inert on live (9Y not open)"
+    "scored_query": "withheld: inert on live (G_AUTH/G_QF closed)"
   },
   "note": "Intent-free Tier-2 factual lookup plus de-ranked Tier-1 methodology. No scored, ranked, or recommended output on the live surface."
 }

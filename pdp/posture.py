@@ -1,13 +1,12 @@
 """The ``regulatory_posture`` gate — load-bearing, do not soften.
 
-- Draft **PERG 19.8** reads venue/price-finding + order-assistance as *likely
-  arranging*, so even an inform-only ranked list is **not** a safe harbour. The
-  gate therefore applies the SAME test to every output tier — ``Rung`` only
-  labels the tier, it never relaxes the gate.
-- The gate for emitting **any** tier against a live qualifying cryptoasset is
-  *authorisation-or-advised-out* (SI 2026/102; the s.21 financial-promotion
-  regime is a separate, already-live axis). Default posture is the most
-  restrictive.
+- Draft **PERG 19.8** (the UK FCA's draft perimeter guidance) reads venue and
+  price-finding expansively, so the gate applies the same precautionary test to
+  every output tier, regardless of how any tier is ultimately classified —
+  ``Rung`` only labels the tier, it never relaxes the gate.
+- Emitting **any** tier against a live qualifying cryptoasset (SI 2026/102)
+  requires an explicit clearance condition; the financial-promotion axis is
+  separate. Default posture is the most restrictive.
 
 Nothing reaches the outside world except through :meth:`RegulatoryGate.check`.
 If an emission would breach the posture, it raises.
@@ -23,11 +22,11 @@ from pdp.schema import RailRecord
 
 
 class Rung(IntEnum):
-    """Output-tier label. Higher tiers are MORE arranging-intense, never more
-    permitted; every tier passes the identical gate test. Only the inform-only
-    tier is defined here; any future tier gates identically."""
+    """Output-tier label. Higher tiers are never more permitted; every tier
+    passes the identical gate test. Only the inform-only tier is defined here;
+    any future tier gates identically."""
 
-    R0_INFORM = 0  # ranked advisory list (still likely arranging — PERG 19.8)
+    R0_INFORM = 0  # ranked advisory list (gated identically to every other tier)
 
 
 class Posture(IntEnum):
@@ -35,7 +34,7 @@ class Posture(IntEnum):
 
     OFFLINE_TESTNET_ONLY = 0  # DEFAULT. Emit only against non-live first-party/testnet rails.
     FIRST_PARTY_DEMO = 1  # same perimeter as above; named separately for demo provenance.
-    LIVE_AUTHORISED = 2  # emit against live qualifying cryptoassets — requires auth-or-advised-out.
+    LIVE_AUTHORISED = 2  # emit against live qualifying cryptoassets — requires the clearance conditions below.
 
 
 class RegulatoryGateError(RuntimeError):
@@ -57,15 +56,15 @@ class RegulatoryGate:
     """The gate. Construct once; every emitter calls :meth:`check` before output."""
 
     posture: Posture = Posture.OFFLINE_TESTNET_ONLY  # most restrictive default
-    authorised: bool = False  # FCA authorisation obtained for the arranging activity
-    advised_out: bool = False  # qualified legal advice that the activity is out of scope
+    authorised: bool = False  # FCA authorisation held for the relevant activity
+    advised_out: bool = False  # secondary clearance condition for the relevant activity
 
     def check(self, rung: Rung, rails: Iterable[RailRecord]) -> EmissionClearance:
         """Authorise (or refuse) emitting ``rung`` over ``rails``.
 
-        Same test for every rung (PERG 19.8: even R0 is arranging). The decision
-        turns solely on whether any target rail is a *live qualifying
-        cryptoasset* and whether the posture + authorisation permit that.
+        Same precautionary test for every tier. The decision turns solely on
+        whether any target rail is a *live qualifying cryptoasset* and whether
+        the posture + clearance conditions permit that.
         """
         rails = list(rails)
         rail_ids = tuple(r.rail_id for r in rails)
@@ -82,7 +81,7 @@ class RegulatoryGate:
                 rationale=(
                     f"{rung.name}: no live qualifying cryptoasset in target set "
                     f"({len(rail_ids)} rail(s), all non-live testnet/first-party) — "
-                    "cleared. PERG 19.8 applies equally to all tiers; none tripped here."
+                    "cleared. The same precautionary test applies to every tier; none tripped here."
                 ),
             )
 
@@ -90,14 +89,14 @@ class RegulatoryGate:
         if self.posture < Posture.LIVE_AUTHORISED:
             raise RegulatoryGateError(
                 f"{rung.name} blocked: targets live qualifying cryptoasset(s) {list(live)} "
-                f"under posture {self.posture.name} (need LIVE_AUTHORISED). PERG 19.8: even "
-                f"an inform-only list is arranging — no tier is a safe harbour. This deployment must not emit live."
+                f"under posture {self.posture.name} (need LIVE_AUTHORISED). The same "
+                f"precautionary test applies to every tier. This deployment must not emit live."
             )
         if not (self.authorised or self.advised_out):
             raise RegulatoryGateError(
                 f"{rung.name} blocked: LIVE_AUTHORISED posture but neither FCA authorisation "
-                f"nor advised-out is set for live targets {list(live)}. Gate = "
-                f"authorisation-or-advised-out."
+                f"nor the secondary clearance condition is set for live targets {list(live)}. "
+                f"The gate requires an explicit clearance condition."
             )
         return EmissionClearance(
             rung=rung,
@@ -107,6 +106,6 @@ class RegulatoryGate:
             cleared=True,
             rationale=(
                 f"{rung.name}: live targets {list(live)} cleared under LIVE_AUTHORISED "
-                f"with {'authorisation' if self.authorised else 'advised-out'}."
+                f"with {'authorisation' if self.authorised else 'clearance'}."
             ),
         )

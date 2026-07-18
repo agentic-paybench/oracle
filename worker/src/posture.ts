@@ -15,10 +15,9 @@
  * Fail-closed, everywhere: unknown mechanic, unknown/missing gate, unknown
  * `POSTURE_CONFIG`, or a malformed config all deny. Default deny.
  *
- * The two perimeter flags NEVER share: `G_S21` (s.21, the named-rail table) is
- * the ONLY gate this module consults. The scored query's `regulatory_posture`/9Y
- * trigger (`G_AUTH`/`G_QF`) is deliberately not read here; clearing s.21 does not
- * open 9Y and vice versa (ADR-009).
+ * The gates NEVER share: `G_S21` (financial promotion, the named-rail table) is
+ * the ONLY gate this module consults. The scored query's gates (`G_AUTH`/`G_QF`)
+ * are deliberately not read here; clearing one never opens the other (ADR-009).
  */
 
 // The shared config is the single source of truth. These relative imports reach

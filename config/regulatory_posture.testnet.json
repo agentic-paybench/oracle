@@ -11,6 +11,6 @@
     "adopted": "2026-07-03",
     "adr": "ADR-009",
     "flip_requires": "config value + redeploy + audit record",
-    "note": "testnet/demo deployment: scored-query exposed for the demo against non-live rails; no live emission; named-rail table stays G_S21-closed."
+    "note": "testnet/demo deployment: scored-query exposed for the demo against non-live rails; no live emission; named-rail table stays G_S21-closed. No custody mechanic exists; G_CUSTODY is reserved and unconsumed."
   }
 }

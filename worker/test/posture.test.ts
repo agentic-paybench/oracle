@@ -27,8 +27,8 @@ describe("ADR-009 canEmit(G_S21) mirror", () => {
     expect(d.allowed).toBe(true);
   });
 
-  it("decouples G_S21 from the 9Y gates: opening G_AUTH/G_QF does NOT open published-rankings", () => {
-    // The scored query's 9Y trigger must never unlock the named-rail table.
+  it("decouples G_S21 from the authorisation-path gates: opening G_AUTH/G_QF does NOT open published-rankings", () => {
+    // The scored query's gates must never unlock the named-rail table.
     const d = canEmit(PUBLISHED_RANKINGS, cfg({ G_S21: "closed", G_AUTH: "open", G_QF: "open" }));
     expect(d.allowed).toBe(false);
   });

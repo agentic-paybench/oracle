@@ -10,6 +10,6 @@
 
 **Options considered.** (a) Ship a "lightly scored" lookup: rejected; any score or rank crosses the line the invariant exists to hold. (b) Withhold the lookup entirely: rejected; the factual lookup is real developer value, and the invariant makes its factual character provable. (c) Hide a scored path behind a UI flag only: rejected per ADR-009; hidden is not enforced.
 
-**Consequences.** The live oracle carries no rankings and refuses intent params. Reverse tripwire: if the surface ever accepts an intent param or emits a score, rank, or recommendation, it has left the factual-lookup contract and must instead pass the posture gate as a scored query (which does not emit under the live config). The property test runs in CI on every change.
+**Consequences.** The live oracle carries no rankings and refuses intent params. Reverse tripwire: if the surface ever accepts an intent param or emits a score, rank, or recommendation, it has left the factual-lookup contract and must instead pass the posture gate as a scored query, which the live config holds inert. The property test runs in CI on every change.
 
 **Related:** ADR-009 (the enforcement spine); the tiered-schema design.

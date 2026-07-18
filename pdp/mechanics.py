@@ -48,7 +48,7 @@ def _requires_s21(cfg) -> bool:
     return cfg.gate_open("G_S21")
 
 
-def _scored_9y(cfg) -> bool:
+def _auth_or_selfdeploy(cfg) -> bool:
     # The scored query is testnet/demo only until G_AUTH (authorisation) or
     # G_QF (self-deploy) opens. G_S21 (financial promotion) does NOT unlock it,
     # so it is deliberately not consulted here.
@@ -82,7 +82,7 @@ MECHANICS = {
             description="Named-rail results table; G_S21-gated, default closed.",
         ),
         Mechanic(
-            "scored-query", "posture-gated", _scored_9y, posture_governed=True,
+            "scored-query", "posture-gated", _auth_or_selfdeploy, posture_governed=True,
             description="Scored/ranked query; testnet/demo only unless G_AUTH or G_QF opens.",
         ),
     )

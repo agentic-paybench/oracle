@@ -11,6 +11,6 @@
     "adopted": "2026-07-03",
     "adr": "ADR-009",
     "flip_requires": "config value + redeploy + audit record",
-    "note": "live public oracle: Tier-2 factual read + methodology only; scored-query inert (G_AUTH/G_QF closed); published-rankings inert (G_S21 closed). Flipping G_S21 or G_AUTH/G_QF is maintainer-only and carries an audit record."
+    "note": "live public oracle: Tier-2 factual read + methodology only; scored-query inert (G_AUTH/G_QF closed); published-rankings inert (G_S21 closed). Flipping G_S21 or G_AUTH/G_QF is maintainer-only and carries an audit record. No custody mechanic exists; G_CUSTODY is reserved and unconsumed."
   }
 }

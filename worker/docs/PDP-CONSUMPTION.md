@@ -42,9 +42,9 @@ The `POST /reply` capture endpoint is **always live** (armed at Day-0), never ga
 
 `canEmit` denies by default. An unknown mechanic, an unknown or missing gate, an
 unknown `POSTURE_CONFIG` name, or a malformed config all deny. `G_S21` is the ONLY
-gate this surface reads. The scored query's `regulatory_posture`/9Y trigger
-(`G_AUTH`/`G_QF`) is deliberately not consulted here: clearing s.21 does not open 9Y
-and clearing 9Y does not open s.21 (ADR-009). A CI property test asserts exactly
+gate this surface reads. The scored query's gates (`G_AUTH`/`G_QF`) are
+deliberately not consulted here: the financial-promotion gate and the
+authorisation-path gates never share a flag (ADR-009). A CI property test asserts exactly
 this decoupling (`test/posture.test.ts`).
 
 ## Reconcile step (config is the shared contract)

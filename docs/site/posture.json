@@ -10,7 +10,7 @@
   "surfaces_live": ["tier2_capabilities", "tier1_methodology"],
   "surfaces_inert": {
     "named_rail_results_table": "G_S21 closed",
-    "scored_query": "9Y closed"
+    "scored_query": "gated (G_AUTH/G_QF closed)"
   },
   "adr": "ADR-009",
   "note": "Public projection of the live PDP config. Gate flips are maintainer-only and carry an audit record."
