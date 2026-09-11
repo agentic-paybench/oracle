@@ -17,15 +17,19 @@ def test_index_lists_expected_live_surfaces():
         assert key in surfaces, f"index missing surface {key}"
 
 
-def test_index_omits_named_rail_table_while_s21_closed():
+def test_index_named_rail_table_follows_live_g_s21():
     index = json.loads(INDEX.read_text(encoding="utf-8"))
+    live = json.loads(LIVE_CONFIG.read_text(encoding="utf-8"))
     surfaces_blob = json.dumps(index["surfaces"]).lower()
-    # No live surface points at the ranking / named-rail table.
+    # The settlement-finality Bradley-Terry output is never a live surface.
     assert "finality-run" not in surfaces_blob
     assert "ranking" not in surfaces_blob
-    assert "named_rail_results_table" not in surfaces_blob
-    # It is documented as gated off instead.
-    assert "G_S21" in index["gated_off"]["named_rail_results_table"]
+    if live["gates"]["G_S21"] == "open":
+        assert index["surfaces"]["named_rail_results_table"].startswith("results/")
+        assert "named_rail_results_table" not in index.get("gated_off", {})
+    else:
+        assert "named_rail_results_table" not in index["surfaces"]
+        assert "G_S21" in index["gated_off"]["named_rail_results_table"]
 
 
 def test_404_page_present():
@@ -37,5 +41,8 @@ def test_posture_json_matches_live_config():
     live = json.loads(LIVE_CONFIG.read_text(encoding="utf-8"))
     assert posture["gates"] == live["gates"]
     assert posture["regulatory_posture"] == live["regulatory_posture"]
-    assert posture["gates"]["G_S21"] == "closed"
     assert "scored_query" in posture["surfaces_inert"]
+    # The published surfaces follow G_S21 in both directions.
+    named_live = "named_rail_results_table" in posture["surfaces_live"]
+    assert named_live == (live["gates"]["G_S21"] == "open")
+    assert ("named_rail_results_table" in posture["surfaces_inert"]) is (not named_live)

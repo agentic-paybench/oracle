@@ -6,7 +6,7 @@
  *
  * The reply-alongside always renders (the channel works regardless of gate state).
  * The NAMED-RAIL RESULTS TABLE section is gated on canEmit('published-rankings'): under a
- * closed G_S21 (Day-0 default) the table is omitted, fail-closed, and the page
+ * closed G_S21 (the shipped default until the gate was opened) the table is omitted, fail-closed, and the page
  * says so; only when G_S21 is open is the table emitted.
  *
  * Usage: node build-results.mjs <published-dir> <result-meta.json> <out.html>
@@ -84,7 +84,7 @@ const replyHtml = replies
 const tableSection = tableAllowed
   ? `<section class="named-rail-table">
   <h2>Named-rail results</h2>
-  <p>[named-rail league table emitted here: G_S21 open]</p>
+  <p>Named-rail measurements are published at <a href="https://oracle.agentic-paybench.dev/results/">oracle.agentic-paybench.dev/results/</a>. They are a measurement and not a recommendation, they carry no merit ordering, and no rail is endorsed.</p>
 </section>`
   : `<section class="named-rail-table withheld">
   <h2>Named-rail results</h2>

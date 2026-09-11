@@ -9,10 +9,24 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SITE="$ROOT/docs/site"
 
-rm -rf "$SITE/schema" "$SITE/adr" "$SITE/methodology"
+rm -rf "$SITE/schema" "$SITE/adr" "$SITE/methodology" "$SITE/results"
 cp -r "$ROOT/schema" "$SITE/schema"
 cp -r "$ROOT/docs/adr" "$SITE/adr"
 cp -r "$ROOT/docs/methodology/frozen" "$SITE/methodology"
+
+# The named-rail results are G_S21-gated (ADR-009). The gate decides whether the
+# artefact is ASSEMBLED into the deploy directory at all, not merely whether the
+# site's JSON declares it: a file copied here is served, and a declaration is not
+# a gate. posture-guard.mjs is the single shared decision point (it applies
+# canEmit('published-rankings') against the same PDP config the worker reads) and
+# is fail-closed, so a missing or unreadable config yields OMIT.
+RESULTS_DECISION="$(node "$ROOT/worker/scripts/posture-guard.mjs" | cut -d' ' -f1)"
+if [ "$RESULTS_DECISION" = "INCLUDE" ]; then
+  cp -r "$ROOT/docs/results" "$SITE/results"
+  echo "build-site: results INCLUDED (G_S21 open)"
+else
+  echo "build-site: results OMITTED (G_S21 closed; fail-closed)"
+fi
 
 # Generate a simple directory index so the landing-page links resolve.
 gen_index () {  # $1 = dir under site, $2 = page title
@@ -30,5 +44,8 @@ gen_index () {  # $1 = dir under site, $2 = page title
 }
 gen_index adr "Decision records (ADR)"
 gen_index methodology "Settlement-finality methodology (frozen v1.2)"
+if [ -d "$SITE/results" ]; then
+  gen_index results "Named-rail measurements"
+fi
 
-echo "site assembled at $SITE (capabilities + methodology + schema + adr + roadmap + posture + 404 + dir indexes)"
+echo "site assembled at $SITE (capabilities + methodology + schema + adr + roadmap + posture + 404 + dir indexes; results per the G_S21 decision above)"

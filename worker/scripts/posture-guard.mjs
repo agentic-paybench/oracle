@@ -5,7 +5,7 @@
  * Reads the shared PDP config and applies canEmit('published-rankings')
  * (its only gate is G_S21). Prints the decision and exits 0. A site build (or
  * build-results.mjs) consults this to decide whether to EMIT the named-rail
- * league table. Fail-closed: a missing/unknown config, or G_S21 not "open",
+ * results table. Fail-closed: a missing/unknown config, or G_S21 not "open",
  * yields OMIT.
  *
  * Config selection mirrors pdp/config.py: ORACLE_POSTURE_CONFIG overrides the

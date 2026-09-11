@@ -1,4 +1,4 @@
-"""The two shared PDP gate configs are valid and default-closed."""
+"""The two shared PDP gate configs are valid; live opens only G_S21."""
 
 from pdp import GATE_KEYS, load_named
 
@@ -11,9 +11,12 @@ def test_configs_parse_and_validate():
             assert value in ("open", "closed")
 
 
-def test_live_config_defaults_closed():
+def test_live_config_gates():
     cfg = load_named("live")
-    # The three cross-to-live gates are closed on the live public oracle.
-    assert cfg.gate_open("G_S21") is False
+    # G_S21 is open on the live public oracle: the named-rail measurement is
+    # published. The gates that would unlock the scored query, and the reserved
+    # custody gate, stay closed; G_S21 never shares a flag with them.
+    assert cfg.gate_open("G_S21") is True
     assert cfg.gate_open("G_AUTH") is False
     assert cfg.gate_open("G_QF") is False
+    assert cfg.gate_open("G_CUSTODY") is False

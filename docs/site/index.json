@@ -9,13 +9,13 @@
       "context": "schema/capability.context.jsonld",
       "credential": "schema/capability.schema.json"
     },
+    "named_rail_results_table": "results/dim02-authorization-latency.level1.md",
     "adr": "adr/",
     "roadmap": "roadmap.md",
     "did": ".well-known/did.json"
   },
   "gated_off": {
-    "named_rail_results_table": "withheld: G_S21 closed (s.21 financial-promotion clearance pending)",
     "scored_query": "withheld: inert on live (G_AUTH/G_QF closed)"
   },
-  "note": "Intent-free Tier-2 factual lookup plus de-ranked Tier-1 methodology. No scored, ranked, or recommended output on the live surface."
+  "note": "Intent-free Tier-2 factual lookup, de-ranked Tier-1 methodology, and named-rail authorization-latency measurements published as a measurement and not a recommendation: rails are listed alphabetically, that ordering carries no performance meaning, and no scored, ranked or recommended output appears on this live surface."
 }

@@ -76,16 +76,16 @@ describe("gateOpen mirrors pdp.gates.is_open", () => {
   });
 });
 
-describe("the bundled shared configs (the real contract) keep published-rankings closed at Day-0", () => {
-  it("selects 'live' by default and denies published-rankings (G_S21 closed)", () => {
+describe("the bundled shared configs (the real contract): live publishes the named-rail measurement, testnet does not", () => {
+  it("selects 'live' by default and allows published-rankings (G_S21 open)", () => {
     const live = selectConfig("live");
     expect(live).not.toBeNull();
     expect(live!.config_id).toBe("live");
-    expect(canEmitFromEnv(PUBLISHED_RANKINGS, undefined).allowed).toBe(false); // default POSTURE_CONFIG
-    expect(canEmitFromEnv(PUBLISHED_RANKINGS, "live").allowed).toBe(false);
+    expect(canEmitFromEnv(PUBLISHED_RANKINGS, undefined).allowed).toBe(true); // default POSTURE_CONFIG
+    expect(canEmitFromEnv(PUBLISHED_RANKINGS, "live").allowed).toBe(true);
   });
 
-  it("also keeps published-rankings closed under the testnet config (G_S21 closed there too)", () => {
+  it("keeps published-rankings closed under the testnet config (G_S21 closed there)", () => {
     const testnet = selectConfig("testnet");
     expect(testnet).not.toBeNull();
     expect(testnet!.config_id).toBe("testnet");

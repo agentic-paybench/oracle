@@ -59,6 +59,7 @@ ingest/build/
 docs/site/schema/
 docs/site/adr/
 docs/site/methodology/
+docs/site/results/
 
 # Logs / temp
 *.log
