@@ -6,7 +6,9 @@
 #
 # Gate model (ADR-009): the named-rail surfaces consult canEmit('published-rankings')
 # against the shared config/regulatory_posture.<POSTURE_CONFIG>.json. Default
-# POSTURE_CONFIG = "live" (most restrictive; G_S21 closed => channel armed-idle).
+# POSTURE_CONFIG = "live", the deployed posture, in which G_S21 is open and the
+# channel is active. "testnet" keeps G_S21 closed, so the dry-run and the tests
+# exercise the armed-idle path.
 # A gate flip is a config-value change + redeploy, never a code change.
 
 name = "right-of-reply"
@@ -34,8 +36,8 @@ bucket_name = "reply-pending"
 
 [vars]
 # The deployment discriminator (ADR-009 "two posture configs"). "live" is the
-# most restrictive posture and the deployed default; the dry-run/tests drive
-# "testnet" and throwaway open-gate configs to exercise the open path.
+# deployed default; the dry-run and the tests drive "testnet" and throwaway
+# configs to exercise the other gate states.
 POSTURE_CONFIG = "live"
 # Public Turnstile sitekey (safe to embed; scoped to reply.agentic-paybench.dev).
 # The matching TURNSTILE_SECRET is a wrangler secret (encrypted, not in the repo).

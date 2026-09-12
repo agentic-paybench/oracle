@@ -79,12 +79,12 @@ describe("draft-only + human-sign publish path", () => {
     expect(existsSync(join(pubDir, `${PENDING.id}.md`))).toBe(true);
   });
 
-  it("build-results renders the signed reply ALONGSIDE MR-000 with the A3 pending-review badge, and OMITS the named-rail table while G_S21 closed", () => {
+  it("build-results renders the signed reply ALONGSIDE MR-000 with the A3 pending-review badge, and OMITS the named-rail table while G_S21 is closed (real testnet config)", () => {
     const out = join(work, "MR-000.html");
     const { code } = run(
       "build-results.mjs",
       [pubDir, join(contentDir, "results", "MR-000.json"), out],
-      { POSTURE_CONFIG: "live" },
+      { POSTURE_CONFIG: "testnet" },
     );
     expect(code).toBe(0);
     const html = readFileSync(out, "utf-8");
@@ -92,7 +92,7 @@ describe("draft-only + human-sign publish path", () => {
     expect(html).toContain(PENDING.submission.public_reply);
     expect(html).toContain("reply pending review"); // A3 immediate badge
     expect(html).toContain("A. Reviewer");
-    // Named-rail table withheld under the live (G_S21 closed) config.
+    // Named-rail table withheld under the testnet config (G_S21 closed there).
     expect(html).toContain("Withheld");
     expect(html).not.toMatch(/agent\s*pay/i);
   });
@@ -114,24 +114,25 @@ describe("draft-only + human-sign publish path", () => {
     });
     const html = readFileSync(out, "utf-8");
     expect(html).not.toContain("Withheld");
-    expect(html).toContain("named-rail league table emitted");
+    expect(html).toContain("Named-rail measurements are published at");
+    // The section must never describe the operator's own output as a league
+    // table: no merit ordering of named rails is published.
+    expect(html).not.toContain("league table");
   });
 
-  it("posture-guard OMITs the table under live and INCLUDEs it under an open config", () => {
-    expect(run("posture-guard.mjs", [], { POSTURE_CONFIG: "live" }).out).toContain("OMIT");
-    const openDir = mkdtempSync(join(tmpdir(), "posture-open-"));
-    writeFileSync(
-      join(openDir, "regulatory_posture.testnet.json"),
-      JSON.stringify({
-        config_id: "testnet",
-        regulatory_posture: "FIRST_PARTY_DEMO",
-        gates: { G_S21: "open" },
-      }),
-    );
-    const openRun = run("posture-guard.mjs", [], {
-      ORACLE_POSTURE_CONFIG: openDir,
-      POSTURE_CONFIG: "testnet",
+  it("build-results INCLUDES the pointer under the real live config (G_S21 open)", () => {
+    const out = join(work, "MR-000-live.html");
+    run("build-results.mjs", [pubDir, join(contentDir, "results", "MR-000.json"), out], {
+      POSTURE_CONFIG: "live",
     });
-    expect(openRun.out).toContain("INCLUDE");
+    const html = readFileSync(out, "utf-8");
+    expect(html).not.toContain("Withheld");
+    expect(html).toContain("Named-rail measurements are published at");
+    expect(html).not.toContain("league table");
+  });
+
+  it("posture-guard INCLUDEs the table under the real live config (G_S21 open) and OMITs it under the real testnet config (G_S21 closed)", () => {
+    expect(run("posture-guard.mjs", [], { POSTURE_CONFIG: "live" }).out).toContain("INCLUDE");
+    expect(run("posture-guard.mjs", [], { POSTURE_CONFIG: "testnet" }).out).toContain("OMIT");
   });
 });

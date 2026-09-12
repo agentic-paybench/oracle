@@ -10,8 +10,14 @@ from the tagged tree, not a working checkout.
   the 5 finality provenance files (log-space mu/sigma calibration params), the 5
   content-addressed fixtures, the MockBench harness, and the manifest.
 - **What is withheld (the "who-beat-whom", F14 de-rank):** `runs/finality-run.json`
-  (the Bradley-Terry league table) and any named-rail results table. Those publish
-  only if the `G_S21` gate flips (UK s.21 financial-promotion clearance).
+  (the Bradley-Terry league table). A league table is a merit ordering of named
+  rails and none is published on this surface.
+- **What is published about named rails:** the authorization-primitive latency
+  (DIM-02) findings, at `results/`, as a measurement with a fixed alphabetical
+  ordering that carries no performance meaning. Settlement-finality results stay
+  unpublished. The `G_S21` gate governs the published measurement and reflects
+  the firm's own section 21 (financial promotion) assessment; the gate is what
+  moves, never the methodology.
 
 ## Verify
 

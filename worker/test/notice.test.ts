@@ -35,12 +35,11 @@ function openConfigDir(): string {
 }
 
 describe("pre-publication notice, G_S21-gated", () => {
-  it("is a no-op under the real live config (G_S21 closed): exit 0, suppression log, no render", () => {
+  it("renders under the real live config now that G_S21 is open (render only; the script sends nothing)", () => {
     const { out, code } = run({ POSTURE_CONFIG: "live" });
     expect(code).toBe(0);
-    expect(out).toContain("notice suppressed");
-    expect(out).not.toContain("Pre-publication notice");
-    expect(out).not.toContain("right of reply");
+    expect(out).not.toContain("notice suppressed");
+    expect(out).toContain("Pre-publication notice");
   });
 
   it("is a no-op under the real testnet config too (G_S21 also closed there)", () => {

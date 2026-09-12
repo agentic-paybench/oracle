@@ -7,7 +7,7 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 
 ## Tier-1 measured dimensions (pre-registered, phased)
 - Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface). Pre-registration: <https://doi.org/10.17605/OSF.IO/XGFUJ>.
-- Authorization latency: pre-registered (methodology frozen and anchored); measurement in progress; no results on the public surface. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
+- Authorization latency: pre-registered (methodology frozen and anchored); named-rail measurements published at `results/` on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
 - Additional measured dimensions: under methodology development; each is pre-registered before any measurement publishes.
 
 ## Tier-2 factual coverage (fills in as sourced; "pending" until then)
@@ -19,6 +19,7 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 ## Tier-3 declared directions
 - Multi-dimension routing evaluation (offline, testnet): roadmap (no measurement).
 - Additional rails and asset classes: roadmap (no measurement).
-- Right-of-reply channel for named rails: roadmap (no measurement); G_S21-gated.
+
+The right-of-reply channel for named rails is live at <https://reply.agentic-paybench.dev/>; it is not a measurement and is not a declared direction.
 
 Nothing on this page is a measured comparison or a league result.

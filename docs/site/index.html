@@ -23,6 +23,7 @@
     <li><strong>Tier-2 capabilities</strong> (factual lookup per rail): <code><a href="capabilities/index.json">capabilities/index.json</a></code></li>
     <li><strong>Tier-1 settlement-finality methodology</strong> (method, harness, fixtures; no league table): <code><a href="methodology/">methodology/</a></code></li>
     <li><strong>Schema</strong>: <code><a href="schema/capability.context.jsonld">capability.context.jsonld</a></code>, <code><a href="schema/capability.schema.json">capability.schema.json</a></code></li>
+    <li><strong>Named-rail measurements</strong> (DIM-02 authorization-primitive latency; a measurement, not a recommendation): <code><a href="results/">results/</a></code></li>
     <li><strong>Decision records</strong>: <code><a href="adr/">adr/</a></code></li>
     <li><strong>Roadmap</strong> (Tier-3, declared, not measured): <code><a href="roadmap.md">roadmap.md</a></code></li>
     <li><strong>Signing key</strong>: <code><a href=".well-known/did.json">.well-known/did.json</a></code></li>
@@ -30,7 +31,9 @@
   </ul>
 
   <p class="note">The oracle answers "what is true about rail X", never "what should I do for this payment".
-  It carries no scored, ranked, or recommended output on this live surface (ADR-007, ADR-009). Named-rail
-  results and the scored query are built but gated off by default.</p>
+  It carries no scored, ranked, or recommended output on this live surface (ADR-007, ADR-009). The named-rail
+  measurements published at <code><a href="results/">results/</a></code> are a measurement and not a
+  recommendation: rails are listed alphabetically, that ordering carries no performance meaning, no rail is
+  endorsed, and there is no route from this site to transact. The scored query remains built and gated off.</p>
 </body>
 </html>

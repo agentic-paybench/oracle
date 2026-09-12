@@ -8,7 +8,7 @@
  *   - Fail-closed: a missing/malformed config, or G_S21 not explicitly "open",
  *     suppresses the notice.
  *
- * While G_S21 is closed (Day-0 default) this is a NO-OP: it logs that the gate is
+ * While G_S21 is closed this is a NO-OP: it logs that the gate is
  * closed and exits 0 without rendering or sending. When G_S21 is open it renders
  * the templated notice for a named subject and prints it. It NEVER actually emails;
  * a human sends the reviewed notice. It is never run against a real operator during

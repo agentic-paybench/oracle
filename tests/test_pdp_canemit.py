@@ -32,10 +32,15 @@ def test_unknown_gate_treated_closed():
     assert _live().gate_open("G_NONEXISTENT") is False  # fail-closed default
 
 
-def test_default_config_denies_named_rail_table():
-    for cfg in (_live(), _testnet()):
-        d = can_emit("published-rankings", EmitContext(), cfg)
-        assert not d.allowed  # G_S21 closed by default
+def test_named_rail_table_follows_g_s21():
+    # Live has G_S21 open: the named-rail measurement is emitted.
+    assert can_emit("published-rankings", EmitContext(), _live()).allowed
+    # Testnet keeps G_S21 closed: denied.
+    assert not can_emit("published-rankings", EmitContext(), _testnet()).allowed
+    # Closing G_S21 on live denies it again: the gate decides, not the config name.
+    cfg = _live()
+    closed = replace(cfg, gates={**cfg.gates, "G_S21": "closed"})
+    assert not can_emit("published-rankings", EmitContext(), closed).allowed
 
 
 def test_scored_query_inert_under_live():
@@ -50,10 +55,13 @@ def test_scored_query_works_under_testnet(spine):
 
 
 def test_s21_does_not_unlock_scored():
+    # The TRANSITION is the point: the scored query must stay denied on both
+    # sides of a G_S21 change, so the mutation has to span one.
     cfg = _live()
+    closed = replace(cfg, gates={**cfg.gates, "G_S21": "closed"})
     opened = replace(cfg, gates={**cfg.gates, "G_S21": "open"})
-    d = can_emit("scored-query", EmitContext(), opened)
-    assert not d.allowed  # s.21 must NOT unlock the scored query
+    assert not can_emit("scored-query", EmitContext(), closed).allowed
+    assert not can_emit("scored-query", EmitContext(), opened).allowed
 
 
 def test_posture_does_not_unlock_named_table():

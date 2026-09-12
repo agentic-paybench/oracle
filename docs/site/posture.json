@@ -4,12 +4,11 @@
   "gates": {
     "G_AUTH": "closed",
     "G_QF": "closed",
-    "G_S21": "closed",
+    "G_S21": "open",
     "G_CUSTODY": "closed"
   },
-  "surfaces_live": ["tier2_capabilities", "tier1_methodology"],
+  "surfaces_live": ["tier2_capabilities", "tier1_methodology", "named_rail_results_table"],
   "surfaces_inert": {
-    "named_rail_results_table": "G_S21 closed",
     "scored_query": "gated (G_AUTH/G_QF closed)"
   },
   "adr": "ADR-009",
