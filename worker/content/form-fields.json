@@ -1,11 +1,11 @@
 {
   "_source": "Canonical right-of-reply form definition.",
   "title": "Right-of-reply submission",
-  "intro": "For a named benchmark subject (a rail operator) to respond to a published result. Structured, publisher-controlled, and not a public comment surface. File a separate form for each axis.",
+  "intro": "For a named benchmark subject (a rail operator, or a facilitator named in a published result) to respond to that result. Structured, publisher-controlled, and not a public comment surface. File a separate form for each axis.",
   "fields": [
     {
       "id": "rail_name",
-      "label": "Rail name and legal entity",
+      "label": "Rail or facilitator name, and legal entity",
       "type": "text",
       "required": true,
       "maxLength": 200
@@ -19,7 +19,7 @@
     },
     {
       "id": "authorised_signatory",
-      "label": "Authorised-signatory confirmation (must be on the rail's published authorised-signatory list)",
+      "label": "Authorised-signatory confirmation (must be on the published authorised-signatory list of the rail or facilitator named above)",
       "type": "checkbox",
       "required": true
     },
@@ -80,7 +80,7 @@
     },
     {
       "id": "consent",
-      "label": "Consent to publication of the rail name, challenged passage, axis, requested remedy, and public reply text.",
+      "label": "Consent to publication of the rail or facilitator name, challenged passage, axis, requested remedy, and public reply text.",
       "type": "checkbox",
       "required": true
     }
