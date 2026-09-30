@@ -9,7 +9,7 @@
       "context": "schema/capability.context.jsonld",
       "credential": "schema/capability.schema.json"
     },
-    "named_rail_results_table": "results/dim02-authorization-latency.level1.md",
+    "named_rail_results_table": "results/dim02-authorization-latency.v1.1.level1.md",
     "adr": "adr/",
     "roadmap": "roadmap.md",
     "did": ".well-known/did.json"

@@ -46,7 +46,11 @@ R4 = "Verifiable right-of-reply fairness"
 "docs/site/404.html" = "R1"
 "docs/site/_headers" = "R1"
 "docs/results/dim02-authorization-latency.level1.md" = "R2"
+# Version 1.1 (2026-09-29) corrects version 1.0 above; version 1.0 is kept unaltered.
+"docs/results/dim02-authorization-latency.v1.1.level1.md" = "R2"
 "docs/site/build-site.sh" = "R1"
+# Labels shown beside results files in the generated index (current, superseded).
+"docs/results-labels.tsv" = "R1"
 "docs/site/capabilities/R1.vc.json" = "R1"
 "docs/site/capabilities/R10.vc.json" = "R1"
 "docs/site/capabilities/R11.vc.json" = "R1"
