@@ -28,6 +28,16 @@ else
   echo "build-site: results OMITTED (G_S21 closed; fail-closed)"
 fi
 
+# Optional labels for a directory index. docs/results-labels.tsv maps a file name
+# to a short label (tab-separated) shown beside its link, so a reader arriving at
+# the index can tell which dated version of an artefact is current and which is a
+# superseded record kept unaltered. A file with no entry gets no label.
+LABELS="$ROOT/docs/results-labels.tsv"
+label_for () {  # $1 = file name; prints ": <label>" or nothing
+  [ -f "$LABELS" ] || return 0
+  awk -F'\t' -v f="$1" '$1 == f { printf ": %s", $2 }' "$LABELS"
+}
+
 # Generate a simple directory index so the landing-page links resolve.
 gen_index () {  # $1 = dir under site, $2 = page title
   local dir="$SITE/$1" title="$2"
@@ -37,7 +47,7 @@ gen_index () {  # $1 = dir under site, $2 = page title
     echo "<title>${title}</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:46rem;margin:3rem auto;padding:0 1rem}code{font-family:ui-monospace,monospace}</style></head><body>"
     echo "<h1>${title}</h1><p><a href=\"../\">&larr; oracle index</a></p><ul>"
     ( cd "$dir" && find . -type f ! -name index.html | sort | while read -r f; do
-        f="${f#./}"; echo "<li><a href=\"${f}\"><code>${f}</code></a></li>"
+        f="${f#./}"; echo "<li><a href=\"${f}\"><code>${f}</code></a>$(label_for "$f")</li>"
       done )
     echo "</ul></body></html>"
   } > "$dir/index.html"
