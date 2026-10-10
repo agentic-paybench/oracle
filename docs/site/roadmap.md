@@ -8,13 +8,14 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 ## Tier-1 measured dimensions (pre-registered, phased)
 - Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface). Pre-registration: <https://doi.org/10.17605/OSF.IO/XGFUJ>.
 - Authorization latency: pre-registered (methodology frozen and anchored); named-rail measurements published at `results/` on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
-- Additional measured dimensions: under methodology development; each is pre-registered before any measurement publishes.
+- Additional measured dimensions: under methodology development; each has its method and analysis plan frozen and externally anchored before any result is published.
 
-## Tier-2 factual coverage (fills in as sourced; "pending" until then)
+## Tier-2 factual coverage (documented facts per rail; "pending" where not yet sourced)
+- Structural facts per rail, sourced 2026-10-09 from primary documentation and served in the capability credentials as a documentation profile, not a measurement: fee bearer, finality model class, retry and idempotency, ambiguity bound, outcome knowledge, restitution kinds, observer privacy exposure, specification pin, declared rate limits, status page, SDK languages, error catalogue.
 - Supported assets per rail: roadmap (no measurement).
 - Custody model per rail: roadmap (no measurement).
 - Headline fee facts: roadmap (no measurement).
-- Auth / dispute / refund / sanctions bundle: roadmap (no measurement).
+- Authorization, dispute and sanctions bundle: roadmap (no measurement).
 
 ## Tier-3 declared directions
 - Multi-dimension routing evaluation (offline, testnet): roadmap (no measurement).
