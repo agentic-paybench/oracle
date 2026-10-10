@@ -43,7 +43,7 @@
   ],
   "notice": {
     "documentationStatement": "This is a documentation profile, not a recommendation: every cell states what a specification or an operator's own documentation says, no number in this document was produced by executing a payment, no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use.",
-    "evenHandedStatement": "The same twelve questions were put to all six rails, in the same fixed order, against each rail's own primary documentation, on a single date (2026-10-09).",
+    "evenHandedStatement": "The same thirteen questions were put to all six rails, in the same fixed order, against each rail's own primary documentation: twelve on a single date (2026-10-09) and the thirteenth, offline verifiability, on a single later date (2026-10-10).",
     "feeQuotation": {
       "appliesTo": [
         "fees",
