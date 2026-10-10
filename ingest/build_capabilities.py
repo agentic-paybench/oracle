@@ -15,7 +15,8 @@ rail-tier2-structural.json``, when present, adds documented structural cells
 per rail (fee bearer, finality model class, retry and idempotency, ambiguity
 bound, outcome knowledge, the restitution kind-table into
 ``bundle.refundSupport``, observer privacy exposure, specification pin,
-declared rate limits, status page, SDK languages, error catalogue). Every cell
+declared rate limits, status page, SDK languages, error catalogue, offline
+verifiability). Every cell
 carries its own provenance. A subject that carries any structural cell also
 carries the ``notice`` object, inside the signed credential, because a lookup
 serves cells one rail at a time and a response has no "top". The ``measured`` label is refused here while the DIM-04 measured
@@ -84,6 +85,7 @@ STRUCTURAL_FIELDS = (
     "feeBearer", "finalityModelClass", "retryIdempotency", "ambiguityBound",
     "outcomeKnowledge", "observerPrivacyExposure", "specificationPin",
     "declaredRateLimits", "statusPage", "sdkLanguages", "errorCatalogue",
+    "offlineVerifiability",
 )
 
 

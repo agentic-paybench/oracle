@@ -12,7 +12,7 @@ Every documentation-derived cell cites the primary source it rests on, by URL, w
 
 Rails are listed alphabetically by rail name. That ordering is fixed and carries no performance meaning.
 
-The same twelve questions were put to all six rails, in the same fixed order, against each rail's own primary documentation, on a single date (2026-10-09).
+The same thirteen questions were put to all six rails, in the same fixed order, against each rail's own primary documentation: twelve on a single date (2026-10-09) and the thirteenth, offline verifiability, on a single later date (2026-10-10).
 
 ## Fee-adjacent cells (`kind`: `fee_quotation`)
 

@@ -166,6 +166,26 @@ def test_fee_companion_statements_describe_facts_not_figures():
         assert "Each figure" not in text
 
 
+def test_offline_verifiability_cell_on_every_rail():
+    """The thirteenth field, offline verifiability: one documentation-profile cell per rail, each with
+    its sources dated, the even-handed statement naming thirteen questions on the data, the page and the
+    notice alike."""
+    subjects, st = _subjects()
+    assert "offlineVerifiability" in bc.STRUCTURAL_FIELDS
+    assert "offlineVerifiability" in SCHEMA["properties"]["credentialSubject"]["dependentRequired"]
+    for s in subjects:
+        cell = s["offlineVerifiability"]
+        assert cell["provenance"]["profile"] == "documentation_profile", s["railId"]
+        assert cell["provenance"]["label"] == "documentation-derived", s["railId"]
+        assert cell["provenance"]["sources"] and all(src["retrievedAt"] == "2026-10-10"
+                                                      for src in cell["provenance"]["sources"]), s["railId"]
+        assert s["notice"]["evenHandedStatement"] == st["meta"]["evenHandedStatement"]
+    page = (REPO / "docs" / "site" / "tier2" / "statements.md").read_text(encoding="utf-8")
+    assert st["meta"]["evenHandedStatement"] in page
+    assert "thirteen questions" in st["meta"]["evenHandedStatement"]
+    assert "twelve questions" not in page
+
+
 def test_option_c_envelope():
     """The notice envelope: typed flags, a pointer to a served page, a per-cell profile."""
     subjects, _ = _subjects()

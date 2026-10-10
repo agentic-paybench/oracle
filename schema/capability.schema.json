@@ -65,6 +65,9 @@
         ],
         "errorCatalogue": [
           "notice"
+        ],
+        "offlineVerifiability": [
+          "notice"
         ]
       },
       "additionalProperties": false,
@@ -381,6 +384,10 @@
               }
             }
           ]
+        },
+        "offlineVerifiability": {
+          "description": "Whether the documentation defines an object the paying agent can check later, without asking any party, to establish the payment's outcome; who signs it; and the limits the documentation states on that check.",
+          "$ref": "#/$defs/stringCell"
         }
       }
     }
