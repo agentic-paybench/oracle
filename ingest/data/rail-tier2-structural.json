@@ -1,7 +1,7 @@
 {
   "meta": {
     "retrievedAt": "2026-10-09",
-    "evenHandedStatement": "The same twelve questions were put to all six rails, in the same fixed order, against each rail's own primary documentation, on a single date (2026-10-09).",
+    "evenHandedStatement": "The same thirteen questions were put to all six rails, in the same fixed order, against each rail's own primary documentation: twelve on a single date (2026-10-09) and the thirteenth, offline verifiability, on a single later date (2026-10-10).",
     "feeSourceStatement": "Each fee fact is quoted from the rail's own published fee documentation at the source URL given beside it, retrieved on 2026-10-09.",
     "statementsUrl": "https://oracle.agentic-paybench.dev/tier2/statements.md",
     "dispositionToLabel": "positive, confirmed-absence and partial-absence are labelled documentation-derived; void is labelled void."
@@ -572,6 +572,31 @@
           },
           "address": "https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/agent_authorization.md",
           "enumeration": "Agent Authorization Framework error codes; receipt error field"
+        },
+        "offlineVerifiability": {
+          "value": "outcome: a Payment Receipt signed by the Merchant Payment Processor (an ES256 JWT bound to the closed Mandate by hash), checkable locally given the issuer's public key; authorization: signed mandates; how the verifier obtains and trusts the issuer's key: not stated in the documents read",
+          "disposition": "positive",
+          "statement": "AP2 v0.2 defines signed mandates and a signed Payment Receipt bound to the closed Mandate by hash, and the reference SDK verifies the receipt's ES256 signature locally given the issuer's public key. How a verifier obtains and trusts that key is not stated in the documents read. The signer is the Merchant Payment Processor, a party to the payment.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/python/ap2/sdk/README.md",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
         }
       }
     },
@@ -1118,6 +1143,27 @@
           },
           "address": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/methods/lightning/draft-lightning-charge-00.md",
           "enumeration": "Lightning problem types in the method draft (absent from the paymentauth.org index); BOLT 4 failure_code"
+        },
+        "offlineVerifiability": {
+          "value": "success outcome: the preimage, checked against the payment hash by one local hash operation with no external service; stated from the server's side, not the paying agent's; a preimage does not identify the payer",
+          "disposition": "positive",
+          "statement": "The Machine Payments Protocol Lightning method and the mpp.dev Lightning page state that the preimage is verified by a single hash operation, locally, without contacting any external service. Two limits: the documents describe the server performing that check, and no page read states it from the paying agent's side; and a preimage shows that the invoice was settled, not which agent paid.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://mpp.dev/payment-methods/lightning.md",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "protocol",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev)"
+          }
         }
       }
     },
@@ -1623,6 +1669,27 @@
           },
           "address": "https://paymentauth.org/problems/",
           "enumeration": "Problem Details types (RFC 9457) under the paymentauth.org base URI; Tempo API error.code values"
+        },
+        "offlineVerifiability": {
+          "value": "receipt: an unsigned acknowledgment by the server, with no signature field defined; offline verification: not addressed by the core draft or the receipts page; establishing the outcome: a read of the referenced transaction on the Tempo chain",
+          "disposition": "confirmed-absence",
+          "statement": "The Payment-Receipt defined by the Machine Payments Protocol core draft is a plain JSON object with no signature field, and neither the core draft nor the mpp.dev receipts page addresses signing or offline verification. The receipt carries a transaction reference, so establishing the outcome is a read of that transaction on the Tempo chain.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://mpp.dev/protocol/receipts.md",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "protocol",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev)"
+          }
         }
       }
     },
@@ -2083,6 +2150,23 @@
           },
           "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
           "enumeration": "x402 error codes (errorReason, invalidReason), section 9; Coinbase Developer Platform x402SettleErrorReason"
+        },
+        "offlineVerifiability": {
+          "value": "by an optional extension: a receipt signed by the resource server, EIP-712 on this network, with the signer address recoverable from the signature and no network call; limits: signer authority is a separate check with no mandated mechanism; the transaction reference is omitted by default; the extension is optional and not yet stable; the settle response itself is unsigned",
+          "disposition": "positive",
+          "statement": "The x402 Offer and Receipt extension, an optional addition to x402, lets the settlement response carry a receipt signed by the resource server on success. On this network the signer address is recovered from an EIP-712 signature with no network call. Three limits are stated in the extension: a valid signature does not establish that the key may sign for the service, and no mechanism for establishing that is mandated (some of the listed routes are network lookups); the receipt is the resource server's own statement and by default omits the transaction reference; and the extension is optional, with its wire shape not yet stable. The settle response itself is unsigned.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "protocol",
+            "operator": "x402 Foundation (specification)"
+          }
         }
       }
     },
@@ -2511,6 +2595,23 @@
           },
           "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
           "enumeration": "x402 error codes (errorReason, invalidReason), section 9; further codes named in the SVM scheme text"
+        },
+        "offlineVerifiability": {
+          "value": "by an optional extension: a receipt signed by the resource server, EIP-712 with a constant chainId that the extension states covers Solana; limits: signer authority is a separate check with no mandated mechanism; the transaction reference is omitted by default; the extension is optional and not yet stable; without it, a transaction signature checked by a node query",
+          "disposition": "positive",
+          "statement": "The x402 Offer and Receipt extension, an optional addition to x402, lets the settlement response carry a receipt signed by the resource server on success, and states that its EIP-712 signing works on non-EVM networks including Solana. Three limits are stated in the extension: a valid signature does not establish that the key may sign for the service, and no mechanism for establishing that is mandated (some of the listed routes are network lookups); the receipt is the resource server's own statement and by default omits the transaction reference; and the extension is optional, with its wire shape not yet stable. Without the extension the agent holds a transaction signature, which is checked by querying a node.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "protocol",
+            "operator": "x402 Foundation (specification)"
+          }
         }
       }
     },
@@ -2967,6 +3068,31 @@
           },
           "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
           "enumeration": "x402 error codes (errorReason, invalidReason), section 9; one Stellar scheme code; OpenZeppelin Channels error table"
+        },
+        "offlineVerifiability": {
+          "value": "receipt: defined by the same optional extension, signed by the resource server; checkable offline on a Stellar network: not settled by the documents read; operator documentation: does not mention the extension",
+          "disposition": "partial-absence",
+          "statement": "The x402 Offer and Receipt extension defines an optional receipt signed by the resource server; the settle response of the x402 v2 specification is unsigned. Whether that receipt can be checked offline on a Stellar network is not settled by the documents read: one section of the extension limits EIP-712 receipts to EVM networks while another states that EIP-712 signing works on non-EVM networks, and a JWS receipt needs a DID URL resolved by a method the extension does not fix. The Stellar x402 page read does not mention the extension.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-10"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-10"
+              }
+            ],
+            "retrievedAt": "2026-10-10",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation)"
+          }
         }
       }
     }

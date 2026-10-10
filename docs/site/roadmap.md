@@ -11,7 +11,7 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 - Additional measured dimensions: under methodology development; each has its method and analysis plan frozen and externally anchored before any result is published.
 
 ## Tier-2 factual coverage (documented facts per rail; "pending" where not yet sourced)
-- Structural facts per rail, sourced 2026-10-09 from primary documentation and served in the capability credentials as a documentation profile, not a measurement: fee bearer, finality model class, retry and idempotency, ambiguity bound, outcome knowledge, restitution kinds, observer privacy exposure, specification pin, declared rate limits, status page, SDK languages, error catalogue.
+- Structural facts per rail, sourced 2026-10-09 from primary documentation and served in the capability credentials as a documentation profile, not a measurement: fee bearer, finality model class, retry and idempotency, ambiguity bound, outcome knowledge, restitution kinds, observer privacy exposure, specification pin, declared rate limits, status page, SDK languages, error catalogue; and offline verifiability (whether the paying agent can check the outcome later without asking anyone), sourced 2026-10-10 on the same terms.
 - Supported assets per rail: roadmap (no measurement).
 - Custody model per rail: roadmap (no measurement).
 - Headline fee facts: roadmap (no measurement).
