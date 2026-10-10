@@ -41,8 +41,21 @@ for (const f of files) {
 
   const railId = basename(f, '.vc.json');
   await writeFile(resolve(OUT, f), JSON.stringify(enveloped, null, 2) + '\n');
-  index.rails.push({ railId, railName: vc.credentialSubject.railName, vc: `capabilities/${f}` });
+  const subj = vc.credentialSubject;
+  const entry = { railId, railName: subj.railName, vc: `capabilities/${f}` };
+  if (subj.displayName) entry.displayName = subj.displayName;
+  // Tier-2 widening: the index is itself a served response, so
+  // it carries the same notice the credentials carry, unsigned here but
+  // byte-identical to the signed copy inside each credential.
+  if (subj.notice && !index.notice) index.notice = subj.notice;
+  index.rails.push(entry);
 }
+
+// Fixed ordering: alphabetical by pinned display name where one exists (the
+// notice's fixedOrderingStatement), else by railName. The order carries no
+// performance meaning.
+const sortKey = (r) => (r.displayName || r.railName).toLowerCase();
+index.rails.sort((a, b) => (sortKey(a) < sortKey(b) ? -1 : sortKey(a) > sortKey(b) ? 1 : 0));
 
 await writeFile(resolve(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n');
 console.log(`signed ${files.length} enveloped VC-JOSE credentials -> ${OUT}`);

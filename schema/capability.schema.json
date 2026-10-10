@@ -2,52 +2,640 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://oracle.agentic-paybench.dev/schema/capability.schema.json",
   "title": "RailCapabilityCredential (Tier-2, ADR-007 intent-free)",
-  "description": "A VCDM 2.0 Verifiable Credential carrying the Tier-2 factual set for one rail. Forbids scored/ranked output at any level (additionalProperties false).",
+  "description": "A VCDM 2.0 Verifiable Credential carrying the Tier-2 factual set for one rail. Forbids scored/ranked output at any level (additionalProperties false). Tier-2 structural cells (widened 2026-10-08) are documented facts, each with its own provenance, and travel with a notice object inside the signed subject.",
   "type": "object",
-  "required": ["@context", "type", "issuer", "credentialSubject"],
+  "required": [
+    "@context",
+    "type",
+    "issuer",
+    "credentialSubject"
+  ],
   "additionalProperties": true,
   "properties": {
     "type": {
       "type": "array",
-      "contains": { "const": "RailCapabilityCredential" }
+      "contains": {
+        "const": "RailCapabilityCredential"
+      }
     },
     "credentialSubject": {
       "type": "object",
-      "required": ["railId", "railName", "settlesIndependently", "fees", "supportedAssets", "custodyModel", "bundle"],
+      "required": [
+        "railId",
+        "railName",
+        "settlesIndependently",
+        "fees",
+        "supportedAssets",
+        "custodyModel",
+        "bundle"
+      ],
+      "dependentRequired": {
+        "displayName": [
+          "notice"
+        ],
+        "feeBearer": [
+          "notice"
+        ],
+        "finalityModelClass": [
+          "notice"
+        ],
+        "retryIdempotency": [
+          "notice"
+        ],
+        "ambiguityBound": [
+          "notice"
+        ],
+        "outcomeKnowledge": [
+          "notice"
+        ],
+        "observerPrivacyExposure": [
+          "notice"
+        ],
+        "specificationPin": [
+          "notice"
+        ],
+        "declaredRateLimits": [
+          "notice"
+        ],
+        "statusPage": [
+          "notice"
+        ],
+        "sdkLanguages": [
+          "notice"
+        ],
+        "errorCatalogue": [
+          "notice"
+        ]
+      },
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "railId": { "type": "string" },
-        "railName": { "type": "string" },
-        "settlesIndependently": { "type": "boolean" },
+        "id": {
+          "type": "string"
+        },
+        "railId": {
+          "type": "string"
+        },
+        "railName": {
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The pinned display name. Served lists are ordered alphabetically by this field; that ordering is fixed and carries no performance meaning.",
+          "type": "string"
+        },
+        "settlesIndependently": {
+          "type": "boolean"
+        },
         "fees": {
           "type": "object",
-          "required": ["model", "headlineFee"],
+          "required": [
+            "model",
+            "headlineFee"
+          ],
           "additionalProperties": false,
           "properties": {
-            "model": { "type": "string" },
-            "headlineFee": { "type": "string" }
+            "model": {
+              "type": "string"
+            },
+            "headlineFee": {
+              "type": "string"
+            }
           }
         },
         "supportedAssets": {
           "oneOf": [
-            { "type": "array", "items": { "type": "string" } },
-            { "const": "pending" }
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "const": "pending"
+            }
           ]
         },
         "custodyModel": {
-          "enum": ["custodial", "non_custodial", "hybrid", "pending"]
+          "enum": [
+            "custodial",
+            "non_custodial",
+            "hybrid",
+            "pending"
+          ]
         },
         "bundle": {
           "type": "object",
-          "required": ["authorizationModel", "disputeMechanism", "refundSupport", "sanctionsScreening"],
+          "required": [
+            "authorizationModel",
+            "disputeMechanism",
+            "refundSupport",
+            "sanctionsScreening"
+          ],
           "additionalProperties": false,
           "properties": {
-            "authorizationModel": { "type": "string" },
-            "disputeMechanism": { "type": "string" },
-            "refundSupport": { "type": "string" },
-            "sanctionsScreening": { "type": "string" }
+            "authorizationModel": {
+              "type": "string"
+            },
+            "disputeMechanism": {
+              "type": "string"
+            },
+            "refundSupport": {
+              "description": "Either the original string form, or the restitution kind-table (Tier-2 widening, 2026-10-08).",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/$defs/restitutionCell"
+                }
+              ]
+            },
+            "sanctionsScreening": {
+              "type": "string"
+            }
           }
+        },
+        "notice": {
+          "$ref": "#/$defs/notice"
+        },
+        "feeBearer": {
+          "description": "Who the documentation says pays the network fee for a payment, and whether recovery from either party is stated. Price-adjacent: carries the fee-quotation profile statements in notice.feeQuotation.",
+          "$ref": "#/$defs/stringCell"
+        },
+        "finalityModelClass": {
+          "description": "The class of finality the settlement layer documents. A class, never a duration.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "enum": [
+                    "probabilistic",
+                    "deterministic",
+                    "staged",
+                    "preimage-on-settlement",
+                    "not-defined-at-this-layer",
+                    "void"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "retryIdempotency": {
+          "description": "Whether resubmitting the identical credential, or signing a fresh one while the first is valid, can move value twice, and the documented deduplication mechanism and its layer.",
+          "$ref": "#/$defs/stringCell"
+        },
+        "ambiguityBound": {
+          "description": "Whether the window in which the paying agent cannot know the outcome is bounded by the documentation, and where the bound lives. A class plus a field name, never a duration.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "enum": [
+                    "bounded-in-signed-artefact",
+                    "bounded-per-route",
+                    "not-defined-at-this-layer",
+                    "unbounded-as-documented",
+                    "void"
+                  ]
+                },
+                "boundField": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "outcomeKnowledge": {
+          "description": "Whether the paying agent's knowledge of the outcome is mediated, trustless, or mediated at submission and trustless afterwards.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "enum": [
+                    "mediated",
+                    "trustless",
+                    "mediated-then-trustless",
+                    "not-defined-at-this-layer",
+                    "void"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "observerPrivacyExposure": {
+          "description": "What a payment exposes, per the documentation, to a party not in the payment.",
+          "$ref": "#/$defs/stringCell"
+        },
+        "specificationPin": {
+          "description": "The specification documents that define the payment flow, their stated version, and their date of last change. Metadata, not a score.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "document",
+                      "url",
+                      "version",
+                      "lastChanged"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "document": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "version": {
+                        "type": "string"
+                      },
+                      "lastChanged": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "declaredRateLimits": {
+          "description": "Whether the operator's documentation declares rate or throughput limits on the profiled path. A declaration, never a measurement; any figure lives only in the quoted source.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "scope": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "statusPage": {
+          "description": "Whether the operator publishes a service status page, and its address. Existence and address only; fidelity is not a Tier-2 fact.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "enum": [
+                    "published",
+                    "none-found-in-documents-read",
+                    "void"
+                  ]
+                },
+                "addresses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "sdkLanguages": {
+          "description": "Languages for which the protocol authors or the operator document an official SDK or reference implementation. Presence only, an input to agent-legibility, not its success rate.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "language",
+                      "package",
+                      "source"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "language": {
+                        "type": "string"
+                      },
+                      "package": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "errorCatalogue": {
+          "description": "Whether the specification or the operator publishes a catalogue of error codes or reasons a paying client can receive, and its address.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/cellBase"
+            },
+            {
+              "properties": {
+                "value": {
+                  "enum": [
+                    "published",
+                    "not-published-in-documents-read",
+                    "void"
+                  ]
+                },
+                "address": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "enumeration": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "provenance": {
+      "description": "Per-cell provenance. The label set has three values. 'measured' is part of the set but is not emitted for Tier-2 cells; measured content on this dimension is held pending a separate publication decision.",
+      "type": "object",
+      "required": [
+        "label",
+        "sources",
+        "retrievedAt",
+        "layer",
+        "profile"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "enum": [
+            "documentation-derived",
+            "measured",
+            "void"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "url",
+              "retrievedAt"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "layer": {
+          "enum": [
+            "protocol",
+            "operator",
+            "both"
+          ]
+        },
+        "operator": {
+          "type": "string"
+        },
+        "voidReason": {
+          "type": "string"
+        },
+        "profile": {
+          "description": "The profile class whose statements govern this cell: fee_quotation for the fee-adjacent cells, documentation_profile for every other cell.",
+          "enum": [
+            "documentation_profile",
+            "fee_quotation"
+          ]
+        }
+      },
+      "if": {
+        "properties": {
+          "label": {
+            "const": "void"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "voidReason"
+        ]
+      },
+      "else": {
+        "properties": {
+          "sources": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "cellBase": {
+      "type": "object",
+      "required": [
+        "value",
+        "disposition",
+        "statement",
+        "provenance"
+      ],
+      "propertyNames": {
+        "not": {
+          "enum": [
+            "score",
+            "rank",
+            "recommendation"
+          ]
+        }
+      },
+      "properties": {
+        "value": true,
+        "disposition": {
+          "description": "The four-way disposition reported separately from the label: a confirmed absence is a documented finding, not a void.",
+          "enum": [
+            "positive",
+            "confirmed-absence",
+            "partial-absence",
+            "void"
+          ]
+        },
+        "statement": {
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    },
+    "stringCell": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cellBase"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "restitutionCell": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cellBase"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "initiatedBy",
+                  "feeBorneBy",
+                  "conditions"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "type": "string"
+                  },
+                  "initiatedBy": {
+                    "type": "string"
+                  },
+                  "feeBorneBy": {
+                    "type": "string"
+                  },
+                  "conditions": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "notice": {
+      "description": "Travels inside every signed credential that carries Tier-2 structural cells, because an API response has no 'top'. Every served response carries the documentation-profile sentence verbatim, per-cell sources with retrieval dates (in each cell's provenance), a pointer to the full statement page, and a typed flag naming the profile class. Statements are pinned verbatim with const.",
+      "type": "object",
+      "required": [
+        "kind",
+        "profile",
+        "documentationStatement",
+        "sourcesStatement",
+        "fixedOrderingStatement",
+        "evenHandedStatement",
+        "statementsUrl",
+        "feeQuotation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "documentation_profile"
+        },
+        "profile": {
+          "const": "level1-documentation-profile"
+        },
+        "documentationStatement": {
+          "const": "This is a documentation profile, not a recommendation: every cell states what a specification or an operator's own documentation says, no number in this document was produced by executing a payment, no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use."
+        },
+        "sourcesStatement": {
+          "const": "Every documentation-derived cell cites the primary source it rests on, by URL, with the date it was retrieved."
+        },
+        "fixedOrderingStatement": {
+          "const": "Rails are listed alphabetically by rail name. That ordering is fixed and carries no performance meaning."
+        },
+        "evenHandedStatement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "feeQuotation": {
+          "description": "The fee-quotation profile for the price-adjacent cells: fees and feeBearer.",
+          "type": "object",
+          "required": [
+            "kind",
+            "appliesTo",
+            "quotationStatement",
+            "sourceStatement",
+            "evenHandedStatement",
+            "statementsUrl"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "fee_quotation"
+            },
+            "appliesTo": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "fees",
+                  "feeBearer"
+                ]
+              },
+              "minItems": 1
+            },
+            "quotationStatement": {
+              "const": "These fee facts are a quotation of published fee documentation, not a recommendation: no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use."
+            },
+            "sourceStatement": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evenHandedStatement": {
+              "const": "Every rail's fee facts are quoted from that rail's own published fee documentation, retrieved on the same date by the same procedure."
+            },
+            "statementsUrl": {
+              "const": "https://oracle.agentic-paybench.dev/tier2/statements.md#fee-adjacent-cells-kind-fee_quotation"
+            }
+          }
+        },
+        "statementsUrl": {
+          "const": "https://oracle.agentic-paybench.dev/tier2/statements.md"
         }
       }
     }

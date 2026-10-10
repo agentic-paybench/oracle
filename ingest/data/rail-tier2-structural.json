@@ -1,0 +1,2974 @@
+{
+  "meta": {
+    "retrievedAt": "2026-10-09",
+    "evenHandedStatement": "The same twelve questions were put to all six rails, in the same fixed order, against each rail's own primary documentation, on a single date (2026-10-09).",
+    "feeSourceStatement": "Each fee fact is quoted from the rail's own published fee documentation at the source URL given beside it, retrieved on 2026-10-09.",
+    "statementsUrl": "https://oracle.agentic-paybench.dev/tier2/statements.md",
+    "dispositionToLabel": "positive, confirmed-absence and partial-absence are labelled documentation-derived; void is labelled void."
+  },
+  "rails": [
+    {
+      "railId": "R6",
+      "displayName": "Google Cloud with AP2",
+      "cells": {
+        "feeBearer": {
+          "value": "not defined at this layer; recovery: not stated",
+          "disposition": "confirmed-absence",
+          "statement": "AP2 is an authorization and evidence layer, not a settlement rail; the specification, mandate documents, considerations, FAQ and glossary contain no network-fee provision. Who pays a network fee depends on the payment instrument beneath AP2, which the protocol does not fix.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/specification.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/checkout_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/glossary.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/overview.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "not-defined-at-this-layer",
+          "disposition": "confirmed-absence",
+          "statement": "AP2 is an authorization and evidence layer, not a settlement rail; AP2 describes itself as a security feature within a commerce protocol and defines mandates and receipts, not settlement. No finality class is defined.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/specification.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/checkout_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/glossary.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/overview.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "double spend named as a threat; overlapping closed mandates barred without a rejection receipt (Shopping Agent MUST), verifiers MAY reject; resubmission at the instrument level not addressed at this layer",
+          "disposition": "positive",
+          "statement": "AP2 v0.2 names double spend as a threat. Its mitigation places a MUST on the Shopping Agent not to sign or present overlapping closed mandates from one open mandate without a rejection receipt for the earlier one, and gives verifiers a MAY to reject overlapping mandates. Each closed Payment Mandate carries a transaction_id that is the hash of the checkout it pays for. Whether the instrument beneath can move value twice on an identical resubmit is not answered at this layer.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/schemas/ap2/payment_mandate.json",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "not-defined-at-this-layer",
+          "disposition": "confirmed-absence",
+          "statement": "The protocol requires a signed Payment Receipt to be returned once the Merchant Payment Processor accepts or rejects the Payment Mandate, but sets no time by which it must arrive. Mandates may carry an expiry, advised by the specification for open mandates and optional on the closed Payment Mandate; that limits how long the authorization is usable, not how long the agent waits to learn the result.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/schemas/ap2/payment_mandate.json",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/specification.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/checkout_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/glossary.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/overview.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "outcomeKnowledge": {
+          "value": "mediated",
+          "disposition": "positive",
+          "statement": "AP2 v0.2 defines a signed Payment Receipt with a Success or Error status, returned to the Shopping Agent by the Merchant Payment Processor, a party to the payment. The protocol defines no public arbiter; a trustless read, if any, would come from the instrument, which AP2 does not fix.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/schemas/ap2/payment_receipt.json",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [
+            {
+              "kind": "dispute",
+              "initiatedBy": "not stated at this layer (the FAQ gives a network adjudicator, for example a card network, as the party that uses the evidence)",
+              "feeBorneBy": "not stated",
+              "conditions": "AP2 supplies evidence (Checkout and Payment Mandates and Receipts, verified per the Dispute rules); resolution, retention and retrieval are outside the specification"
+            }
+          ],
+          "disposition": "partial-absence",
+          "statement": "The evidence half of a dispute path is specified: mandates and receipts can be brought together and verified as dispute evidence. The resolution half (who initiates, how value returns, who bears any fee) is declared outside the specification. No refund, reversal or cancellation path is defined.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/checkout_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/glossary.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "payer identifier: none published by the protocol (no public ledger at this layer); amount: carried in the Payment Mandate disclosed to the Credential Provider, Network and Merchant Payment Processor; memo or metadata: checkout contents, payee, payment instrument description, optional risk_data, selectively disclosed; linkable on a public ledger: not at this layer (depends on the instrument)",
+          "disposition": "partial-absence",
+          "statement": "AP2 shares mandates with named roles and requires selective disclosure and data minimisation; it publishes nothing to a public ledger. What a party outside the payment can see is determined by the instrument beneath, which the documents do not address beyond noting that sharing with other parties is outside the scope of AP2.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/schemas/ap2/payment_mandate.json",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "AP2 specification",
+              "url": "https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md",
+              "version": "v0.2 (release tag v0.2.0)",
+              "lastChanged": "2026-04-28"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The site and the repository both carry the v0.2 specification; the repository release v0.2.0 and the last commit touching the specification file are dated 2026-04-28. The AP2 site and FAQ say the specification work continues in the FIDO Alliance, while the site also says the GitHub repository hosts the latest specification.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/google-agentic-commerce/AP2/releases?per_page=5",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/google-agentic-commerce/AP2/commits?path=docs/ap2/specification.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "not declared in the documents read",
+          "disposition": "confirmed-absence",
+          "statement": "AP2 is a protocol with an SDK and samples, not a hosted API; no document read declares a rate or throughput limit.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/specification.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/payment_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/checkout_mandate.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/flows.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/implementation_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/security_and_privacy_considerations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/glossary.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/overview.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/python/ap2/sdk/README.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          },
+          "scope": "no hosted service documented"
+        },
+        "statusPage": {
+          "value": "none-found-in-documents-read",
+          "disposition": "confirmed-absence",
+          "statement": "No status page is linked from ap2-protocol.org, the repository README or the documentation; AP2 documents no hosted service whose status could be published.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://ap2-protocol.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/faq.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "Python",
+              "package": "ap2 (code/sdk/python/ap2 in google-agentic-commerce/AP2; installed from the repository, PyPI release not yet published)",
+              "source": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md"
+            },
+            {
+              "language": "Python",
+              "package": "reference samples (code/samples/python)",
+              "source": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md"
+            },
+            {
+              "language": "Go",
+              "package": "reference servers and scenarios (code/samples/go)",
+              "source": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md"
+            },
+            {
+              "language": "Kotlin (Android)",
+              "package": "Android shopping assistant sample (code/samples/android)",
+              "source": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The repository names a Python SDK as its primary artifact and says future language SDKs would sit beside it. Reference implementations are published as Python, Go and Android samples.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/README.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The Agent Authorization Framework document defines four error codes for all action authorizations and marks two as terminal; receipts carry an error code when the status is Error.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/docs/ap2/agent_authorization.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/google-agentic-commerce/AP2/main/code/sdk/schemas/ap2/payment_receipt.json",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://ap2-protocol.org/ap2/specification/",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "AP2 protocol authors (ap2-protocol.org; google-agentic-commerce/AP2)"
+          },
+          "address": "https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/agent_authorization.md",
+          "enumeration": "Agent Authorization Framework error codes; receipt error field"
+        }
+      }
+    },
+    {
+      "railId": "R11",
+      "displayName": "Machine Payments Protocol on Lightning",
+      "cells": {
+        "feeBearer": {
+          "value": "paying agent: the origin node pays forwarding fees; on the Spark path the paying wallet pays a capped routing fee; recovery: not stated",
+          "disposition": "positive",
+          "statement": "Protocol layer (BOLT 7, BOLT 4): the origin node must pay each forwarding node the fee that node advertises, and the amount forwarded to a non-final hop includes the origin-computed fee. Operator layer (Spark, Lightspark): payLightningInvoice takes a required maximum fee the payer will pay, and the Spark fee table lists a fee structure for Spark to Lightning sends. Neither the Machine Payments Protocol Lightning draft nor the Spark pages read say whether the payer recovers the fee from the payee.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/07-routing-gossip.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/estimate-fees.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/payment-methods/lightning/charge.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "preimage-on-settlement",
+          "disposition": "positive",
+          "statement": "BOLT 2 states that knowledge of the payment preimage is irrevocable by definition, and the BOLT glossary defines the preimage as proof that payment has been received. The Machine Payments Protocol Lightning draft states that settlement is final once the preimage is revealed and that the preimage is not revealed until the HTLC resolves.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/02-peer-protocol.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/00-introduction.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "same preimage: not accepted twice (atomic consume-once, MUST); another payment to an already paid hash: MAY be accepted (BOLT 4); deduplication: optional transferId (Spark wallet)",
+          "disposition": "positive",
+          "statement": "The core draft requires single-use proofs and the Lightning method draft requires that a consumed challenge is never accepted again, with acceptance and invalidation atomic. BOLT 4 says a final node whose payment hash has already been paid MAY succeed in accepting the HTLC, so another payment to the same hash is not prevented at the protocol layer. On the Spark path, payLightningInvoice takes an optional transferId for retrying the same logical payment, and the docs tell integrators not to create another payment because the original call threw.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/11-payment-encoding.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "bounded-per-route",
+          "disposition": "partial-absence",
+          "statement": "Protocol half (stated): BOLT 7 has the origin compute HTLC expiries backward from the destination, each hop advertises the blocks it subtracts, and the delta contributes to the time funds are unavailable if the payment fails; BOLT 2 gates failure on downstream resolution and derives an upper allowance in blocks from stated assumptions. Operator half (not stated as a bound available to the agent): on the Spark path the hosted Lightning payment provider builds the route; payLightningInvoice returns no expiry field, the Spark overview says operators lock the sender leaves until a specified time, and the wallet guide says the swap expiry is not a guaranteed refund time.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/07-routing-gossip.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/02-peer-protocol.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/get-lightning-send-request.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          },
+          "boundField": "HTLC cltv_expiry (protocol layer; not documented as exposed on the Spark path)"
+        },
+        "outcomeKnowledge": {
+          "value": "mediated",
+          "disposition": "positive",
+          "statement": "On the profiled Spark path the paying agent learns the outcome by polling the operator: the preimage is not returned by the payment call and must be fetched from getLightningSendRequest, and the incoming-transfer event does not fire for outgoing Lightning sends. The Spark overview describes a Lightning payment provider that pays the invoice and submits proof to the Spark operators. At the protocol layer the routing error channel is documented as unreliable, and no document read describes a public arbiter for a Lightning payment.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/02-peer-protocol.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [
+            {
+              "kind": "cancellation of an unsettled authorization",
+              "initiatedBy": "payer node (spends the HTLC after its timeout) or a downstream node (fails the HTLC back)",
+              "feeBorneBy": "not stated",
+              "conditions": "Protocol layer: the HTLC was not fulfilled with the preimage; the payer can cancel after a given time, and nodes must fail the incoming HTLC once its cltv_expiry is reached."
+            },
+            {
+              "kind": "cancellation of an unsettled authorization",
+              "initiatedBy": "Spark operators (lapse of the lock)",
+              "feeBorneBy": "not stated",
+              "conditions": "Operator layer (Spark): if the specified lock time expires without proof of payment, the operators unlock the sender leaves; the wallet guide states the swap expiry is not a guaranteed refund time and that the SDK has no public client cancellation method for an in-flight send."
+            },
+            {
+              "kind": "refund",
+              "initiatedBy": "resource server (payee), at its discretion",
+              "feeBorneBy": "not stated",
+              "conditions": "Out-of-protocol only: the Lightning method draft states settled payments cannot be refunded through the payment channel; mpp.dev states refunds in the charge flow are out-of-protocol. The Lightning draft makes the credential source field optional and forbids servers from requiring it, so the protocol does not supply a refund destination."
+            }
+          ],
+          "disposition": "positive",
+          "statement": "After settlement (preimage revealed) no in-protocol return path exists in the documents read; the method draft says so explicitly. Before settlement, the HTLC can be cancelled or failed back at the protocol layer, and on the Spark path the operator lock lapses at a specified time. Any refund of a settled charge is out-of-protocol and at the payee discretion.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/00-introduction.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/02-peer-protocol.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/advanced/refunds.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/11-payment-encoding.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "protocol layer: no public payment ledger is described; forwarding hops see the amount to forward and their adjacent nodes, not the origin (ephemeral key) or full route; the invoice carries the payee node public key and a description; the receipt reference (payment hash) is described as publicly shareable. operator layer (Spark): new wallets have privacy off, so public clients can query Bitcoin balances and transfer history unless the owner enables privacy mode",
+          "disposition": "positive",
+          "statement": "BOLT 4 states intermediate nodes cannot learn route members beyond their predecessor and successor, and that hops see an ephemeral key for the origin in place of its identity; each hop payload carries the amount to forward. BOLT 11 invoices carry the payee node public key and a payment description. The Lightning method draft calls the payment hash a publicly shareable receipt identifier. Spark states new wallets start with privacy off and public clients can query their Bitcoin balances and transfer history.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/11-payment-encoding.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/privacy.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "Lightning charge method",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/methods/lightning/draft-lightning-charge-00.md",
+              "version": "draft 00",
+              "lastChanged": "2026-04-16"
+            },
+            {
+              "document": "Payment HTTP Authentication Scheme",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/core/draft-httpauth-payment-01.md",
+              "version": "draft 01",
+              "lastChanged": "2026-09-21"
+            },
+            {
+              "document": "Charge intent",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/intents/draft-payment-intent-charge-00.md",
+              "version": "draft 00",
+              "lastChanged": "2026-08-18"
+            },
+            {
+              "document": "BOLT 2",
+              "url": "https://github.com/lightning/bolts/blob/master/02-peer-protocol.md",
+              "version": "not stated",
+              "lastChanged": "2026-08-26"
+            },
+            {
+              "document": "BOLT 4",
+              "url": "https://github.com/lightning/bolts/blob/master/04-onion-routing.md",
+              "version": "not stated",
+              "lastChanged": "2026-08-27"
+            },
+            {
+              "document": "BOLT 7",
+              "url": "https://github.com/lightning/bolts/blob/master/07-routing-gossip.md",
+              "version": "not stated",
+              "lastChanged": "2026-05-12"
+            },
+            {
+              "document": "BOLT 11",
+              "url": "https://github.com/lightning/bolts/blob/master/11-payment-encoding.md",
+              "version": "not stated",
+              "lastChanged": "2026-03-09"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The Machine Payments Protocol layer is defined by the Lightning charge method draft (Lightspark authors), the core scheme draft and the charge intent draft in tempoxyz/mpp-specs; the Lightning layer by BOLT 2, 4, 7 and 11 in lightning/bolts. Dates are the last commits touching each file per the GitHub commits API.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/intents/draft-payment-intent-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/methods/lightning/draft-lightning-charge-00.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/core/draft-httpauth-payment-01.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/intents/draft-payment-intent-charge-00.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/lightning/bolts/commits?path=02-peer-protocol.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/lightning/bolts/commits?path=04-onion-routing.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/lightning/bolts/commits?path=07-routing-gossip.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/lightning/bolts/commits?path=11-payment-encoding.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "not declared in the documents read",
+          "disposition": "confirmed-absence",
+          "statement": "None of the Spark wallet SDK or API reference pages read, the Spark limitations page, or the mpp.dev Lightning pages declares a rate or throughput limit for the Spark Lightning send path or the Lightning payment provider. The core draft advises servers to rate-limit challenges but declares no figure.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/get-lightning-send-request.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/estimate-fees.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/limitations.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/learn/trust-model.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet-overview.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/typescript.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/llms.txt",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/payment-methods/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/payment-methods/lightning/charge.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          },
+          "scope": "Spark Lightning send path"
+        },
+        "statusPage": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The Spark documentation index (llms.txt) lists a status page address. mpp.dev links no status page.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.spark.money/llms.txt",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://spark.money/status",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          },
+          "addresses": [
+            "https://spark.money/status"
+          ]
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "TypeScript",
+              "package": "@buildonspark/lightning-mpp-sdk (github.com/buildonspark/lightning-mpp-sdk), the Lightning method implementation extending mppx",
+              "source": "https://mpp.dev/payment-methods/lightning.md"
+            },
+            {
+              "language": "TypeScript",
+              "package": "@buildonspark/spark-sdk (Spark wallet SDK, payLightningInvoice)",
+              "source": "https://docs.spark.money/wallets/typescript.md"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "mpp.dev names @buildonspark/lightning-mpp-sdk as the implementation of the Lightning payment method, extending the mppx TypeScript SDK, with Spark as the reference wallet. The Spark documentation documents the TypeScript wallet SDK. The mpp.dev SDK feature matrix lists the Tempo and Stripe methods for its five core SDKs and says additional methods implement their own SDKs; Lightning is not marked in any core SDK.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://mpp.dev/payment-methods/lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/typescript.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/features.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The Lightning method draft defines four RFC 9457 problem types on top of the core codes. BOLT 4 lists the supported failure_code values returned to the origin node. The Spark pages read publish no error catalogue for payLightningInvoice or getLightningSendRequest; the guide shows one send status value. The paymentauth.org problems index lists core and session types and no Lightning types.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/lightning/draft-lightning-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/lightning/bolts/master/04-onion-routing.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/wallets/withdraw-to-lightning.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://paymentauth.org/problems/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/pay-lightning-invoice.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.spark.money/api-reference/wallet/get-lightning-send-request.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Lightning BOLT authors; Spark (hosted wallet)"
+          },
+          "address": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/methods/lightning/draft-lightning-charge-00.md",
+          "enumeration": "Lightning problem types in the method draft (absent from the paymentauth.org index); BOLT 4 failure_code"
+        }
+      }
+    },
+    {
+      "railId": "R10",
+      "displayName": "Machine Payments Protocol on Tempo",
+      "cells": {
+        "feeBearer": {
+          "value": "set per challenge: paying agent by default, resource server when the challenge sets feePayer; recovery: stated (the server may recover the cost through pricing)",
+          "disposition": "positive",
+          "statement": "The Tempo charge method draft makes the fee bearer a per-challenge choice: with methodDetails.feePayer false or omitted the client sets the fee token and arranges payment of the fee; with feePayer true the server commits to paying the fee and may recover the cost through pricing. The Tempo fee specification (chain layer, operator Tempo Labs) states that without a fee payer signature the sender pays, and that a fee payer signature authorizes a third party to pay; fees go to the block proposer.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/fees/spec-fee.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/fees.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "deterministic",
+          "disposition": "positive",
+          "statement": "The Tempo chain documentation (operator Tempo Labs) states that Tempo uses Simplex BFT consensus with deterministic finality and that a finalized block cannot be reverted; integrators are told to treat finalized blocks as irreversible.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/blockspace/consensus.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "identical credential: rejected (single-use proof, MUST); freshly signed transaction: a distinct transaction at the chain layer; second client broadcast in push mode: not addressed; deduplication: single-use challenge (protocol), replay store (mppx SDK)",
+          "disposition": "partial-absence",
+          "statement": "The core draft requires single-use proof semantics and concurrent-request protection, and the charge intent draft requires each challenge id to be single-use; the Tempo method draft names chain ID binding, nonce consumption and validity windows. At the chain layer TIP-1009 states that a transaction hash cannot execute twice but that changing validBefore produces a different hash, so a freshly signed transaction is a distinct transaction. In pull mode the server broadcasts, so another credential for a consumed challenge is rejected before broadcast; in push mode the client broadcasts before presenting the credential, and no document read says whether a second client-broadcast transaction for the same challenge is prevented. The mppx SDK (operator layer) claims transaction hashes and proof challenge IDs in a replay store.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/intents/draft-payment-intent-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/tips/tip-1009.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/typescript/server/Method.tempo.charge.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/transactions/spec-tempo-transaction.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "bounded-in-signed-artefact",
+          "disposition": "positive",
+          "statement": "The Tempo Transaction carries an optional valid_before expiration timestamp that the payer signs, and the Tempo charge method draft has the client sign with validBefore no later than the challenge expires auth-param, within which the server may submit. TIP-1009 expiring-nonce transactions require validBefore and reject transactions outside a protocol maximum window.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/transactions/spec-tempo-transaction.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/tips/tip-1009.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/upgrades/t11.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          },
+          "boundField": "valid_before"
+        },
+        "outcomeKnowledge": {
+          "value": "mediated-then-trustless",
+          "disposition": "positive",
+          "statement": "In pull mode the server broadcasts the signed transaction and reports success through a Payment-Receipt carrying the transaction hash, so knowledge at submission passes through the payee; the Tempo chain documentation then states that finalized blocks can be queried through standard JSON-RPC and that a public explorer shows transactions and accounts, so the arbiter is readable without the payee. In push mode the client broadcasts and can read the chain itself.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://mpp.dev/protocol/receipts.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/blockspace/consensus.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/ecosystem/block-explorers.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [
+            {
+              "kind": "refund",
+              "initiatedBy": "resource server (payee), at its discretion",
+              "feeBorneBy": "not stated",
+              "conditions": "Out-of-protocol: the Machine Payments Protocol defines no refund protocol; for the charge flow the server may send funds back to the address in the credential source field by an ordinary on-chain transfer."
+            },
+            {
+              "kind": "cancellation of an unsettled authorization",
+              "initiatedBy": "none (lapse)",
+              "feeBorneBy": "not stated",
+              "conditions": "Pull mode only: a client-signed transaction that the server does not broadcast before its valid_before passes is rejected by the chain, so no value moves; this is a lapse, not a return of settled value."
+            }
+          ],
+          "disposition": "positive",
+          "statement": "At the protocol layer the charge intent draft states reversibility is method-dependent and neither the core nor the Tempo method draft defines a refund. The mpp.dev refunds page (operator layer) states that refunds in the charge flow are out-of-protocol transfers back to the client. The chain documentation states that finalized blocks cannot be reverted, so no reversal or chargeback path exists at the settlement layer in the documents read.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/intents/draft-payment-intent-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/advanced/refunds.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/blockspace/consensus.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/tips/tip-1009.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "payer identifier: public ledger address (Tempo account); amount: visible on the public ledger (TIP-20 transfer); memo: an attribution memo bound to the challenge is carried on the primary transfer when mppx is used, and an optional bytes32 memo field exists in the method draft; linkable on a public ledger: yes",
+          "disposition": "positive",
+          "statement": "The Tempo documentation states that on Tempo Mainnet anyone can read any account balance and that the public explorer shows transactions, accounts and token activity. The method draft settles by TIP-20 transfer or transferWithMemo calls and defines an optional bytes32 memo; the mpp.dev Tempo charge page states the mppx client adds a challenge-bound attribution memo to the primary transfer. The core draft asks payment methods to support pseudonymous options where possible.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/zones/accounts.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/ecosystem/block-explorers.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/payment-methods/tempo/charge.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "Payment HTTP Authentication Scheme",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/core/draft-httpauth-payment-01.md",
+              "version": "draft 01",
+              "lastChanged": "2026-09-21"
+            },
+            {
+              "document": "Charge intent",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/intents/draft-payment-intent-charge-00.md",
+              "version": "draft 00",
+              "lastChanged": "2026-08-18"
+            },
+            {
+              "document": "Tempo charge method",
+              "url": "https://github.com/tempoxyz/mpp-specs/blob/main/specs/methods/tempo/draft-tempo-charge-00.md",
+              "version": "draft 00",
+              "lastChanged": "2026-10-05"
+            },
+            {
+              "document": "Tempo Transactions Specification",
+              "url": "https://tempo.xyz/developers/docs/protocol/transactions/spec-tempo-transaction",
+              "version": "not stated",
+              "lastChanged": "not stated"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The payment flow is defined by the core Payment HTTP Authentication Scheme draft, the charge intent draft and the Tempo charge method draft in tempoxyz/mpp-specs, with the Tempo transaction format defined on the Tempo documentation site. Last-change dates are the last commits touching each file per the GitHub commits API.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/intents/draft-payment-intent-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/core/draft-httpauth-payment-01.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/intents/draft-payment-intent-charge-00.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/methods/tempo/draft-tempo-charge-00.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/tempoxyz/mpp-specs/commits?path=specs/core/draft-httpauth-payment-00.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/protocol/transactions/spec-tempo-transaction.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "declared",
+          "disposition": "positive",
+          "statement": "Tempo Labs declares default rate limits for the hosted Tempo API in fixed one-minute windows, with separate defaults for API-key and anonymous callers, and states the authoritative limit is the RateLimit-Limit response header. The API reference describes direct JSON-RPC access as outside the stable API contract with no availability guarantees. The core draft advises servers to rate-limit challenges and verification attempts but declares no figure.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://tempo.xyz/developers/docs/api/rate-limits.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/api/rpc.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/quickstart/connection-details.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          },
+          "scope": "hosted Tempo API, per API key and per client IP; not stated for the public JSON-RPC endpoint"
+        },
+        "statusPage": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The Tempo homepage links a Status page at status.tempo.xyz. No status page link was found on mpp.dev or in the Tempo developer documentation index.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://tempo.xyz/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://status.tempo.xyz/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/llms.txt",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          },
+          "addresses": [
+            "https://status.tempo.xyz/"
+          ]
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "TypeScript",
+              "package": "mppx (github.com/wevm/mppx), Machine Payments Protocol reference implementation, Tempo charge supported",
+              "source": "https://mpp.dev/sdk.md"
+            },
+            {
+              "language": "Python",
+              "package": "pympp (github.com/tempoxyz/pympp), Tempo charge supported",
+              "source": "https://mpp.dev/sdk/python.md"
+            },
+            {
+              "language": "Rust",
+              "package": "mpp crate (github.com/tempoxyz/mpp-rs), Tempo charge supported",
+              "source": "https://mpp.dev/sdk/rust.md"
+            },
+            {
+              "language": "Go",
+              "package": "github.com/tempoxyz/mpp-go, Tempo charge supported",
+              "source": "https://mpp.dev/sdk/go.md"
+            },
+            {
+              "language": "Ruby",
+              "package": "mpp-rb (github.com/stripe/mpp-rb), Tempo charge supported",
+              "source": "https://mpp.dev/sdk/ruby.md"
+            },
+            {
+              "language": "TypeScript (chain)",
+              "package": "Tempo extensions for Viem and Wagmi",
+              "source": "https://tempo.xyz/developers/docs/sdk/typescript.md"
+            },
+            {
+              "language": "Go (chain)",
+              "package": "github.com/tempoxyz/tempo-go",
+              "source": "https://tempo.xyz/developers/docs/sdk/go.md"
+            },
+            {
+              "language": "Rust (chain)",
+              "package": "tempo-alloy (github.com/tempoxyz/tempo)",
+              "source": "https://tempo.xyz/developers/docs/sdk/rust.md"
+            },
+            {
+              "language": "Python (chain)",
+              "package": "pytempo",
+              "source": "https://tempo.xyz/developers/docs/sdk/python.md"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "mpp.dev lists five official Machine Payments Protocol SDKs (TypeScript, Python, Rust, Go, Ruby), and its feature matrix marks the Tempo method and charge intent as supported in all five. The Tempo documentation separately lists chain SDKs; Foundry is listed as tooling and is not counted as a language SDK.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://mpp.dev/sdk.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/features.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/typescript.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/python.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/rust.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/go.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://mpp.dev/sdk/ruby.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/sdk/go.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/sdk/rust.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/sdk/python.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The core draft defines a table of payment error codes delivered as RFC 9457 Problem Details types under a canonical base URI, and the paymentauth.org problems page lists the same core types plus session types. The Tempo charge method draft refers failures to HTTP status codes and Problem Details without adding types. The Tempo API errors page lists stable error.code values for the hosted API.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/core/draft-httpauth-payment-01.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://paymentauth.org/problems/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/tempoxyz/mpp-specs/main/specs/methods/tempo/draft-tempo-charge-00.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://tempo.xyz/developers/docs/api/errors.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "Machine Payments Protocol authors (tempoxyz/mpp-specs, mpp.dev); Tempo Labs (chain and hosted API)"
+          },
+          "address": "https://paymentauth.org/problems/",
+          "enumeration": "Problem Details types (RFC 9457) under the paymentauth.org base URI; Tempo API error.code values"
+        }
+      }
+    },
+    {
+      "railId": "R1",
+      "displayName": "x402 on Base",
+      "cells": {
+        "feeBearer": {
+          "value": "facilitator, for the resource server, on the EIP-3009 path; payer, once, for a Permit2 approval where no gas extension applies; recovery: stated by the operator",
+          "disposition": "positive",
+          "statement": "The exact-on-EVM scheme states that the facilitator pays the gas and the client signs. The scheme-level text says a facilitator may pay the fee or relay a payer-funded payment. The CDP FAQ states the facilitator pays gas and that the per-transaction price covers it; the CDP pricing text places that price on the seller.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_evm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/support/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "staged",
+          "disposition": "positive",
+          "statement": "The Base documentation describes finality for ordinary Base transactions as a sequence of named stages, each giving increasing security guarantees. The x402 specification does not define a finality class; its settle endpoint establishes finality from the resource server perspective.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.base.org/specifications/transactions/transaction-finality.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_evm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "identical authorization: cannot settle twice (nonce consumed); freshly signed authorization: a separate payment; deduplication: EIP-3009 nonce (protocol), optional payment-identifier key (x402 extension)",
+          "disposition": "positive",
+          "statement": "EIP-3009 rejects an authorization whose nonce is already used, and x402 relies on that for replay protection. A newly signed authorization carries a new nonce and is a separate authorization; CDP warns that creating another payment before reconciling can charge the buyer twice. An optional x402 extension defines an idempotency key that resource servers and facilitators may honour.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/support/troubleshooting.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/settlement-pending.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/payment_identifier.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "bounded-in-signed-artefact",
+          "disposition": "positive",
+          "statement": "The signed EIP-3009 authorization carries validBefore, and the reference contract logic refuses execution at or after it, so an authorization unconsumed at that time cannot later be consumed. x402 adds a non-terminal settlement_pending code for a broadcast whose confirmation was not observed; CDP tells the caller to reconcile on chain and treat a revert, failure or expiry as the terminal failure.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/settlement-pending.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          },
+          "boundField": "authorization.validBefore"
+        },
+        "outcomeKnowledge": {
+          "value": "mediated-then-trustless",
+          "disposition": "positive",
+          "statement": "The paying agent initially learns the outcome from the settlement response the resource server relays from the facilitator. The arbiter is public: EIP-3009 exposes authorizationState as a view function, and CDP directs callers to look the transaction up on the network. An optional x402 extension lets the resource server return a signed receipt; that receipt is signed by the payee side.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/settlement-pending.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/transports-v2/http.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [
+            {
+              "kind": "cancellation of an unsettled authorization",
+              "initiatedBy": "payer (the authorizer signs a CancelAuthorization message); the submitting party is not stated",
+              "feeBorneBy": "not stated",
+              "conditions": "EIP-3009 lists cancelAuthorization under Optional, so it exists where the token contract implements it; applies to an authorization not yet used"
+            },
+            {
+              "kind": "refund",
+              "initiatedBy": "seller (payee), by sending a new transfer to the payer address",
+              "feeBorneBy": "not stated",
+              "conditions": "operator documentation (CDP); settled exact and upto payments are described as irreversible, with no chargebacks"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The x402 exact scheme defines no refund and leaves any remedy to the resource server. EIP-3009 defines an optional cancellation of an unused authorization. CDP describes settled payments as irreversible and a refund as a new transfer back to the payer.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/support/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_evm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "Payer identifier: public ledger address (authorization.from), and the facilitator signer address is published in /supported. Amount: visible on the public chain. Metadata: the authorization nonce via the AuthorizationUsed event; optional ERC-8021 builder-code attribution appended to settlement calldata by the CDP Facilitator. Linkable on the public ledger: yes.",
+          "disposition": "positive",
+          "statement": "Base documentation states that a transfer on the public chain exposes sender, recipient and amount. EIP-3009 emits an event indexed by authorizer and nonce. The x402 facilitator interface publishes signer addresses, and CDP appends attribution codes to settlement calldata when the builder-code extension is used.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.base.org/get-started/private-transactions.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_evm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "x402 core specification",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+              "version": "Protocol Version 2",
+              "lastChanged": "2026-08-31"
+            },
+            {
+              "document": "x402 exact scheme",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact.md",
+              "version": "not stated",
+              "lastChanged": "2026-09-24"
+            },
+            {
+              "document": "x402 exact scheme on EVM",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact_evm.md",
+              "version": "not stated",
+              "lastChanged": "2026-08-17"
+            },
+            {
+              "document": "x402 HTTP transport",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/transports-v2/http.md",
+              "version": "v2 (directory)",
+              "lastChanged": "2026-05-26"
+            },
+            {
+              "document": "EIP-3009",
+              "url": "https://eips.ethereum.org/EIPS/eip-3009",
+              "version": "status Draft",
+              "lastChanged": "2025-10-09"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The payment flow is defined by the x402 v2 core specification, the exact scheme documents and EIP-3009. Dates are the last commits touching each file, read from the GitHub commits API.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/x402-specification-v2.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/schemes/exact/scheme_exact.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/schemes/exact/scheme_exact_evm.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/transports-v2/http.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://eips.ethereum.org/EIPS/eip-3009",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/ethereum/ERCs/commits?path=ERCS/erc-3009.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "declared for the operator API in general; not stated for the x402 facilitator endpoints",
+          "disposition": "partial-absence",
+          "statement": "CDP publishes rate limits for the CDP API with figures for write and read operations and a 429 response. No page read states a limit for the x402 facilitator endpoints; the settle endpoint reference lists rate_limit_exceeded among its error types.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.cdp.coinbase.com/api-reference/v2/rate-limits.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/settle-payment.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/production-configuration.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          },
+          "scope": "Coinbase Developer Platform API, write and read operations"
+        },
+        "statusPage": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "Both operators on the profiled path publish a status page reachable from their own documentation. Existence and address are recorded; no uptime or incident content is recorded.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.cdp.coinbase.com/llms.txt",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://status.coinbase.com/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.base.org/specifications/transactions/transaction-finality",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://status.base.org/",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          },
+          "addresses": [
+            "https://status.coinbase.com/",
+            "https://status.base.org/"
+          ]
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "TypeScript",
+              "package": "@x402/core, @x402/evm, @x402/fetch, @x402/express and further @x402 packages (x402 Foundation reference SDK)",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "Python",
+              "package": "x402 (pip), x402 Foundation",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "Go",
+              "package": "github.com/x402-foundation/x402/go/v2",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "TypeScript",
+              "package": "CDP SDK x402 helpers (createX402Server, CdpX402Client, CDP Facilitator client)",
+              "source": "https://docs.cdp.coinbase.com/x402/support/faq.md"
+            },
+            {
+              "language": "Python",
+              "package": "CDP SDK cdp.x402 module (coinbase/cdp-sdk python/cdp/x402), facilitator configuration",
+              "source": "https://docs.cdp.coinbase.com/x402/seller/facilitator.md"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The x402 Foundation README documents reference SDKs in TypeScript, Python and Go. CDP documents its own x402 helpers in TypeScript and a facilitator configuration module in Python, and states that its SDK has no Go x402 helpers.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/support/faq.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/seller/facilitator.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The x402 specification lists standard error codes, including EVM-specific ones and the non-terminal settlement_pending. CDP publishes an enumeration of settle error reasons and a reference table, and states that it returns a smaller set than the specification defines.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/transports-v2/http.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/settle-payment.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.cdp.coinbase.com/x402/support/troubleshooting.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Coinbase Developer Platform (facilitator); Base (chain documentation)"
+          },
+          "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+          "enumeration": "x402 error codes (errorReason, invalidReason), section 9; Coinbase Developer Platform x402SettleErrorReason"
+        }
+      }
+    },
+    {
+      "railId": "R9",
+      "displayName": "x402 on Solana",
+      "cells": {
+        "feeBearer": {
+          "value": "the account named as fee payer: the resource server or a third-party facilitator; recovery: not stated",
+          "disposition": "positive",
+          "statement": "The exact-on-Solana scheme assigns the network fee to the fee-payer account, which may be the merchant or a third-party facilitator, and restricts that account to paying the fee. Solana documentation states the fee is deducted from the fee payer and is charged even if the transaction fails. No document read says the fee is recovered from either party.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/core/fees/fee-structure.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/kora/guides/x402.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/payments/agentic-payments/x402.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "staged",
+          "disposition": "positive",
+          "statement": "The Solana RPC overview defines three named commitment levels (processed, confirmed, finalized) that state how finalized a block must be, with processed described as still able to be rolled back. The x402 specification does not define a finality class.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://solana.com/docs/rpc.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "identical transaction: executes once (network deduplication); re-signed transaction before blockhash expiry: both can be accepted; deduplication: memo nonce and settlement cache (facilitator), optional payment-identifier key (x402 extension)",
+          "disposition": "positive",
+          "statement": "The x402 SVM scheme states that Solana deduplication makes a resubmitted transaction execute once, while the facilitator could still report success to each caller, and specifies a settlement cache as a mitigation. Solana documentation states that re-signing before the original blockhash expires can lead to both transactions being accepted.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/developers/cookbook/transactions/confirmation.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/developers/cookbook/transactions/retry.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/payment_identifier.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "bounded-in-signed-artefact",
+          "disposition": "positive",
+          "statement": "The signed transaction carries a recent blockhash and expires when that blockhash is no longer recent; Solana documentation says a dropped transaction can be discarded once the blockhash is older than lastValidBlockHeight, and that an expired transaction will never be processed. The x402 scheme can pass lastValidBlockHeight as an informational hint that is not part of the transaction, so the client computes the bound.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://solana.com/developers/cookbook/transactions/confirmation.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/developers/cookbook/transactions/retry.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          },
+          "boundField": "recentBlockhash (expiry height computed by the client)"
+        },
+        "outcomeKnowledge": {
+          "value": "mediated-then-trustless",
+          "disposition": "positive",
+          "statement": "The settlement response travels from the fee-paying party to the resource server and then to the client. The x402 SVM scheme notes the facilitator could report success to several callers for one transfer. Solana documentation describes getSignatureStatuses for reading a signature status from a node, and warns that a network error or malformed facilitator response is not proof of payment.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/rpc/http/getsignaturestatuses.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/transports-v2/http.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [],
+          "disposition": "confirmed-absence",
+          "statement": "The x402 exact scheme states that it defines no refund and leaves any remedy to the resource server. The SVM scheme, the core specification and the Solana x402 and facilitator pages define no refund, reversal, chargeback, dispute or cancellation path for an exact payment.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/payments/agentic-payments/x402.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/llms-full.txt",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "Payer identifier: public ledger address (the client signer and source token account; the fee-payer address is also public). Amount: visible; transactions are described as fully auditable and amount confidentiality is an opt-in Token-2022 extension the exact scheme does not name. Metadata: a Memo instruction carrying extra.memo or a random nonce, recorded in transaction logs. Linkable on the public ledger: yes.",
+          "disposition": "positive",
+          "statement": "Solana documentation states that its public ledger makes every transaction, token account and mint auditable, that memos are recorded on chain and visible in logs, and that privacy is provided by application-level tools. The x402 exact scheme requires a TransferChecked transfer and a Memo instruction, and reports the payer as a public address.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://solana.com/docs/payments/interacting-with-solana.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/payments/send-payments/payment-with-memo.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/finance/privacy.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "x402 core specification",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+              "version": "Protocol Version 2",
+              "lastChanged": "2026-08-31"
+            },
+            {
+              "document": "x402 exact scheme",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact.md",
+              "version": "not stated",
+              "lastChanged": "2026-09-24"
+            },
+            {
+              "document": "x402 exact scheme on SVM",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact_svm.md",
+              "version": "not stated",
+              "lastChanged": "2026-08-25"
+            },
+            {
+              "document": "x402 HTTP transport",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/transports-v2/http.md",
+              "version": "v2 (directory)",
+              "lastChanged": "2026-05-26"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The payment flow is defined by the x402 v2 core specification and the exact scheme documents for Solana. Dates are the last commits touching each file, read from the GitHub commits API.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/x402-specification-v2.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/schemes/exact/scheme_exact.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/schemes/exact/scheme_exact_svm.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/transports-v2/http.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "protocol",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "declared for the public RPC endpoints; no facilitator is named in the documents read",
+          "disposition": "partial-absence",
+          "statement": "Solana documentation declares rate limits for its public RPC endpoints, which a client may use to fetch a blockhash or read a signature status. No facilitator operator is named in the R9 corpus, and no facilitator rate limit is declared.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://solana.com/docs/references/clusters.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/kora/guides/x402.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          },
+          "scope": "Solana public RPC endpoints"
+        },
+        "statusPage": {
+          "value": "none-found-in-documents-read",
+          "disposition": "confirmed-absence",
+          "statement": "No link to a service status page was found in the Solana documentation corpus or in the x402 documents read.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://solana.com/llms-full.txt",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/llms.txt",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/rpc.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/references/clusters.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/production-readiness.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/tools/x402-facilitator.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "TypeScript",
+              "package": "@x402/svm with @x402/core, @x402/fetch, @x402/express (x402 Foundation reference SDK)",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "Python",
+              "package": "x402 (pip), x402 Foundation",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "Go",
+              "package": "github.com/x402-foundation/x402/go/v2",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md"
+            },
+            {
+              "language": "TypeScript",
+              "package": "@x402/svm, @x402/express, @x402/fetch as documented in the Solana x402 guide",
+              "source": "https://solana.com/docs/payments/agentic-payments/x402.md"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The x402 Foundation README documents reference SDKs in TypeScript, Python and Go. The Solana x402 guide builds its client and server with the TypeScript @x402 packages including @x402/svm.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/payments/agentic-payments/x402.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The x402 specification publishes a list of standard error codes; the SVM scheme adds named codes in its text without a separate enumeration. Solana documentation lists HTTP error codes for its public RPC endpoints.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/transports-v2/http.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_svm.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://solana.com/docs/references/clusters.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Solana Foundation (documentation)"
+          },
+          "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+          "enumeration": "x402 error codes (errorReason, invalidReason), section 9; further codes named in the SVM scheme text"
+        }
+      }
+    },
+    {
+      "railId": "R2",
+      "displayName": "x402 on Stellar",
+      "cells": {
+        "feeBearer": {
+          "value": "facilitator, as the transaction source account; recovery: not stated in the specification",
+          "disposition": "positive",
+          "statement": "The Stellar exact scheme has the facilitator rebuild the transaction with its own account as source, and that account pays the fee; the paying agent signs an authorization entry, not the transaction. The specification does not say whether the cost is recovered; the OpenZeppelin Channels documentation for the service used by the hosted Built on Stellar facilitator says fees are paid by the service and that the service is free to use.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/fees-resource-limits-metering.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://stellar.org/blog/foundation-news/x402-on-stellar",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-channels-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "finalityModelClass": {
+          "value": "deterministic",
+          "disposition": "positive",
+          "statement": "The Stellar Consensus Protocol page describes federated voting in which a confirmed statement cannot be contradicted, and states that the protocol prioritizes safety over liveness; the transaction lifecycle page says consensus settles on a single transaction set per ledger. The pages read do not use the word finality.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/stellar-consensus-protocol.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/transactions/transaction-lifecycle",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/transactions/operations-and-transactions",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/glossary",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/llms.txt",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "retryIdempotency": {
+          "value": "identical authorization entry: cannot apply twice (nonce consumed by the host); freshly signed entry: not prevented; deduplication: Soroban nonce (protocol), optional payment-identifier key (x402 extension)",
+          "disposition": "positive",
+          "statement": "The authorization entry the agent signs carries a nonce unique per address until its expiration ledger, and the host verifies and consumes it, so the same entry cannot apply twice. Nothing read prevents the agent from signing another entry with a new nonce. The x402 payment-identifier extension, published in the canonical repository, offers an optional idempotency key that resource servers and facilitators may use.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/contract-development/contract-interactions/stellar-transaction",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/contract-development/authorization",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402/built-on-stellar",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/payment_identifier.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "ambiguityBound": {
+          "value": "bounded-in-signed-artefact",
+          "disposition": "positive",
+          "statement": "The agent sets the expiration ledger of the authorization entry it signs, and the facilitator must reject an entry whose expiration exceeds the bound derived from maxTimeoutSeconds. The bound is expressed in ledger sequence numbers.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/learn/fundamentals/contract-development/contract-interactions/stellar-transaction",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          },
+          "boundField": "signatureExpirationLedger"
+        },
+        "outcomeKnowledge": {
+          "value": "mediated-then-trustless",
+          "disposition": "positive",
+          "statement": "The agent initially learns the outcome through the facilitator and resource server (the SettlementResponse carrying a transaction hash); afterwards the outcome can be read from the public Stellar ledger by that hash. The optional offer-and-receipt extension adds a receipt signed by the resource server, which is still a party to the payment.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/apps/privacy.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://stellar.org/blog/developers/transaction-submission-timeouts-and-dynamic-fees-faq",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/extensions/extension-offer-and-receipt.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "restitutionKinds": {
+          "value": [],
+          "disposition": "confirmed-absence",
+          "statement": "No refund, reversal, chargeback, dispute or cancellation path is defined in the x402 v2 specification, the Stellar exact scheme, the Stellar x402 pages or the OpenZeppelin facilitator documentation read. An unsettled authorization entry lapses at its expiration ledger, which is expiry rather than a restitution path.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402/built-on-stellar",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x/guides/stellar-x402-facilitator-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/OpenZeppelin/relayer-plugin-x402-facilitator/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-channels-guide",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "observerPrivacyExposure": {
+          "value": "payer identifier: public ledger address (the from argument of the token transfer); amount: visible (transfer argument on a public ledger); memo or metadata: none defined by the scheme on-chain (the resource URL travels to the facilitator, not on-chain); linkable on a public ledger: yes",
+          "disposition": "positive",
+          "statement": "Stellar documents itself as a public blockchain on which every transaction is visible. The x402 exact scheme moves value with a token transfer(from, to, amount) call, so payer address, payee address and amount are transfer arguments in a public transaction; the facilitator appears as the transaction source account.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://developers.stellar.org/docs/build/apps/privacy.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "specificationPin": {
+          "value": [
+            {
+              "document": "x402 core specification",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+              "version": "Protocol Version 2",
+              "lastChanged": "2026-08-31"
+            },
+            {
+              "document": "x402 exact scheme on Stellar",
+              "url": "https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact_stellar.md",
+              "version": "x402 v2",
+              "lastChanged": "2026-09-02"
+            },
+            {
+              "document": "Stellar x402 developer page",
+              "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+              "version": "not stated",
+              "lastChanged": "2026-09-28"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The payment flow is defined by the x402 v2 core specification and the Stellar binding of the exact scheme in the canonical x402-foundation repository; the Stellar developer page describes the operator path.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/x402-specification-v2.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/commits?path=specs/schemes/exact/scheme_exact_stellar.md&per_page=1",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/stellar/stellar-docs/commits?path=docs/build/agentic-payments/x402/README.mdx&per_page=1",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "declaredRateLimits": {
+          "value": "a fee-consumption limit per API key is declared; no request-rate limit is declared for the facilitator endpoints",
+          "disposition": "partial-absence",
+          "statement": "The Channels guide declares a fair-use policy in which each API key has a fee consumption limit, and requests return FEE_LIMIT_EXCEEDED once it is reached. The Stellar x402 page says the hosted facilitator leverages Channels, and its API keys are generated at the Channels address; no document read states a request-per-second limit for /verify or /settle.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-channels-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402/built-on-stellar",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x/guides/stellar-x402-facilitator-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/OpenZeppelin/relayer-plugin-x402-facilitator/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          },
+          "scope": "OpenZeppelin Channels service used by the hosted facilitator"
+        },
+        "statusPage": {
+          "value": "published",
+          "disposition": "partial-absence",
+          "statement": "The Stellar developer documentation links a status page for Stellar.org services. No status page is linked from the OpenZeppelin facilitator, Relayer or Channels documentation read.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://status.stellar.org/",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402/built-on-stellar",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x/guides/stellar-x402-facilitator-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-channels-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/OpenZeppelin/relayer-plugin-x402-facilitator/main/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "operator",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          },
+          "addresses": [
+            "https://status.stellar.org/"
+          ]
+        },
+        "sdkLanguages": {
+          "value": [
+            {
+              "language": "TypeScript",
+              "package": "@x402/stellar (x402-foundation/x402, typescript/packages/mechanisms/stellar)",
+              "source": "https://raw.githubusercontent.com/x402-foundation/x402/main/typescript/packages/mechanisms/stellar/README.md"
+            },
+            {
+              "language": "TypeScript",
+              "package": "stellar/x402-stellar (examples and a reference facilitator service, published by the Stellar organisation)",
+              "source": "https://raw.githubusercontent.com/stellar/x402-stellar/main/README.md"
+            },
+            {
+              "language": "TypeScript",
+              "package": "@openzeppelin/relayer-plugin-x402-facilitator (facilitator side, operator)",
+              "source": "https://docs.openzeppelin.com/relayer/1.4.x/guides/stellar-x402-facilitator-guide"
+            }
+          ],
+          "disposition": "positive",
+          "statement": "The x402 Foundation publishes a Stellar mechanism package for TypeScript covering client, server and facilitator roles. The canonical repository tree contains no Stellar mechanism for Python, Go or Java. The Stellar organisation publishes a TypeScript examples repository, and OpenZeppelin publishes the facilitator plugin in TypeScript.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/typescript/packages/mechanisms/stellar/README.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://registry.npmjs.org/@x402/stellar/latest",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.4.x/guides/stellar-x402-facilitator-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://api.github.com/repos/x402-foundation/x402/git/trees/main?recursive=1",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          }
+        },
+        "errorCatalogue": {
+          "value": "published",
+          "disposition": "positive",
+          "statement": "The v2 specification lists standard error codes returned by facilitators or resource servers; the Stellar scheme adds one scheme-specific code for the fee ceiling. The Channels guide publishes a table of service error codes.",
+          "provenance": {
+            "label": "documentation-derived",
+            "sources": [
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/x402-specification-v2.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://raw.githubusercontent.com/x402-foundation/x402/main/specs/schemes/exact/scheme_exact_stellar.md",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-channels-guide",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402",
+                "retrievedAt": "2026-10-09"
+              },
+              {
+                "url": "https://developers.stellar.org/docs/build/agentic-payments/x402/built-on-stellar",
+                "retrievedAt": "2026-10-09"
+              }
+            ],
+            "retrievedAt": "2026-10-09",
+            "layer": "both",
+            "operator": "x402 Foundation (specification); Stellar Development Foundation (documentation); OpenZeppelin (hosted facilitator)"
+          },
+          "address": "https://github.com/x402-foundation/x402/blob/main/specs/x402-specification-v2.md",
+          "enumeration": "x402 error codes (errorReason, invalidReason), section 9; one Stellar scheme code; OpenZeppelin Channels error table"
+        }
+      }
+    }
+  ]
+}

@@ -5,34 +5,60 @@
   "note": "dev-key signed (ES256/P-256), non-production",
   "rails": [
     {
-      "railId": "R1",
-      "railName": "R1 x402-Base",
-      "vc": "capabilities/R1.vc.json"
-    },
-    {
-      "railId": "R10",
-      "railName": "R10 MPP-on-Tempo (Machine Payments Protocol)",
-      "vc": "capabilities/R10.vc.json"
+      "railId": "R6",
+      "railName": "R6 GCP-AP2",
+      "vc": "capabilities/R6.vc.json",
+      "displayName": "Google Cloud with AP2"
     },
     {
       "railId": "R11",
       "railName": "R11 MPP-on-Lightning (Machine Payments Protocol, via Lightspark/Spark)",
-      "vc": "capabilities/R11.vc.json"
+      "vc": "capabilities/R11.vc.json",
+      "displayName": "Machine Payments Protocol on Lightning"
     },
     {
-      "railId": "R2",
-      "railName": "R2 x402-Stellar",
-      "vc": "capabilities/R2.vc.json"
+      "railId": "R10",
+      "railName": "R10 MPP-on-Tempo (Machine Payments Protocol)",
+      "vc": "capabilities/R10.vc.json",
+      "displayName": "Machine Payments Protocol on Tempo"
     },
     {
-      "railId": "R6",
-      "railName": "R6 GCP-AP2",
-      "vc": "capabilities/R6.vc.json"
+      "railId": "R1",
+      "railName": "R1 x402-Base",
+      "vc": "capabilities/R1.vc.json",
+      "displayName": "x402 on Base"
     },
     {
       "railId": "R9",
       "railName": "R9 x402-Solana",
-      "vc": "capabilities/R9.vc.json"
+      "vc": "capabilities/R9.vc.json",
+      "displayName": "x402 on Solana"
+    },
+    {
+      "railId": "R2",
+      "railName": "R2 x402-Stellar",
+      "vc": "capabilities/R2.vc.json",
+      "displayName": "x402 on Stellar"
     }
-  ]
+  ],
+  "notice": {
+    "documentationStatement": "This is a documentation profile, not a recommendation: every cell states what a specification or an operator's own documentation says, no number in this document was produced by executing a payment, no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use.",
+    "evenHandedStatement": "The same twelve questions were put to all six rails, in the same fixed order, against each rail's own primary documentation, on a single date (2026-10-09).",
+    "feeQuotation": {
+      "appliesTo": [
+        "fees",
+        "feeBearer"
+      ],
+      "evenHandedStatement": "Every rail's fee facts are quoted from that rail's own published fee documentation, retrieved on the same date by the same procedure.",
+      "kind": "fee_quotation",
+      "quotationStatement": "These fee facts are a quotation of published fee documentation, not a recommendation: no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use.",
+      "sourceStatement": "Each fee fact is quoted from the rail's own published fee documentation at the source URL given beside it, retrieved on 2026-10-09.",
+      "statementsUrl": "https://oracle.agentic-paybench.dev/tier2/statements.md#fee-adjacent-cells-kind-fee_quotation"
+    },
+    "fixedOrderingStatement": "Rails are listed alphabetically by rail name. That ordering is fixed and carries no performance meaning.",
+    "kind": "documentation_profile",
+    "profile": "level1-documentation-profile",
+    "sourcesStatement": "Every documentation-derived cell cites the primary source it rests on, by URL, with the date it was retrieved.",
+    "statementsUrl": "https://oracle.agentic-paybench.dev/tier2/statements.md"
+  }
 }

@@ -6,6 +6,7 @@
     "cap": "https://oracle.agentic-paybench.dev/schema#",
     "railId": "cap:railId",
     "railName": "cap:railName",
+    "displayName": "cap:displayName",
     "settlesIndependently": "cap:settlesIndependently",
     "fees": {
       "@id": "cap:fees",
@@ -22,7 +23,81 @@
         "authorizationModel": "cap:authorizationModel",
         "disputeMechanism": "cap:disputeMechanism",
         "refundSupport": "cap:refundSupport",
-        "sanctionsScreening": "cap:sanctionsScreening"
+        "sanctionsScreening": "cap:sanctionsScreening",
+        "kind": "cap:restitutionKind",
+        "initiatedBy": "cap:restitutionInitiatedBy",
+        "feeBorneBy": "cap:restitutionFeeBorneBy",
+        "conditions": "cap:restitutionConditions"
+      }
+    },
+    "value": "cap:cellValue",
+    "disposition": "cap:cellDisposition",
+    "statement": "cap:cellStatement",
+    "provenance": {
+      "@id": "cap:provenance",
+      "@context": {
+        "label": "cap:provenanceLabel",
+        "sources": "cap:provenanceSources",
+        "url": { "@id": "cap:sourceUrl", "@type": "@id" },
+        "retrievedAt": { "@id": "cap:retrievedAt", "@type": "http://www.w3.org/2001/XMLSchema#date" },
+        "layer": "cap:provenanceLayer",
+        "operator": "cap:provenanceOperator",
+        "voidReason": "cap:voidReason",
+        "profile": "cap:provenanceProfile"
+      }
+    },
+    "feeBearer": "cap:feeBearer",
+    "finalityModelClass": "cap:finalityModelClass",
+    "retryIdempotency": "cap:retryIdempotency",
+    "ambiguityBound": "cap:ambiguityBound",
+    "boundField": "cap:ambiguityBoundField",
+    "outcomeKnowledge": "cap:outcomeKnowledge",
+    "observerPrivacyExposure": "cap:observerPrivacyExposure",
+    "specificationPin": {
+      "@id": "cap:specificationPin",
+      "@context": {
+        "document": "cap:specificationDocument",
+        "url": { "@id": "cap:specificationUrl", "@type": "@id" },
+        "version": "cap:specificationVersion",
+        "lastChanged": "cap:specificationLastChanged"
+      }
+    },
+    "declaredRateLimits": "cap:declaredRateLimits",
+    "scope": "cap:declaredRateLimitScope",
+    "statusPage": "cap:statusPage",
+    "address": { "@id": "cap:address", "@type": "@id" },
+    "addresses": { "@id": "cap:addresses", "@type": "@id", "@container": "@set" },
+    "sdkLanguages": {
+      "@id": "cap:sdkLanguages",
+      "@context": {
+        "language": "cap:sdkLanguage",
+        "package": "cap:sdkPackage",
+        "source": { "@id": "cap:sdkSource", "@type": "@id" }
+      }
+    },
+    "errorCatalogue": "cap:errorCatalogue",
+    "enumeration": "cap:errorEnumeration",
+    "notice": {
+      "@id": "cap:notice",
+      "@context": {
+        "kind": "cap:noticeKind",
+        "profile": "cap:noticeProfile",
+        "documentationStatement": "cap:documentationStatement",
+        "sourcesStatement": "cap:sourcesStatement",
+        "fixedOrderingStatement": "cap:fixedOrderingStatement",
+        "evenHandedStatement": "cap:evenHandedStatement",
+        "statementsUrl": { "@id": "cap:statementsUrl", "@type": "@id" },
+        "feeQuotation": {
+          "@id": "cap:feeQuotationNotice",
+          "@context": {
+            "kind": "cap:feeQuotationKind",
+            "appliesTo": "cap:feeQuotationAppliesTo",
+            "statementsUrl": { "@id": "cap:feeStatementsUrl", "@type": "@id" },
+            "quotationStatement": "cap:quotationStatement",
+            "sourceStatement": "cap:feeSourceStatement",
+            "evenHandedStatement": "cap:feeEvenHandedStatement"
+          }
+        }
       }
     }
   }
