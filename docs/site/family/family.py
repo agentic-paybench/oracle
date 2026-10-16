@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@8e0eb54 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -263,9 +263,15 @@ def render_page(
     marker: str | None = None,
     extra_head: str = "",
     lang: str = "en",
+    layout: str = "measure",
 ) -> str:
+    """layout "measure" (every page by default) or "wide" (a data page: the
+    container widens, prose inside it keeps the reading measure, one left edge)."""
     if surface not in {s[0] for s in SURFACES}:
         raise ValueError(f"unknown surface {surface!r}")
+    if layout not in ("measure", "wide"):
+        raise ValueError(f"unknown layout {layout!r}")
+    page_class = "family-page family-page--wide" if layout == "wide" else "family-page"
     body = _insert(body, PLACEHOLDER_POSTURE, posture_block(posture, snippet_path), True)
     body = _insert(body, PLACEHOLDER_MACHINE, machine_panel(machine or [], machine_intro), False)
     head_marker = f"<!-- posture-class: {marker} -->\n" if marker else ""
@@ -288,7 +294,7 @@ def render_page(
         f'<link rel="stylesheet" href="{family_prefix}tokens.css">\n'
         f'<link rel="stylesheet" href="{family_prefix}family.css">\n'
         f"{icon}{extra}</head>\n<body>\n"
-        '<div class="family-page">\n'
+        f'<div class="{page_class}">\n'
         f"{family_bar(surface)}\n<main>\n{body}\n</main>\n{footer_line()}\n</div>\n</body>\n</html>\n"
     )
 

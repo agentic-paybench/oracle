@@ -21,6 +21,7 @@ import argparse
 import base64
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -102,23 +103,54 @@ def render_value(v) -> str:
     return esc(str(v))
 
 
+SLUG_VALUE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+
+def render_kv(d: dict) -> str:
+    """One structured item as a compact key and value list (keys as served)."""
+    return '<dl class="kv">' + "".join(
+        f"<div><dt>{esc(k)}</dt><dd>{render_value(x)}</dd></div>" for k, x in d.items()) + "</dl>"
+
+
+def render_record_value(v) -> tuple[str, str]:
+    """Returns (css class, html). A short machine label (a slug or one lowercase
+    word) is set as code so it reads as a defined term; a list of structured
+    items becomes compact key and value blocks; anything else renders as text."""
+    if isinstance(v, str) and SLUG_VALUE.fullmatch(v):
+        return "value", f"<code>{esc(v)}</code>"
+    if isinstance(v, list) and not v:
+        return "value", "none listed"
+    if isinstance(v, list) and all(isinstance(x, dict) for x in v):
+        return "value structured", '<ul class="items">' + "".join(f"<li>{render_kv(x)}</li>" for x in v) + "</ul>"
+    if isinstance(v, dict):
+        return "value structured", render_kv(v)
+    return "value", render_value(v)
+
+
 def render_record(question_id: str, name: str, cell) -> str:
-    """One stacked record: the rail name, the value and disposition on one
-    line, the statement as a paragraph, the sources behind a native details
+    """One record card: the rail name, the value, the disposition and provenance
+    as labelled tags, the statement, the sources behind a native details
     disclosure (closed by default; no script; the URLs stay in the page)."""
     rid = f"{question_id}-{family.slug(name)}"
     if not isinstance(cell, dict) or not CELL_KEYS & set(cell):
+        cls, html_value = render_record_value(cell)
         return (f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>'
-                f'<dl class="facts"><div><dt>Value</dt><dd>{render_value(cell)}</dd></div></dl></section>')
+                f'<div class="{cls}">{html_value}</div></section>')
     extras = {k: v for k, v in cell.items() if k not in CELL_KEYS}
     prov = cell.get("provenance", {}) or {}
     sources = prov.get("sources", []) or []
-    facts = [("Value", render_value(cell.get("value"))), ("Disposition", esc(str(cell.get("disposition", ""))))]
+    cls, html_value = render_record_value(cell.get("value"))
+    value = f'<div class="{cls}">{html_value}</div>'
+    extras_html = ""
+    if extras:
+        extras_html = '<dl class="extras">' + "".join(
+            f"<div><dt>{esc(k)}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
+    tags = []
+    if cell.get("disposition"):
+        tags.append(f'<span class="tag"><span class="k">Disposition</span> {esc(str(cell["disposition"]))}</span>')
     if prov.get("label"):
-        facts.append(("Provenance", esc(str(prov["label"]))))
-    for k, v in extras.items():
-        facts.append((esc(k), render_value(v)))
-    dl = '<dl class="facts">' + "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in facts) + "</dl>"
+        tags.append(f'<span class="tag"><span class="k">Provenance</span> {esc(str(prov["label"]))}</span>')
+    tags_html = f'<p class="tags">{"".join(tags)}</p>' if tags else ""
     statement = f'<p class="statement">{esc(str(cell.get("statement", "")))}</p>' if cell.get("statement") else ""
     details = ""
     if sources:
@@ -126,14 +158,15 @@ def render_record(question_id: str, name: str, cell) -> str:
         when = f", retrieved {' and '.join(dates)}" if dates else ""
         items = "".join(f'<li><a href="{esc(s.get("url", ""))}">{esc(s.get("url", ""))}</a></li>' for s in sources)
         details = f"<details><summary>Sources ({len(sources)}){esc(when)}</summary><ul>{items}</ul></details>"
-    return f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>{dl}{statement}{details}</section>'
+    return f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>{value}{extras_html}{tags_html}{statement}{details}</section>'
 
 
 def capabilities_body(index: dict, subjects: list[dict]) -> str:
     notice = index.get("notice", {})
     parts = [
+        '<div class="lede"><div class="intro">',
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
-        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one record per rail under each question, with each record's sources folded beneath it; the signed records themselves are listed at the end for software.</p>",
+        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one card per rail under each question, rails in alphabetical order, with each card's sources folded beneath it; the signed records themselves are listed at the end for software.</p>",
         family.PLACEHOLDER_POSTURE,
     ]
     if notice.get("evenHandedStatement"):
@@ -141,15 +174,23 @@ def capabilities_body(index: dict, subjects: list[dict]) -> str:
     if notice.get("sourcesStatement"):
         parts.append(f"<p>{esc(notice['sourcesStatement'])}</p>")
     fee = notice.get("feeQuotation", {}) or {}
+    toc = "".join(f'<li><a href="#{family.slug(label)}">{esc(label)}</a></li>' for _, label, _ in QUESTIONS)
+    parts.append("</div>")
+    parts.append(f'<nav class="toc" aria-labelledby="questions"><h2 id="questions">The thirteen questions</h2><ol>{toc}</ol></nav>')
+    parts.append("</div>")
     for key, label, _ in QUESTIONS:
-        parts.append(f'<h2 id="{family.slug(label)}">{esc(label)}</h2>')
-        if key == "feeBearer" and fee:
-            for k in ("quotationStatement", "sourceStatement", "evenHandedStatement"):
-                if fee.get(k):
-                    parts.append(f'<p class="meta">{esc(fee[k])}</p>')
         qid = family.slug(label)
+        parts.append(f'<section class="question" aria-labelledby="{qid}">')
+        parts.append(f'<h2 id="{qid}">{esc(label)}</h2>')
+        if key == "feeBearer" and fee:
+            notes = "".join(f'<p class="meta">{esc(fee[k])}</p>'
+                            for k in ("quotationStatement", "sourceStatement", "evenHandedStatement") if fee.get(k))
+            if notes:
+                parts.append(f'<div class="notes">{notes}</div>')
+        parts.append('<div class="cards">')
         for s in subjects:
             parts.append(render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key)))
+        parts.append("</div></section>")
     parts.append('<h2 id="pending-facts">Facts not yet sourced</h2>')
     parts.append('<p class="meta">These fields are served as "pending" in every credential: roadmap, no measurement, never invented.</p>')
     parts.append('<div class="table-scroll"><table><thead><tr><th>Field</th><th>Status across the six rails</th></tr></thead><tbody>')
@@ -211,7 +252,7 @@ def listing_body(title: str, intro: str, items: list[tuple[str, str, str]]) -> s
 
 def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machine: list[dict] | None,
          marker: str | None, description: str | None = None, check: bool, root_relative: bool = False,
-         machine_intro: str | None = None) -> int:
+         machine_intro: str | None = None, layout: str = "measure") -> int:
     depth = rel_out.count("/")
     prefix = "/family/" if root_relative else ("../" * depth) + "family/"
     html = family.render_page(
@@ -225,6 +266,7 @@ def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machi
         machine=machine,
         machine_intro=machine_intro,
         marker=marker,
+        layout=layout,
     )
     return family.write_or_check(site / rel_out, html, check)
 
@@ -276,7 +318,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, "capabilities/index.html", body, title="Capability records: documented facts per rail",
                    posture="documentation", machine=machine_for_capabilities(index, subjects, "../"),
                    marker="level1-documentation-profile", check=check,
-                   machine_intro="The same facts as signed data, verifiable offline against the published key.")
+                   machine_intro="The same facts as signed data, verifiable offline against the published key.",
+                   layout="wide")
 
     # Statements and roadmap as reader pages beside their Markdown.
     for rel in ("tier2/statements.md", "roadmap.md"):

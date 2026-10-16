@@ -1,5 +1,5 @@
 {
-  "x-vendored-from": "vendored from agentic-paybench/design-system-private@8e0eb54 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
+  "x-vendored-from": "vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
   "name": "family-gates",
   "private": true,
   "version": "0.1.0",
