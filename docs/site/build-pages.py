@@ -233,12 +233,19 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     if results_md:
         items = [(md.with_suffix(".html").name, (labels.get(md.name) or md.name), "") for md in current_md]
         body = listing_body("Named-rail measurements", "Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.", items)
+        # The listing sits under results/, which the gate classifies as a
+        # measurement artefact by path, so it carries the measurement set and
+        # the pre-registration pointers the profile requires, and the marker.
+        body = body.replace(
+            family.PLACEHOLDER_MACHINE,
+            '<p class="meta">The measurement methods are published and pre-registered on the Open Science Framework: '
+            '<a href="https://doi.org/10.17605/OSF.IO/UFQG5">10.17605/OSF.IO/UFQG5</a> (authorization latency), '
+            '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a> (settlement finality, method) and '
+            '<a href="https://doi.org/10.17605/OSF.IO/UETFW">10.17605/OSF.IO/UETFW</a> (settlement finality, test-network confirmatory data).</p>\n'
+            + family.PLACEHOLDER_MACHINE, 1)
         machine = [{"href": md.name, "path": f"results/{md.name}", "note": labels.get(md.name, "")} for md in results_md]
-        # A listing, not a measurement artefact: it carries no figure and no
-        # DOI, so it is not declared (no marker); the posture set still rides
-        # with it as on the root page.
         rc |= page(site, "results/index.html", body, title="Named-rail measurements", posture="measurement",
-                   machine=machine, marker=None, check=check)
+                   machine=machine, marker="level1-measurement", check=check)
 
     # Capabilities reader page.
     if assembled or (site / "capabilities" / "index.json").exists():
