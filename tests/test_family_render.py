@@ -160,8 +160,10 @@ def test_tracked_root_and_404_pages_match_a_fresh_render():
         [sys.executable, "-I", str(SITE / "build-pages.py"), "--site", str(SITE), "--labels", str(LABELS), "--check"],
         capture_output=True, text=True,
     )
-    # Only the two tracked pages exist in the working tree without a build, so
-    # --check there compares exactly those; a missing generated page is a
-    # failure the assemble fixtures cover, not this test.
-    stderr = rc.stderr
-    assert "index.html differs" not in stderr and "404.html differs" not in stderr, stderr
+    # On a fresh clone the gitignored pages do not exist, so --check reports
+    # them too; this test judges only the two TRACKED pages, by exact path.
+    tracked = {str(SITE / "index.html"), str(SITE / "404.html")}
+    drifted = [line for line in rc.stderr.splitlines()
+               if line.endswith(" differs from a fresh render")
+               and line.split("family: ", 1)[-1].rsplit(" differs", 1)[0] in tracked]
+    assert not drifted, "\n".join(drifted)

@@ -308,8 +308,9 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         {"href": "tier2/statements.md", "path": "tier2/statements.md", "note": "the statements every served cell carries"},
         {"href": "roadmap.md", "path": "roadmap.md", "note": "declared directions, none of them measured"},
     ]
-    if current_md:
-        root_machine.insert(2, {"href": f"results/{current_md[-1].name}", "path": f"results/{current_md[-1].name}", "note": "the current named-rail measurement as Markdown"})
+    # The root page is a TRACKED rendered file, so it must not depend on
+    # whether the gate assembled results/: the reader list links results/ as
+    # the page always has, and index.json carries the gated pointer.
     frag = (HERE / "content" / "index.html").read_text(encoding="utf-8")
     rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="measurement",
                machine=root_machine, marker=None, check=check,
