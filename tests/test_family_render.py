@@ -85,10 +85,12 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
         subj = json.loads(base64.urlsafe_b64decode(part + "=" * (-len(part) % 4)))["credentialSubject"]
         names.append(subj["displayName"])
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
-    body = text.split("<tbody>", 1)[1]
-    positions = [body.index("<td>" + n + "</td>") for n in names]
+    first_question = text.split("<h2", 2)[1]
+    positions = [first_question.index("<h3>" + n + "</h3>") for n in names]
     ordered = [n for _, n in sorted(zip(positions, names))]
     assert ordered == sorted(names, key=str.casefold)
+    assert text.count('<section class="record"') == 13 * len(names)
+    assert "<details><summary>Sources (" in text and " open>" not in text
     for heading in ("Who pays the network fee", "Finality model class", "Retry and idempotency", "Ambiguity bound",
                     "Outcome knowledge", "Restitution kinds (refund support)", "Observer privacy exposure",
                     "Specification pin", "Declared rate limits", "Status page", "SDK languages",
