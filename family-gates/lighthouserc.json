@@ -1,6 +1,6 @@
 {
-  "x-vendored-from": "vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
-  "x-vendored": "the Lighthouse CI budgets of the public page family (DES-100, founder-approved 2026-10-16); the URLs are passed on the command line (--collect.url=...) by each repository's workflow; vendored from agentic-paybench/design-system-private packages/family/gates, re-vendor, never edit here",
+  "x-vendored-from": "vendored from agentic-paybench/design-system-private@f2b1319 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
+  "x-vendored": "the Lighthouse CI budgets of the public page family (DES-100, founder-approved 2026-10-16; the third-party and script budgets moved to lh-check.mjs on 2026-10-16, which fails on any third-party or script resource beyond the decided-assets list, Register Operating 80 item 8, and must run straight after lhci autorun); the URLs are passed on the command line (--collect.url=...) by each repository's workflow; vendored from agentic-paybench/design-system-private packages/family/gates, re-vendor, never edit here",
   "ci": {
     "collect": {
       "numberOfRuns": 2,
@@ -32,18 +32,6 @@
           "warn",
           {
             "minScore": 0.8
-          }
-        ],
-        "resource-summary:third-party:count": [
-          "error",
-          {
-            "maxNumericValue": 0
-          }
-        ],
-        "resource-summary:script:count": [
-          "error",
-          {
-            "maxNumericValue": 0
           }
         ],
         "resource-summary:total:size": [
