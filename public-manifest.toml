@@ -45,6 +45,26 @@ R4 = "Verifiable right-of-reply fairness"
 "docs/site/.well-known/did.json" = "R1"
 "docs/site/404.html" = "R1"
 "docs/site/_headers" = "R1"
+# The shared family layout (DES-99, DES-103), vendored from design-system-private
+# by its packages/family/vendor.mjs; the first line of each text file names the
+# source commit. Re-vendor, never edit here.
+"docs/site/family/tokens.css" = "R0"
+"docs/site/family/family.css" = "R0"
+"docs/site/family/family.py" = "R0"
+"docs/site/family/posture-snippet.html" = "R0"
+"docs/site/family/fonts/hanken-grotesk-latin.woff2" = "R0"
+"docs/site/family/fonts/hanken-grotesk-latin-ext.woff2" = "R0"
+"docs/site/family/fonts/ibm-plex-mono-400-latin.woff2" = "R0"
+"docs/site/family/fonts/ibm-plex-mono-500-latin.woff2" = "R0"
+"docs/site/family/fonts/OFL-HankenGrotesk.txt" = "R0"
+"docs/site/family/fonts/OFL-IBMPlexMono.txt" = "R0"
+# The reader-page renderer and the tracked content fragments of the root and
+# 404 pages (DES-103); the rendered pages beside them are build outputs except
+# index.html and 404.html, which are tracked and drift-checked by the tests.
+"docs/site/build-pages.py" = "R1"
+"docs/site/content/index.html" = "R1"
+"docs/site/content/404.html" = "R1"
+"tests/test_family_render.py" = "R3"
 "docs/results/dim02-authorization-latency.level1.md" = "R2"
 # Version 1.1 (2026-10-01) corrects version 1.0 above; version 1.0 is kept unaltered.
 "docs/results/dim02-authorization-latency.v1.1.level1.md" = "R2"

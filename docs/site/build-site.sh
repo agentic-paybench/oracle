@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Assemble the Cloudflare Pages deploy directory (docs/site) by copying the served
-# source artefacts into it, then generate directory index pages so /adr/ and
-# /methodology/ resolve (Cloudflare Pages serves index.html for a directory
-# request). Idempotent. Run before `wrangler pages deploy docs/site`.
-# The copied trees (schema/, adr/, methodology/) are gitignored build outputs.
+# source artefacts into it, then render the reader pages (DES-103) from the
+# assembled tree with docs/site/build-pages.py. Idempotent. Run before
+# `wrangler pages deploy docs/site`.
+# The copied trees (schema/, adr/, methodology/) and every rendered page except
+# the root index.html and 404.html are gitignored build outputs.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -28,34 +29,11 @@ else
   echo "build-site: results OMITTED (G_S21 closed; fail-closed)"
 fi
 
-# Optional labels for a directory index. docs/results-labels.tsv maps a file name
-# to a short label (tab-separated) shown beside its link, so a reader arriving at
-# the index can tell which dated version of an artefact is current and which is a
-# superseded record kept unaltered. A file with no entry gets no label.
-LABELS="$ROOT/docs/results-labels.tsv"
-label_for () {  # $1 = file name; prints ": <label>" or nothing
-  [ -f "$LABELS" ] || return 0
-  awk -F'\t' -v f="$1" '$1 == f { printf ": %s", $2 }' "$LABELS"
-}
+# Render the reader pages from the ASSEMBLED tree only (never from docs/results),
+# so a results page exists only when the gate copied the directory. The
+# renderer is the vendored family layout (docs/site/family); labels for the
+# results listing come from docs/results-labels.tsv. It exits non-zero on any
+# failure and set -e stops the deploy.
+python3 "$SITE/build-pages.py" --site "$SITE" --labels "$ROOT/docs/results-labels.tsv"
 
-# Generate a simple directory index so the landing-page links resolve.
-gen_index () {  # $1 = dir under site, $2 = page title
-  local dir="$SITE/$1" title="$2"
-  {
-    echo "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
-    echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-    echo "<title>${title}</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:46rem;margin:3rem auto;padding:0 1rem}code{font-family:ui-monospace,monospace}</style></head><body>"
-    echo "<h1>${title}</h1><p><a href=\"../\">&larr; oracle index</a></p><ul>"
-    ( cd "$dir" && find . -type f ! -name index.html | sort | while read -r f; do
-        f="${f#./}"; echo "<li><a href=\"${f}\"><code>${f}</code></a>$(label_for "$f")</li>"
-      done )
-    echo "</ul></body></html>"
-  } > "$dir/index.html"
-}
-gen_index adr "Decision records (ADR)"
-gen_index methodology "Settlement-finality methodology (frozen v1.2)"
-if [ -d "$SITE/results" ]; then
-  gen_index results "Named-rail measurements"
-fi
-
-echo "site assembled at $SITE (capabilities + methodology + schema + adr + roadmap + posture + 404 + dir indexes; results per the G_S21 decision above)"
+echo "site assembled at $SITE (capabilities + methodology + schema + adr + roadmap + posture + 404 + reader pages; results per the G_S21 decision above)"
