@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@adf6e82 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@dccf561 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -326,7 +326,10 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   min-width: 0;
   padding: var(--space-3) 0 0;
   border-top: var(--border-hairline) solid var(--color-border);
-  scroll-margin-top: var(--space-4);
+  /* A jump to a record must land BELOW the pinned question heading, so the
+     rail's name is visible: the heading's own height (its padding and one
+     heading line, from the same tokens) plus a gap. */
+  scroll-margin-top: calc(var(--space-4) + var(--space-2) + var(--type-heading-size) * var(--type-heading-leading) + var(--border-hairline) + var(--space-3));
 }
 .record h3 {
   margin: 0 0 var(--space-2);
@@ -423,4 +426,5 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   /* On a phone the pinned question heading drops its padding so it costs
      under one body line of reading height. */
   .question > h2 { padding-top: 0; padding-bottom: 0; }
+  .record { scroll-margin-top: calc(var(--type-heading-size) * var(--type-heading-leading) + var(--border-hairline) + var(--space-3)); }
 }
