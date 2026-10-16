@@ -211,7 +211,9 @@ def test_lead_lines_are_the_schemas_first_sentences_with_two_omitted(site_with_r
     """D3: eleven lead lines, each the first sentence of the served schema
     description, verbatim; none for Restitution kinds or SDK languages."""
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
-    schema = json.loads((SITE / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
+    # The fixture's assembled copy (built from the tracked schema/), never
+    # docs/site/schema/, which is gitignored and absent on a fresh clone.
+    schema = json.loads((site_with_results / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
     props = schema["properties"]["credentialSubject"]["properties"]
     leads = re.findall(r'<p class="lead">(.*?)</p>', text)
     assert len(leads) == 11
