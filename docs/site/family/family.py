@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@f2b1319 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@adf6e82 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -214,10 +214,14 @@ def machine_panel(paths: list[dict], intro: str | None = None) -> str:
     )
 
 
-def family_bar(surface: str) -> str:
+def family_bar(surface: str, at_root: bool = True) -> str:
+    """The one-line family bar. The current surface's link carries
+    aria-current: "page" on that surface's root page (the link IS this page),
+    "true" on any other page of the surface (the link is the current site,
+    not this page)."""
     links = []
     for key, href, label in SURFACES:
-        cur = ' aria-current="page"' if key == surface else ""
+        cur = (' aria-current="page"' if at_root else ' aria-current="true"') if key == surface else ""
         links.append(f'  <a href="{href}"{cur}>{label}</a>')
     return (
         '<nav class="fam" aria-label="Family">\n'
@@ -264,6 +268,7 @@ def render_page(
     extra_head: str = "",
     lang: str = "en",
     layout: str = "measure",
+    at_root: bool = True,
 ) -> str:
     """layout "measure" (every page by default) or "wide" (a data page: the
     container widens, prose inside it keeps the reading measure, one left edge)."""
@@ -295,7 +300,7 @@ def render_page(
         f'<link rel="stylesheet" href="{family_prefix}family.css">\n'
         f"{icon}{extra}</head>\n<body>\n"
         f'<div class="{page_class}">\n'
-        f"{family_bar(surface)}\n<main>\n{body}\n</main>\n{footer_line()}\n</div>\n</body>\n</html>\n"
+        f"{family_bar(surface, at_root)}\n<main>\n{body}\n</main>\n{footer_line()}\n</div>\n</body>\n</html>\n"
     )
 
 

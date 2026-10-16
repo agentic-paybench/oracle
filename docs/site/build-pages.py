@@ -91,6 +91,8 @@ def render_value(v) -> str:
     if v is None:
         return ""
     if isinstance(v, str):
+        if URL_VALUE.fullmatch(v):
+            return f'<a href="{esc(v)}">{esc(v)}</a>'
         return esc(v)
     if isinstance(v, bool):
         return "yes" if v else "no"
@@ -104,6 +106,33 @@ def render_value(v) -> str:
 
 
 SLUG_VALUE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+URL_VALUE = re.compile(r"https?://[^\s<>\"]+")
+
+# D3: each question's lead line is the FIRST sentence of the schema's own
+# served description (schema/capability.schema.json), moved verbatim. Two are
+# omitted by the founder's ruling of 2026-10-16 (Register Operating 80 item
+# 14): Restitution kinds (its first sentence is schema-internal) and SDK
+# languages.
+LEAD_OMIT = {"bundle.refundSupport", "sdkLanguages"}
+FIRST_SENTENCE = re.compile(r"(.+?[.!?])(?=\s+[A-Z(]|\s*$)", re.S)
+
+
+def lead_lines(site: Path) -> dict:
+    schema = json.loads((site / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
+    props = schema["properties"]["credentialSubject"]["properties"]
+    out = {}
+    for key, _, _ in QUESTIONS:
+        if key in LEAD_OMIT:
+            continue
+        node = props
+        for part in key.split("."):
+            node = node[part]
+            if part != key.split(".")[-1]:
+                node = node["properties"]
+        m = FIRST_SENTENCE.match(node.get("description", ""))
+        if m:
+            out[key] = m.group(1)
+    return out
 
 
 def render_kv(d: dict) -> str:
@@ -127,7 +156,7 @@ def render_record_value(v) -> tuple[str, str]:
     return "value", render_value(v)
 
 
-def render_record(question_id: str, name: str, cell) -> str:
+def render_record(question_id: str, name: str, cell, question: str = "") -> str:
     """One record card: the rail name, the value, the disposition and provenance
     as labelled tags, the statement, the sources behind a native details
     disclosure (closed by default; no script; the URLs stay in the page)."""
@@ -145,9 +174,9 @@ def render_record(question_id: str, name: str, cell) -> str:
     if extras:
         extras_html = '<dl class="extras">' + "".join(
             f"<div><dt>{esc(k)}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
+    # D2 (founder ruling 2026-10-16): the disposition is not shown on the
+    # reader card; it stays in the signed credential, where software needs it.
     tags = []
-    if cell.get("disposition"):
-        tags.append(f'<span class="tag"><span class="k">Disposition</span> {esc(str(cell["disposition"]))}</span>')
     if prov.get("label"):
         tags.append(f'<span class="tag"><span class="k">Provenance</span> {esc(str(prov["label"]))}</span>')
     tags_html = f'<p class="tags">{"".join(tags)}</p>' if tags else ""
@@ -157,16 +186,18 @@ def render_record(question_id: str, name: str, cell) -> str:
         dates = sorted({str(s.get("retrievedAt", "")) for s in sources if s.get("retrievedAt")})
         when = f", retrieved {' and '.join(dates)}" if dates else ""
         items = "".join(f'<li><a href="{esc(s.get("url", ""))}">{esc(s.get("url", ""))}</a></li>' for s in sources)
-        details = f"<details><summary>Sources ({len(sources)}){esc(when)}</summary><ul>{items}</ul></details>"
+        context = f'<span class="visually-hidden">: {esc(name)}, {esc(question)}</span>' if question else ""
+        details = f"<details><summary>Sources ({len(sources)}){esc(when)}{context}</summary><ul>{items}</ul></details>"
     return f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>{value}{extras_html}{tags_html}{statement}{details}</section>'
 
 
-def capabilities_body(index: dict, subjects: list[dict]) -> str:
+def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = None) -> str:
+    leads = leads or {}
     notice = index.get("notice", {})
     parts = [
         '<div class="lede"><div class="intro">',
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
-        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one card per rail under each question, rails in alphabetical order, with each card's sources folded beneath it; the signed records themselves are listed at the end for software.</p>",
+        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one card per rail under each question, rails in alphabetical order, with each card's sources folded beneath it; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
         family.PLACEHOLDER_POSTURE,
     ]
     if notice.get("evenHandedStatement"):
@@ -176,12 +207,24 @@ def capabilities_body(index: dict, subjects: list[dict]) -> str:
     fee = notice.get("feeQuotation", {}) or {}
     toc = "".join(f'<li><a href="#{family.slug(label)}">{esc(label)}</a></li>' for _, label, _ in QUESTIONS)
     parts.append("</div>")
-    parts.append(f'<nav class="toc" aria-labelledby="questions"><h2 id="questions">The thirteen questions</h2><ol>{toc}</ol></nav>')
+    extra = ('<ul class="extra"><li><a href="#pending-facts">Facts not yet sourced</a></li>'
+             '<li><a href="#machine-h">For agents and software</a></li></ul>')
+    parts.append(f'<nav class="toc" aria-labelledby="questions"><h2 id="questions">The thirteen questions</h2><ol>{toc}</ol>{extra}</nav>')
     parts.append("</div>")
+    rows = []
+    for s in subjects:
+        name = str(s.get("displayName", s.get("railName", "")))
+        links = "".join(
+            f'<a href="#{family.slug(label)}-{family.slug(name)}" title="{esc(label)}">{n}<span class="visually-hidden">, {esc(name)}: {esc(label)}</span></a>'
+            for n, (_, label, _) in enumerate(QUESTIONS, 1))
+        rows.append(f"<div><dt>{esc(name)}</dt><dd>{links}</dd></div>")
+    parts.append(f'<nav class="by-rail" aria-labelledby="by-rail"><h2 id="by-rail">By rail</h2><dl>{"".join(rows)}</dl></nav>')
     for key, label, _ in QUESTIONS:
         qid = family.slug(label)
         parts.append(f'<section class="question" aria-labelledby="{qid}">')
         parts.append(f'<h2 id="{qid}">{esc(label)}</h2>')
+        if leads.get(key):
+            parts.append(f'<p class="lead">{esc(leads[key])}</p>')
         if key == "feeBearer" and fee:
             notes = "".join(f'<p class="meta">{esc(fee[k])}</p>'
                             for k in ("quotationStatement", "sourceStatement", "evenHandedStatement") if fee.get(k))
@@ -189,7 +232,7 @@ def capabilities_body(index: dict, subjects: list[dict]) -> str:
                 parts.append(f'<div class="notes">{notes}</div>')
         parts.append('<div class="cards">')
         for s in subjects:
-            parts.append(render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key)))
+            parts.append(render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key), label))
         parts.append("</div></section>")
     parts.append('<h2 id="pending-facts">Facts not yet sourced</h2>')
     parts.append('<p class="meta">These fields are served as "pending" in every credential: roadmap, no measurement, never invented.</p>')
@@ -252,7 +295,7 @@ def listing_body(title: str, intro: str, items: list[tuple[str, str, str]]) -> s
 
 def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machine: list[dict] | None,
          marker: str | None, description: str | None = None, check: bool, root_relative: bool = False,
-         machine_intro: str | None = None, layout: str = "measure") -> int:
+         machine_intro: str | None = None, layout: str = "measure", at_root: bool = False) -> int:
     depth = rel_out.count("/")
     prefix = "/family/" if root_relative else ("../" * depth) + "family/"
     html = family.render_page(
@@ -267,6 +310,7 @@ def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machi
         machine_intro=machine_intro,
         marker=marker,
         layout=layout,
+        at_root=at_root,
     )
     return family.write_or_check(site / rel_out, html, check)
 
@@ -314,7 +358,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # Capabilities reader page.
     if assembled or (site / "capabilities" / "index.json").exists():
         index, subjects = load_subjects(site)
-        body = capabilities_body(index, subjects)
+        body = capabilities_body(index, subjects, lead_lines(site))
         rc |= page(site, "capabilities/index.html", body, title="Capability records: documented facts per rail",
                    posture="documentation", machine=machine_for_capabilities(index, subjects, "../"),
                    marker="level1-documentation-profile", check=check,
@@ -362,7 +406,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # the page always has, and index.json carries the gated pointer.
     frag = (HERE / "content" / "index.html").read_text(encoding="utf-8")
     rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="measurement",
-               machine=root_machine, marker=None, check=check,
+               machine=root_machine, marker=None, check=check, at_root=True,
                description="Published facts and measurements about the payment rails that software agents use, signed so they can be checked, with nothing on this site that tells you which rail to use.")
     frag404 = (HERE / "content" / "404.html").read_text(encoding="utf-8")
     rc |= page(site, "404.html", frag404, title="Not found: agentic-paybench oracle", posture="none", machine=None,

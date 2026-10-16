@@ -172,3 +172,71 @@ def test_tracked_root_and_404_pages_match_a_fresh_render():
                if line.endswith(" differs from a fresh render")
                and line.split("family: ", 1)[-1].rsplit(" differs", 1)[0] in tracked]
     assert not drifted, "\n".join(drifted)
+
+
+QUESTION_KEYS = ["feeBearer", "finalityModelClass", "retryIdempotency", "ambiguityBound", "outcomeKnowledge",
+                 "bundle.refundSupport", "observerPrivacyExposure", "specificationPin", "declaredRateLimits",
+                 "statusPage", "sdkLanguages", "errorCatalogue", "offlineVerifiability"]
+
+
+def _subjects():
+    index = json.loads((SITE / "capabilities" / "index.json").read_text(encoding="utf-8"))
+    out = []
+    for rail in index["rails"]:
+        vc = json.loads((SITE / rail["vc"]).read_text(encoding="utf-8"))
+        part = vc["id"].split(",", 1)[1].split(".")[1]
+        out.append(json.loads(base64.urlsafe_b64decode(part + "=" * (-len(part) % 4)))["credentialSubject"])
+    return out
+
+
+def _dig(d, dotted):
+    for k in dotted.split("."):
+        d = d[k]
+    return d
+
+
+def test_disposition_off_the_reader_cards_and_kept_in_every_credential(site_with_results):
+    """D2 (founder ruling 2026-10-16): the reader page shows no disposition; the
+    signed credentials keep one on every one of the thirteen cells per rail."""
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    assert "Disposition" not in text
+    for word in ("confirmed-absence", "partial-absence"):
+        assert word not in text, word
+    for subj in _subjects():
+        for key in QUESTION_KEYS:
+            assert _dig(subj, key).get("disposition") in {"positive", "partial-absence", "confirmed-absence", "void"}, (subj["displayName"], key)
+
+
+def test_lead_lines_are_the_schemas_first_sentences_with_two_omitted(site_with_results):
+    """D3: eleven lead lines, each the first sentence of the served schema
+    description, verbatim; none for Restitution kinds or SDK languages."""
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    schema = json.loads((SITE / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
+    props = schema["properties"]["credentialSubject"]["properties"]
+    leads = re.findall(r'<p class="lead">(.*?)</p>', text)
+    assert len(leads) == 11
+    for line in leads:
+        assert any(line.replace("&#x27;", "'") in (props[k].get("description", "") if k in props else "")
+                   for k in props), line
+    sections = text.split('<section class="question"')[1:]
+    for i in (5, 10):  # Restitution kinds, SDK languages (zero-based in the fixed order)
+        assert '<p class="lead">' not in sections[i]
+
+
+def test_family_bar_marks_the_page_only_on_the_root(site_with_results):
+    root = (site_with_results / "index.html").read_text(encoding="utf-8")
+    assert 'href="https://oracle.agentic-paybench.dev/" aria-current="page"' in root
+    for rel in ("capabilities/index.html", "404.html", "roadmap.html"):
+        page = (site_with_results / rel).read_text(encoding="utf-8")
+        assert 'aria-current="page"' not in page, rel
+        assert 'href="https://oracle.agentic-paybench.dev/" aria-current="true"' in page, rel
+
+
+def test_every_in_page_link_on_the_capabilities_page_resolves(site_with_results):
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    ids = set(re.findall(r'id="([^"]+)"', text))
+    anchors = re.findall(r'href="#([^"]+)"', text)
+    by_rail = text.split('class="by-rail"', 1)[1].split("</nav>", 1)[0]
+    assert len(re.findall(r'<a href="#', by_rail)) == 13 * 6
+    for a in anchors:
+        assert a in ids, a
