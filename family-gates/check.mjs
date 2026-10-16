@@ -1,4 +1,4 @@
-// vendored from agentic-paybench/design-system-private@0ceef1d (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+// vendored from agentic-paybench/design-system-private@d7550af (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 // check.mjs: the network-log, layout and axe-core gates of the public page
 // family (DES-100, founder-approved 2026-10-16). One script, the same in every
 // page repository, vendored from design-system-private packages/family/gates.
@@ -26,7 +26,14 @@ const opt = (name, dflt) => {
 const base = opt("--base", "http://127.0.0.1:8080").replace(/\/$/, "");
 const out = opt("--out", "");
 const pathsIdx = args.indexOf("--paths");
-const paths = pathsIdx >= 0 ? args.slice(pathsIdx + 1).filter((p) => !p.startsWith("--")) : ["/"];
+const paths = [];
+if (pathsIdx >= 0) {
+  for (const p of args.slice(pathsIdx + 1)) {
+    if (p.startsWith("--")) break;
+    paths.push(p);
+  }
+}
+if (!paths.length) paths.push("/");
 const origin = new URL(base).origin;
 
 const browser = await chromium.launch();
@@ -90,7 +97,7 @@ await browser.close();
 
 for (const e of report) {
   const tag = e.skipped ? "SKIP" : e.failures.length ? "FAIL" : "OK  ";
-  const detail = e.skipped ? e.skipped : `scroll=${e.scrollWidth}/${e.clientWidth} requests=${e.requests} offOrigin=${e.offOrigin.length} scripts=${e.scripts} fonts=${(e.fonts || []).join("|")}` + (e.axeViolations ? ` axe=${e.axeViolations.length} violation(s), ${e.axePasses} rules passed` : "");
+  const detail = e.skipped ? e.skipped : `scroll=${e.scrollWidth}/${e.clientWidth} requests=${e.requests} offOrigin=${(e.offOrigin || []).length} scripts=${e.scripts} fonts=${(e.fonts || []).join("|")}` + (e.axeViolations ? ` axe=${e.axeViolations.length} violation(s), ${e.axePasses} rules passed` : "");
   console.log(`${tag} ${String(e.width).padStart(4)} ${e.scheme.padEnd(5)} ${e.path}  ${detail}`);
   for (const f of e.failures) console.log(`      ${f}`);
 }

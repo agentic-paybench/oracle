@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@d61ab99 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@d7550af (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -20,9 +20,15 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* The page ground is the SURFACE role, not the canvas role: on the canvas the
+   muted text role measures 4.49:1 in the light theme, one hundredth under the
+   AA line the gate enforces; on the surface it measures 4.9:1. The posture
+   block and code blocks take the canvas role so they still read as recessed.
+   (Gate finding 2026-10-16, applied under the no-wording-escalation rule; the
+   founder's veto stands.) */
 body {
   margin: 0;
-  background: var(--color-canvas);
+  background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--type-body-size);
@@ -94,7 +100,7 @@ pre {
   font-family: var(--font-mono);
   font-size: var(--type-small-size);
   line-height: var(--leading-body);
-  background: var(--color-surface-sunken);
+  background: var(--color-canvas);
   border: var(--border-hairline) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
   padding: var(--space-3) var(--space-4);
@@ -126,7 +132,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 
 /* --- the posture block: the ruled sentences, from the shared snippet --- */
 .posture {
-  background: var(--color-surface-sunken);
+  background: var(--color-canvas);
   border: var(--border-hairline) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
   padding: var(--space-3) var(--space-4);

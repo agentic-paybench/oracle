@@ -1,5 +1,5 @@
 {
-  "x-vendored-from": "vendored from agentic-paybench/design-system-private@0ceef1d (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
+  "x-vendored-from": "vendored from agentic-paybench/design-system-private@d7550af (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
   "x-vendored": "the Lighthouse CI budgets of the public page family (DES-100, founder-approved 2026-10-16); the URLs are passed on the command line (--collect.url=...) by each repository's workflow; vendored from agentic-paybench/design-system-private packages/family/gates, re-vendor, never edit here",
   "ci": {
     "collect": {

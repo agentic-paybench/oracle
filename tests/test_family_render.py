@@ -137,7 +137,7 @@ def test_every_relative_reference_resolves(site_with_results):
         parser = _Refs()
         parser.feed(p.read_text(encoding="utf-8"))
         for ref in parser.loads + parser.hrefs:
-            if ref == "<inline script>" or re.match(r"^(https?:|mailto:|#)", ref):
+            if ref == "<inline script>" or re.match(r"^(https?:|mailto:|data:|#)", ref):
                 continue
             if ref.startswith("/"):
                 assert p.name == "404.html", f"{p}: root-relative {ref} outside the 404 page"
