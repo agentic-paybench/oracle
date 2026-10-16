@@ -1,0 +1,780 @@
+/* vendored from agentic-paybench/design-system-private@d7550af (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+
+/* ---- packages/tokens/fonts.css ---- */
+/* ==========================================================================
+   FONTS. The whole typeface commitment of the system lives in this one file.
+   --------------------------------------------------------------------------
+   Both the @font-face declarations and the two family tokens are here on
+   purpose. Swapping a typeface later is then a single-file edit plus dropping
+   new woff2 files into ./fonts/: replace the faces, repoint --font-sans or
+   --font-mono, rebuild. No component and no export names a typeface, so
+   nothing else has to change.
+
+   Self-hosted rather than fetched from a font CDN, because the exports are
+   embedded in a demo shell that must make no network requests at all, and
+   because a demo that depends on a third-party CDN fails in exactly the room
+   where it matters most.
+
+   Both families are licensed under the SIL Open Font License 1.1, which
+   permits redistribution; the licence texts travel with the files in
+   ./fonts/, which is what the OFL requires.
+
+   Subsetting: latin and latin-ext only. Cyrillic and Vietnamese are dropped
+   because no surface here uses them. A glyph outside those ranges falls back
+   per-glyph to the system stack, which is correct behaviour rather than a
+   failure; the one place it currently shows is the arrow glyph in the estates
+   map.
+   ========================================================================== */
+
+/* Hanken Grotesk is a variable font, so one file covers the whole 400 to 800
+   weight range rather than one file per weight. */
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("./fonts/hanken-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("./fonts/hanken-grotesk-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* IBM Plex Mono ships static instances, so the two weights the system uses
+   are two files. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/ibm-plex-mono-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* The only two places a typeface is named. Everything else reads these. */
+:root {
+  --font-sans: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+               Consolas, monospace;
+}
+
+
+/* ---- packages/tokens/primitives.css ---- */
+/* ==========================================================================
+   LAYER 1: PRIMITIVES. This is the brand-swap point.
+   --------------------------------------------------------------------------
+   Raw values only. No component may reference these directly; components read
+   the semantic layer, so a brand change edits this file and the brand slots
+   and nothing else.
+
+   Values are taken from the design project's own pages rather than invented.
+   Where those pages disagreed with each other, the conflict is noted inline
+   with the resolution, so a later reader can see it was a decision and not an
+   accident.
+   ========================================================================== */
+
+:root {
+  /* --- accent ramps: three interchangeable brand accents ----------------
+     Each accent carries four roles, a structure lifted from the demo
+     console's own theme object: the accent itself, a darker variant for
+     text sitting on the tint, the tint background, and a translucent
+     version used by the pulse ring. */
+
+  --p-teal-accent:        #0e9a93;
+  --p-teal-accent-deep:   #0c7e78;
+  --p-teal-accent-tint:   #e7f4f2;
+  --p-teal-accent-soft:   rgba(14, 154, 147, 0.5);
+
+  --p-indigo-accent:      #5b6cf0;
+  --p-indigo-accent-deep: #4453d6;
+  --p-indigo-accent-tint: #eceefe;
+  --p-indigo-accent-soft: rgba(91, 108, 240, 0.5);
+
+  --p-violet-accent:      #7c5cf0;
+  --p-violet-accent-deep: #6244d6;
+  --p-violet-accent-tint: #f0ecfe;
+  --p-violet-accent-soft: rgba(124, 92, 240, 0.5);
+
+  /* --- accent ramps, DARK end -------------------------------------------
+     The three accents above were picked against a light canvas, and for a
+     while the accent axis was treated as theme-independent. Measurement
+     (DES-61-TypeScaleAudit, 2026-08-15) showed that does not hold: on the
+     dark panel these surfaces actually use, #1a2027, contrast against the
+     accent is 4.74:1 for teal but 3.79:1 for indigo and 3.63:1 for violet.
+     Indigo and violet FAIL WCAG AA for normal text. That is why the demo's
+     Overview page invented its own off-system blue, #7cc0ff, which measures
+     8.47:1: the page was not being lazy, it was working around a real gap.
+
+     These -night variants keep each accent's hue and saturation and raise
+     lightness until contrast on that panel reaches 7:1, with a -strong step
+     at roughly 9.5:1 for emphasis. Ratios on the panel / on the page
+     background #101418:
+
+       teal    7.00 / 7.89     strong  9.71 / 10.95
+       indigo  7.10 / 8.00     strong  9.53 / 10.74
+       violet  7.05 / 7.95     strong  9.59 / 10.81
+
+     Note that -deep inverts across themes and that is correct rather than a
+     naming slip: on a light canvas more emphasis means darker, on a dark one
+     it means lighter. -deep serves the first, -night-strong the second. */
+
+  --p-teal-accent-night:          #11bdb4;
+  --p-teal-accent-night-strong:   #14ded4;
+  --p-teal-accent-night-soft:     rgba(17, 189, 180, 0.5);
+
+  --p-indigo-accent-night:        #9aa5f6;
+  --p-indigo-accent-night-strong: #bbc2f9;
+  --p-indigo-accent-night-soft:   rgba(154, 165, 246, 0.5);
+
+  --p-violet-accent-night:        #b19df6;
+  --p-violet-accent-night-strong: #cbbef9;
+  --p-violet-accent-night-soft:   rgba(177, 157, 246, 0.5);
+
+  /* --- neutral ramp, light end ------------------------------------------
+     CONFLICT RESOLVED: the demo consoles use #f4f5f7 as the page canvas,
+     the diagram pages use #f5f6f8. Taking the console value, because the
+     consoles are the surface this system is built to reproduce. */
+
+  --p-canvas:      #f4f5f7;
+  --p-canvas-warm: #f1f0ec;
+  --p-white:       #ffffff;
+
+  --p-ink-050: #fafbfc;
+  --p-ink-100: #f3f4f6;
+  --p-ink-150: #eef0f2;
+  --p-ink-200: #e4e6ea;
+  --p-ink-250: #d7dae0;
+  --p-ink-300: #c2c7d0;
+  --p-ink-400: #a4a9b3;
+  --p-ink-450: #9aa0aa;
+  --p-ink-500: #8a909c;
+  --p-ink-550: #7a808b;
+  --p-ink-600: #6b717c;
+  --p-ink-650: #5c626c;
+  --p-ink-700: #56606b;
+  --p-ink-800: #3a3f4a;
+  --p-ink-850: #2a2e37;
+  --p-ink-900: #1f2430;
+
+  /* --- dark surfaces ----------------------------------------------------
+     CONFLICT RESOLVED: four near-blacks are in use across the project.
+     Keeping two named roles rather than collapsing to one, because they do
+     different jobs: a chrome bar and a deep inset panel read as one system
+     only when they differ slightly. */
+
+  --p-slate-chrome: #1b1f2a;
+  --p-slate-deep:   #20242e;
+  --p-slate-raised: #222735;
+
+  /* --- neutral ramp, dark theme ----------------------------------------- */
+
+  --p-night-900: #101418;
+  --p-night-800: #1a2027;
+  --p-night-700: #2c3540;
+  --p-night-400: #8fa0b3;
+  --p-night-100: #dde4ec;
+
+  /* --- status ramps ------------------------------------------------------
+     Each status carries a light triple and a dark-theme counterpart.
+     CONFLICT RESOLVED: three near-identical red tints existed
+     (#fbe7e7, #fbe6e6, #fbecec). Taking #fbe7e7, the most used. */
+
+  --p-positive:       #16a34a;
+  --p-positive-tint:  #e5f5ec;
+  --p-positive-night: #4cc38a;
+
+  --p-caution:        #b9740f;
+  --p-caution-graphic:#e08a1e;
+  --p-caution-tint:   #fbf0dd;
+  --p-caution-night:  #e5b567;
+
+  --p-critical:       #c92f2f;
+  --p-critical-deep:  #9a3030;
+  --p-critical-tint:  #fbe7e7;
+  --p-critical-edge:  #f0c2c2;
+  --p-critical-night: #e5716b;
+
+  --p-info:      #5b6470;
+  --p-info-tint: #eceef1;
+  --p-info-line: #cdd2da;
+
+  /* --- elevation ---------------------------------------------------------
+     Two real shadows scraped from the console, plus the "moat" ring: a
+     solid spacer that detaches a coloured marker from whatever sits behind
+     it. The moat is what makes a pulse read as a halo rather than a glow. */
+
+  --p-shadow-raised:  0 1px 2px rgba(0, 0, 0, 0.06);
+  --p-shadow-lifted:  0 1px 2px rgba(0, 0, 0, 0.12);
+  --p-moat-light:     0 0 0 4px #ffffff;
+}
+
+
+/* ---- packages/tokens/semantic.css ---- */
+/* ==========================================================================
+   LAYER 2: SEMANTICS. The only layer components are allowed to read.
+   --------------------------------------------------------------------------
+   Theme resolution, in precedence order:
+     a. :root                         light, the default
+     b. @media (prefers-color-scheme)  follows the viewer's OS
+     c. [data-theme="light|dark"]      explicit, wins over both
+
+   The explicit form is element-scoped, not root-scoped, so a dark island can
+   be nested inside a light page and the reverse. That is what lets one
+   specimen show both themes at once.
+
+   Accent is chosen independently of light/dark, via [data-accent]. The accent
+   rules own the accent roles outright and the theme blocks never touch them,
+   so the two axes compose instead of multiplying into six hand-written
+   variants. See the note above those rules for why that split is load-bearing
+   rather than stylistic.
+   ========================================================================== */
+
+/* --- accent selection: independent of the light/dark axis ----------------
+
+   Each accent rule declares the finished accent ROLES, not an intermediate
+   ramp that the theme blocks then dereference. That is deliberate and it is
+   the one non-obvious thing in this file.
+
+   A custom property whose value contains var() is resolved where it is
+   DECLARED, not where it is used. So `--color-accent: var(--accent-base)`
+   sitting on :root resolves against :root's --accent-base and inherits that
+   fixed result downwards; a nested [data-accent] setting --accent-base later
+   can never change it. The first version of this file had exactly that bug,
+   and every accent rendered teal.
+
+   The surface tint is a translucent mix rather than a baked pastel, so one
+   declaration is correct on a light page and on a dark one: 12% over white
+   lands within a shade of the original hand-picked tints, and the same 12%
+   over a dark canvas gives the subtle wash that theme needs. That is what
+   lets the accent axis and the light/dark axis stay genuinely independent
+   instead of multiplying into six hand-written combinations.
+
+   AMENDED 2026-08-15 (DES-73): the accent axis is no longer fully
+   theme-independent, because measurement showed it could not be. Indigo and
+   violet failed WCAG AA on the dark surfaces these pages use. The accent rules
+   now read a THEME-RESOLVED --ramp-* indirection and live at the FOOT of this
+   file; see the note there for why both of those are load-bearing. */
+
+/* --- type, space, radius: theme-independent ------------------------------ */
+
+:root {
+  /* Typeface tokens live in fonts.css beside the @font-face rules they
+     depend on, so a typeface swap is a single-file edit. */
+
+  /* The half-pixel steps are deliberate and pervasive in the source pages,
+     not rounding noise. They are what keeps dense metadata legible without
+     jumping a whole step. */
+  --text-2xs:   0.5938rem;  /*  9.5px  dense table metadata */
+  --text-xs:    0.6563rem;  /* 10.5px  uppercase micro labels */
+  --text-sm:    0.7188rem;  /* 11.5px  pills, tags */
+  --text-md:    0.7813rem;  /* 12.5px  metadata, mono values */
+  --text-base:  0.8438rem;  /* 13.5px  secondary body */
+  --text-lg:    0.9063rem;  /* 14.5px  body */
+  --text-xl:    1rem;       /* 16px    standfirst */
+  --text-2xl:   1.125rem;   /* 18px    section head */
+  --text-3xl:   1.4375rem;  /* 23px    title */
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-heavy:    800;
+
+  --leading-tight: 1.25;
+  --leading-body:  1.55;
+
+  --tracking-title: -0.02em;
+  --tracking-caps:  0.06em;
+
+  /* --- type ROLES ---------------------------------------------------------
+     The size ramp above is a RAMP: nine raw steps, chosen freely. These four
+     roles are the vocabulary a PAGE is allowed to use, so a page cannot mint a
+     twentieth size by picking a rem value that looks about right.
+
+     This layer exists because of a measured finding (DES-61-TypeScaleAudit,
+     2026-08-15). Colour has had two layers here from the start, primitives and
+     semantics, and the file says the semantic layer is the only one components
+     may read. Type had only the ramp. Given a raw ramp and no role layer, the
+     demo's Overview page rendered NINETEEN distinct font sizes and twenty-three
+     size-and-weight pairs, eight of them inside a 1.6px band where the gaps are
+     too small to perceive as deliberate levels. Two of its nineteen came from
+     tokens at all, and both arrived by accident of using a vendored component.
+
+     Size, weight and leading travel together because a "font", as a reader
+     counts one, is the pair rather than the size. Splitting them is precisely
+     what turned four intended levels into twenty-three rendered ones.
+
+     Colour is deliberately NOT bound in here, for the resolution reason
+     documented above the accent rules: a custom property containing var()
+     resolves where it is DECLARED. --color-text is redeclared per theme, so
+     --type-body-color: var(--color-text) sitting on :root would freeze to the
+     root theme and a nested dark island would render wrong. Pages read
+     --color-text and --color-text-muted at the point of use, where they
+     resolve correctly. Size, weight and leading are safe here because
+     --text-*, --weight-* and --leading-* are declared once and never
+     redeclared in a theme or accent block.
+
+     Purely additive: no existing token changes value, so nothing already built
+     against the --text-* ramp can break.
+
+     TWO FOUNDER CALLS, ruled 2026-08-15, recorded here because both are
+     satisfied at the point of USE and neither moves a value in this block:
+
+       1. A section heading (h2) takes --type-heading-* at --color-text, and
+          drops the uppercase and the letter-spacing. It stops being an eyebrow.
+          The role above already carries exactly that; the retirement of the
+          eyebrow styling is page-side work.
+       2. Diagram band labels keep the BRIGHTER fill, --color-text, while the
+          rail labels beside them stay --color-text-muted. Size and weight are
+          shared between them, which was the founder's point; the brightness
+          difference is what keeps the drawing reading as a stack.
+
+     Both are colour decisions, and colour is deliberately not bound into these
+     roles (see above), so both are expressed by the page choosing --color-text
+     or --color-text-muted at the point of use. That is why no fifth role and no
+     eyebrow role appears here: the ruling is four roles, and an eyebrow is a
+     colour and a tracking choice on an existing one. --tracking-caps stays,
+     because genuine micro-labels elsewhere still use it. */
+
+  --type-display-size:    var(--text-3xl);        /* 23px */
+  --type-display-weight:  var(--weight-bold);     /* 700  */
+  --type-display-leading: var(--leading-tight);   /* 1.25 */
+
+  --type-heading-size:    var(--text-2xl);        /* 18px */
+  --type-heading-weight:  var(--weight-semibold); /* 600  */
+  --type-heading-leading: var(--leading-tight);   /* 1.25 */
+
+  --type-body-size:       var(--text-xl);         /* 16px */
+  --type-body-weight:     var(--weight-regular);  /* 400  */
+  --type-body-leading:    var(--leading-body);    /* 1.55 */
+
+  --type-small-size:      var(--text-base);       /* 13.5px */
+  --type-small-weight:    var(--weight-regular);  /* 400    */
+  --type-small-leading:   var(--leading-body);    /* 1.55   */
+
+  /* Inline emphasis inside body copy. 600, not the browser's 700: at 700 a
+     <strong> outranks every heading on the page, which is what it does on the
+     Overview page today (16px/700 emphasis against 12.8px/600 section
+     headings). A card heading is body size at HEADING weight, not a fifth
+     size, which is what lets three near-identical sizes collapse without
+     losing the distinction they were carrying. */
+  --type-emphasis-weight: var(--weight-semibold); /* 600 */
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+
+  /* The full scale actually in use, not a tidied subset. 10px is the most
+     common card radius in the source pages and was missing from the first
+     token pass. */
+  --radius-2xs:  2px;
+  --radius-xs:   3px;
+  --radius-sm:   4px;
+  --radius-md:   5px;
+  --radius-lg:   6px;
+  --radius-xl:   7px;
+  --radius-2xl:  8px;
+  --radius-3xl:  9px;
+  --radius-4xl:  10px;
+  --radius-5xl:  11px;
+  --radius-pill: 999px;
+
+  --border-hairline: 1px;
+
+  /* --- on-chrome roles: for surfaces that are dark in BOTH themes -------
+     The chrome surface (engine-room panels, the shell bar) stays dark
+     whatever the page theme is, so anything sitting on it needs its own
+     text and border roles. Without these, a child that legitimately sets
+     colour from --color-text renders dark-on-dark in the light theme, which
+     is exactly what happened to the field values inside the first dark
+     panel. These are theme-independent by design. */
+  --color-on-chrome:         var(--p-night-100);
+  --color-on-chrome-muted:   var(--p-night-400);
+  --color-on-chrome-border:  var(--p-night-700);
+  --color-on-chrome-sunken:  var(--p-night-900);
+
+  /* --- brand slots: the other half of the swap point --------------------
+     The wordmark is empty and the mark is a neutral geometric form, so
+     nothing brand-bearing renders until a brand exists. Filling
+     --brand-wordmark is the whole of a brand launch on this surface. */
+  --brand-wordmark: "";
+  --brand-mark-size: 14px;
+  --brand-mark-radius: var(--radius-xs);
+
+  /* --brand-mark-color is deliberately NOT given a default here. The mark
+     falls back to var(--color-accent) at the point of use instead, so it
+     follows a nested [data-accent] like everything else; a default of
+     var(--color-accent) declared on :root would resolve once, against the
+     root accent, and pin every mark on the page to it. Set this token only
+     to make the mark differ from the accent on purpose. */
+}
+
+/* --- colour roles, LIGHT -------------------------------------------------- */
+
+:root,
+[data-theme="light"] {
+  /* The accent ramps resolved for THIS theme. Plumbing, not a public role:
+     components read --color-accent* and never these. See the note above the
+     accent rules for why the indirection exists. */
+  --ramp-teal:          var(--p-teal-accent);
+  --ramp-teal-strong:   var(--p-teal-accent-deep);
+  --ramp-teal-soft:     var(--p-teal-accent-soft);
+  --ramp-indigo:        var(--p-indigo-accent);
+  --ramp-indigo-strong: var(--p-indigo-accent-deep);
+  --ramp-indigo-soft:   var(--p-indigo-accent-soft);
+  --ramp-violet:        var(--p-violet-accent);
+  --ramp-violet-strong: var(--p-violet-accent-deep);
+  --ramp-violet-soft:   var(--p-violet-accent-soft);
+
+  /* The DEFAULT accent (teal) resolved for this theme. Needed on the theme
+     block itself, not only on :root: an island that sets a theme but no accent
+     would otherwise inherit an accent frozen at :root, in the root's theme.
+     An island that DOES set an accent overrides these from the rules at the
+     foot of this file. */
+  --color-accent:         var(--ramp-teal);
+  --color-accent-strong:  var(--ramp-teal-strong);
+  --color-accent-surface: color-mix(in srgb, var(--ramp-teal) 12%, transparent);
+  --color-accent-border:  color-mix(in srgb, var(--ramp-teal) 42%, transparent);
+  --color-accent-ring:    var(--ramp-teal-soft);
+  --color-link:           var(--ramp-teal-strong);
+
+  --color-canvas:          var(--p-canvas);
+  --color-canvas-warm:     var(--p-canvas-warm);
+  --color-surface:         var(--p-white);
+  --color-surface-sunken:  var(--p-ink-050);
+  --color-surface-chrome:  var(--p-slate-chrome);
+  --color-surface-deep:    var(--p-slate-deep);
+
+  --color-border:        var(--p-ink-200);
+  --color-border-subtle: var(--p-ink-150);
+  --color-border-strong: var(--p-ink-400);
+
+  --color-text:         var(--p-ink-900);
+  --color-text-strong:  var(--p-ink-850);
+  --color-text-muted:   var(--p-ink-600);
+  --color-text-subtle:  var(--p-ink-450);
+  --color-text-faint:   var(--p-ink-400);
+  --color-text-inverse: var(--p-white);
+
+  /* Accent roles are NOT set here: they belong to the [data-accent] rules
+     above, for the resolution reason documented there. Setting them in a
+     theme block would pin the accent to whatever the theme block could see. */
+
+  --color-positive:         var(--p-positive);
+  --color-positive-surface: var(--p-positive-tint);
+  --color-positive-border:  var(--p-positive);
+
+  --color-caution:         var(--p-caution);
+  --color-caution-graphic: var(--p-caution-graphic);
+  --color-caution-surface: var(--p-caution-tint);
+  --color-caution-border:  var(--p-caution);
+
+  --color-critical:         var(--p-critical);
+  --color-critical-strong:  var(--p-critical-deep);
+  --color-critical-surface: var(--p-critical-tint);
+  --color-critical-border:  var(--p-critical-edge);
+
+  --color-info:         var(--p-info);
+  --color-info-surface: var(--p-info-tint);
+  --color-info-line:    var(--p-info-line);
+
+  --color-neutral-surface: var(--p-ink-150);
+
+  --shadow-raised: var(--p-shadow-raised);
+  --shadow-lifted: var(--p-shadow-lifted);
+  --moat:          var(--p-moat-light);
+}
+
+/* --- colour roles, DARK --------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Accent ramps for dark. Indigo and violet FAILED WCAG AA on these
+       surfaces before this existed (3.79:1 and 3.63:1); see the primitives. */
+    --ramp-teal:          var(--p-teal-accent-night);
+    --ramp-teal-strong:   var(--p-teal-accent-night-strong);
+    --ramp-teal-soft:     var(--p-teal-accent-night-soft);
+    --ramp-indigo:        var(--p-indigo-accent-night);
+    --ramp-indigo-strong: var(--p-indigo-accent-night-strong);
+    --ramp-indigo-soft:   var(--p-indigo-accent-night-soft);
+    --ramp-violet:        var(--p-violet-accent-night);
+    --ramp-violet-strong: var(--p-violet-accent-night-strong);
+    --ramp-violet-soft:   var(--p-violet-accent-night-soft);
+
+    --color-accent:         var(--ramp-teal);
+    --color-accent-strong:  var(--ramp-teal-strong);
+    --color-accent-surface: color-mix(in srgb, var(--ramp-teal) 12%, transparent);
+    --color-accent-border:  color-mix(in srgb, var(--ramp-teal) 42%, transparent);
+    --color-accent-ring:    var(--ramp-teal-soft);
+    --color-link:           var(--ramp-teal-strong);
+
+    --color-canvas:          var(--p-night-900);
+    --color-canvas-warm:     var(--p-night-900);
+    --color-surface:         var(--p-night-800);
+    --color-surface-sunken:  var(--p-night-900);
+    --color-surface-chrome:  var(--p-slate-chrome);
+    --color-surface-deep:    var(--p-night-900);
+
+    --color-border:        var(--p-night-700);
+    --color-border-subtle: var(--p-night-700);
+    --color-border-strong: var(--p-night-400);
+
+    --color-text:         var(--p-night-100);
+    --color-text-strong:  var(--p-night-100);
+    --color-text-muted:   var(--p-night-400);
+    --color-text-subtle:  var(--p-night-400);
+    --color-text-faint:   var(--p-night-400);
+    --color-text-inverse: var(--p-night-900);
+
+    /* Accent roles deliberately absent: see the [data-accent] rules. */
+
+    --color-positive:         var(--p-positive-night);
+    --color-positive-surface: rgba(76, 195, 138, 0.15);
+    --color-positive-border:  rgba(76, 195, 138, 0.45);
+
+    --color-caution:         var(--p-caution-night);
+    --color-caution-graphic: var(--p-caution-night);
+    --color-caution-surface: rgba(229, 181, 103, 0.15);
+    --color-caution-border:  rgba(229, 181, 103, 0.45);
+
+    --color-critical:         var(--p-critical-night);
+    --color-critical-strong:  var(--p-critical-night);
+    --color-critical-surface: rgba(229, 113, 107, 0.15);
+    --color-critical-border:  rgba(229, 113, 107, 0.45);
+
+    --color-info:         var(--p-night-400);
+    --color-info-surface: rgba(143, 160, 179, 0.15);
+    --color-info-line:    var(--p-night-700);
+
+    --color-neutral-surface: rgba(143, 160, 179, 0.15);
+
+    --moat: 0 0 0 4px var(--p-night-800);
+  }
+}
+
+[data-theme="dark"] {
+  /* Same ramps as the media-query branch above. Declared again rather than
+     shared, because this block is the EXPLICIT form and has to win on an
+     element whose OS preference says light. */
+  --ramp-teal:          var(--p-teal-accent-night);
+  --ramp-teal-strong:   var(--p-teal-accent-night-strong);
+  --ramp-teal-soft:     var(--p-teal-accent-night-soft);
+  --ramp-indigo:        var(--p-indigo-accent-night);
+  --ramp-indigo-strong: var(--p-indigo-accent-night-strong);
+  --ramp-indigo-soft:   var(--p-indigo-accent-night-soft);
+  --ramp-violet:        var(--p-violet-accent-night);
+  --ramp-violet-strong: var(--p-violet-accent-night-strong);
+  --ramp-violet-soft:   var(--p-violet-accent-night-soft);
+
+  --color-accent:         var(--ramp-teal);
+  --color-accent-strong:  var(--ramp-teal-strong);
+  --color-accent-surface: color-mix(in srgb, var(--ramp-teal) 12%, transparent);
+  --color-accent-border:  color-mix(in srgb, var(--ramp-teal) 42%, transparent);
+  --color-accent-ring:    var(--ramp-teal-soft);
+  --color-link:           var(--ramp-teal-strong);
+
+  --color-canvas:          var(--p-night-900);
+  --color-canvas-warm:     var(--p-night-900);
+  --color-surface:         var(--p-night-800);
+  --color-surface-sunken:  var(--p-night-900);
+  --color-surface-chrome:  var(--p-slate-chrome);
+  --color-surface-deep:    var(--p-night-900);
+
+  --color-border:        var(--p-night-700);
+  --color-border-subtle: var(--p-night-700);
+  --color-border-strong: var(--p-night-400);
+
+  --color-text:         var(--p-night-100);
+  --color-text-strong:  var(--p-night-100);
+  --color-text-muted:   var(--p-night-400);
+  --color-text-subtle:  var(--p-night-400);
+  --color-text-faint:   var(--p-night-400);
+  --color-text-inverse: var(--p-night-900);
+
+  /* Accent roles deliberately absent: see the [data-accent] rules. */
+
+  --color-positive:         var(--p-positive-night);
+  --color-positive-surface: rgba(76, 195, 138, 0.15);
+  --color-positive-border:  rgba(76, 195, 138, 0.45);
+
+  --color-caution:         var(--p-caution-night);
+  --color-caution-graphic: var(--p-caution-night);
+  --color-caution-surface: rgba(229, 181, 103, 0.15);
+  --color-caution-border:  rgba(229, 181, 103, 0.45);
+
+  --color-critical:         var(--p-critical-night);
+  --color-critical-strong:  var(--p-critical-night);
+  --color-critical-surface: rgba(229, 113, 107, 0.15);
+  --color-critical-border:  rgba(229, 113, 107, 0.45);
+
+  --color-info:         var(--p-night-400);
+  --color-info-surface: rgba(143, 160, 179, 0.15);
+  --color-info-line:    var(--p-night-700);
+
+  --color-neutral-surface: rgba(143, 160, 179, 0.15);
+
+  --moat: 0 0 0 4px var(--p-night-800);
+}
+
+/* --- accent selection, composed with the theme axis -----------------------
+
+   These rules are LAST in the file on purpose, and they read --ramp-*, also on
+   purpose. Both are load-bearing; changing either reintroduces a real bug.
+
+   WHY --ramp-* rather than the primitives directly. A custom property whose
+   value contains var() resolves where it is DECLARED. That is the trap
+   described at the head of this file, and the naive fix for theming the accent
+   walks straight back into it. Here the direction is inverted: the accent rule
+   sits ON the accent element and reads --ramp-teal, which it INHERITS from the
+   nearest themed ancestor. An inherited value resolves correctly at the element
+   declaring against it, so a dark island containing an indigo island resolves
+   indigo-on-dark, and a light island inside that resolves indigo-on-light, to
+   any depth. One indirection replaces every theme-by-accent combination
+   written out by hand.
+
+   WHY LAST. The theme blocks above also declare the finished accent roles, for
+   the default accent, so a themed island that names no accent does not inherit
+   an accent frozen at :root. Those declarations and these are both a single
+   attribute selector, so they tie on specificity and source order decides. An
+   element carrying BOTH data-theme and data-accent must resolve to its accent,
+   so these come last. Move this block up and that element silently reverts to
+   teal.
+
+   The surface tint stays a translucent mix rather than a baked pastel, so one
+   declaration is correct on a light page and a dark one: 12% over white lands
+   within a shade of the original hand-picked tints, and the same 12% over a
+   dark canvas gives the subtle wash that theme needs. */
+
+:root,
+[data-accent="teal"] {
+  --color-accent:         var(--ramp-teal);
+  --color-accent-strong:  var(--ramp-teal-strong);
+  --color-accent-surface: color-mix(in srgb, var(--ramp-teal) 12%, transparent);
+  --color-accent-border:  color-mix(in srgb, var(--ramp-teal) 42%, transparent);
+  --color-accent-ring:    var(--ramp-teal-soft);
+  --color-link:           var(--ramp-teal-strong);
+}
+
+[data-accent="indigo"] {
+  --color-accent:         var(--ramp-indigo);
+  --color-accent-strong:  var(--ramp-indigo-strong);
+  --color-accent-surface: color-mix(in srgb, var(--ramp-indigo) 12%, transparent);
+  --color-accent-border:  color-mix(in srgb, var(--ramp-indigo) 42%, transparent);
+  --color-accent-ring:    var(--ramp-indigo-soft);
+  --color-link:           var(--ramp-indigo-strong);
+}
+
+[data-accent="violet"] {
+  --color-accent:         var(--ramp-violet);
+  --color-accent-strong:  var(--ramp-violet-strong);
+  --color-accent-surface: color-mix(in srgb, var(--ramp-violet) 12%, transparent);
+  --color-accent-border:  color-mix(in srgb, var(--ramp-violet) 42%, transparent);
+  --color-accent-ring:    var(--ramp-violet-soft);
+  --color-link:           var(--ramp-violet-strong);
+}
+
+
+/* ---- packages/tokens/motion.css ---- */
+/* ==========================================================================
+   MOTION TOKENS
+   --------------------------------------------------------------------------
+   Every duration in the source pages was ad hoc: an 880ms sequence tick, a
+   0.25s card fade, a 1.6s pulse in one file and 1.7s in another, a 0.7s
+   marching dash. Named here so tiles breathe at one tempo, and so a demo can
+   be slowed for a room or sped up for a recording by changing four values.
+
+   Two of the three keyframes below (fadeUp, flowDash) were declared in the
+   demo console and never wired to anything. flowDash in particular reads as
+   an abandoned money-in-motion effect; the working version of the same
+   technique lives in the tracker page. Both are now real and used.
+
+   CONFLICT RESOLVED: pulse was 1.6s in one page and 1.7s in another. Taking
+   1.6s.
+
+   Accessibility is not an afterthought here: prefers-reduced-motion collapses
+   every animation to a state snap. That same switch doubles as the
+   projector-safe mode, where continuous motion can strobe badly.
+   ========================================================================== */
+
+:root {
+  /* durations */
+  --motion-tick:  880ms;   /* one sequence step advancing */
+  --motion-fade:  250ms;   /* a card changing state */
+  --motion-pulse: 1600ms;  /* the active-step ring */
+  --motion-flow:  700ms;   /* one repeat of a travelling dash */
+  --motion-snap:  120ms;   /* immediate feedback, e.g. a tab */
+
+  /* easings */
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-linear:  linear;
+
+  /* the travelling-dash geometry, kept with the motion it serves */
+  --flow-dash-len: 7px;
+  --flow-dash-gap: 7px;
+  --flow-cycle:    14px;
+}
+
+@keyframes ds-pulse-ring {
+  0%   { box-shadow: var(--moat), 0 0 0 0 var(--color-accent-ring); }
+  70%  { box-shadow: var(--moat), 0 0 0 11px transparent; }
+  100% { box-shadow: var(--moat), 0 0 0 11px transparent; }
+}
+
+@keyframes ds-flow-dash {
+  from { background-position: 0 0; }
+  to   { background-position: var(--flow-cycle) 0; }
+}
+
+@keyframes ds-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-tick:  1ms;
+    --motion-fade:  1ms;
+    --motion-pulse: 1ms;
+    --motion-flow:  1ms;
+    --motion-snap:  1ms;
+  }
+
+  /* Belt and braces: zeroing the durations is not enough for an infinite
+     animation, which would still run, just imperceptibly fast. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

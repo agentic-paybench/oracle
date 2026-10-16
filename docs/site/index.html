@@ -1,71 +1,76 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>agentic-paybench capability oracle</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.6 system-ui, sans-serif; max-width: 46rem; margin: 3rem auto; padding: 0 1rem; }
-    code { font-family: ui-monospace, monospace; }
-    h1 { margin-bottom: 0.2rem; }
-    h2 { font-size: 1.15rem; margin: 2rem 0 0.6rem; }
-    .sub { opacity: 0.7; margin-top: 0; }
-    ul { padding-left: 1.2rem; }
-    .surfaces li { margin: 0 0 0.9rem; }
-    .path { display: block; opacity: 0.7; font-size: 0.9rem; }
-    pre { font-size: 0.9rem; padding: 0.6rem 0.8rem; border: 1px solid rgba(128,128,128,0.3); overflow-x: auto; }
-    .posture p { margin: 0 0 0.6rem; }
-    .note { opacity: 0.7; font-size: 0.9rem; border-top: 1px solid rgba(128,128,128,0.3); padding-top: 1rem; margin-top: 2rem; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agentic-paybench capability oracle</title>
+<meta name="description" content="Published facts and measurements about the payment rails that software agents use, signed so they can be checked, with nothing on this site that tells you which rail to use.">
+<link rel="preload" href="family/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="family/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="family/tokens.css">
+<link rel="stylesheet" href="family/family.css">
+<link rel="icon" href="data:,">
 </head>
 <body>
-  <h1>agentic-paybench capability oracle</h1>
-  <p class="sub">Published facts and measurements about the payment rails that software agents use, signed so they can be checked, with nothing on this site that tells you which rail to use.</p>
+<div class="family-page">
+<nav class="fam" aria-label="Family">
+  <span class="who">Everyday AI Ltd</span>
+  <a href="https://everydayai.link/">everydayai.link</a>
+  <a href="https://agentic-paybench.dev/">agentic-paybench.dev</a>
+  <a href="https://oracle.agentic-paybench.dev/" aria-current="page">oracle.agentic-paybench.dev</a>
+</nav>
+<main>
+<h1 id="agentic-paybench-capability-oracle">agentic-paybench capability oracle</h1>
+<p class="lead">Published facts and measurements about the payment rails that software agents use, signed so they can be checked, with nothing on this site that tells you which rail to use.</p>
 
-  <h2>What this is</h2>
-  <p>A research data layer over agent-payment rails. For an agent developer, it is a set of signed, machine-readable records of what each rail documents about itself, plus the published method and results of one neutral measurement applied to every rail in the same way. For a payments-strategy reader looking for a neutral measurement, it is that measurement: the method is published and pre-registered, the figures carry confidence intervals, and no figure is presented as a reason to prefer a rail.</p>
+<h2 id="what-this-is">What this is</h2>
+<p>A research data layer over agent-payment rails. For an agent developer, it is a set of signed, machine-readable records of what each rail documents about itself, plus the published method and results of one neutral measurement applied to every rail in the same way. For a payments-strategy reader looking for a neutral measurement, it is that measurement: the method is published and pre-registered, the figures carry confidence intervals, and no figure is presented as a reason to prefer a rail.</p>
 
-  <h2>What you can read here</h2>
-  <ul class="surfaces">
-    <li><strong>Capability records, one per rail.</strong> Documented facts about each rail (who pays the network fee, how finality is modelled, retry and idempotency rules, declared rate limits, status page, error catalogue, and more), every cell naming the source it rests on and the date it was read. Served as signed credentials.
-      <span class="path"><code><a href="capabilities/index.json">capabilities/index.json</a></code>; the statements every record carries: <code><a href="tier2/statements.md">tier2/statements.md</a></code></span></li>
-    <li><strong>Named-rail measurements.</strong> Authorization latency: the time a rail takes to complete its authorization step, the permission part of a payment before settlement, measured the same way on every rail and shown with confidence intervals and no ordering by result.
-      <span class="path"><code><a href="results/">results/</a></code></span></li>
-    <li><strong>Settlement-finality method.</strong> The frozen method, harness and calibrated fixtures for measuring when a payment becomes final. The method only; no results table.
-      <span class="path"><code><a href="methodology/">methodology/</a></code></span></li>
-    <li><strong>Schema.</strong> The vocabulary (a JSON-LD context) and the JSON Schema that every capability record conforms to.
-      <span class="path"><code><a href="schema/capability.context.jsonld">schema/capability.context.jsonld</a></code>, <code><a href="schema/capability.schema.json">schema/capability.schema.json</a></code></span></li>
-    <li><strong>Decision records.</strong> Why the oracle is intent-free, that is, why it answers questions about rails and never questions about what to do (ADR-007), and how its gates work (ADR-009).
-      <span class="path"><code><a href="adr/">adr/</a></code></span></li>
-    <li><strong>Roadmap.</strong> Declared directions, none of them measured.
-      <span class="path"><code><a href="roadmap.md">roadmap.md</a></code></span></li>
-    <li><strong>Signing key.</strong> The public key the credentials are signed with, published as a DID document (the W3C Decentralized Identifier format for a key record).
-      <span class="path"><code><a href=".well-known/did.json">.well-known/did.json</a></code></span></li>
-    <li><strong>Posture.</strong> Which surfaces are live and which are switched off, as served.
-      <span class="path"><code><a href="posture.json">posture.json</a></code></span></li>
-    <li><strong>Machine index.</strong> This list as JSON.
-      <span class="path"><code><a href="index.json">index.json</a></code></span></li>
-  </ul>
+<h2 id="what-you-can-read-here">What you can read here</h2>
+<ul>
+<li><strong>Capability records, one per rail.</strong> Documented facts about each rail (who pays the network fee, how finality is modelled, retry and idempotency rules, declared rate limits, status page, error catalogue, and more), every cell naming the source it rests on and the date it was read. <a href="capabilities/">Read the records</a>; the statements every record carries: <a href="tier2/statements.html">tier2/statements</a>.</li>
+<li><strong>Named-rail measurements.</strong> Authorization latency: the time a rail takes to complete its authorization step, the permission part of a payment before settlement, measured the same way on every rail and shown with confidence intervals and no ordering by result. <a href="results/">Read the measurements</a>.</li>
+<li><strong>Settlement-finality method.</strong> The frozen method, harness and calibrated fixtures for measuring when a payment becomes final. The method only; no results table. <a href="methodology/">Read the method</a>.</li>
+<li><strong>Decision records.</strong> Why the oracle is intent-free, that is, why it answers questions about rails and never questions about what to do (ADR-007), and how its gates work (ADR-009). <a href="adr/">Read the decision records</a>.</li>
+<li><strong>Roadmap.</strong> Declared directions, none of them measured. <a href="roadmap.html">Read the roadmap</a>.</li>
+</ul>
 
-  <h2>How to check it</h2>
-  <p>Every capability record is a signed credential (ES256 over the P-256 curve). The signing key is published at <code>.well-known/did.json</code>; that document states the key's status (at present a development key, to be replaced by a hardware key at the maintainer ceremony). The credentials verify offline against the published key with the repository's own script and no key of your own; from a clone of <a href="https://github.com/agentic-paybench/oracle">github.com/agentic-paybench/oracle</a>:</p>
-  <pre><code>cd ingest/signer &amp;&amp; npm ci &amp;&amp; node verify.mjs</code></pre>
-  <p>Every documented cell names its source URL and the date it was read, so a fact can be re-read at the source. One of the documented cells, offline verifiability, records whether a paying agent can confirm a payment's outcome later without asking anyone.</p>
-  <p>The measurement methods are published and pre-registered on the Open Science Framework: <a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a> (settlement finality, method), <a href="https://doi.org/10.17605/OSF.IO/UFQG5">10.17605/OSF.IO/UFQG5</a> (authorization latency) and <a href="https://doi.org/10.17605/OSF.IO/UETFW">10.17605/OSF.IO/UETFW</a> (settlement finality, test-network confirmatory data).</p>
+<h2 id="how-to-check-it">How to check it</h2>
+<p>Every capability record is a signed credential (ES256 over the P-256 curve). The signing key is published at <code>.well-known/did.json</code>; that document states the key's status (at present a development key, to be replaced by a hardware key at the maintainer ceremony). The credentials verify offline against the published key with the repository's own script and no key of your own; from a clone of <a href="https://github.com/agentic-paybench/oracle">github.com/agentic-paybench/oracle</a>:</p>
+<pre><code>cd ingest/signer &amp;&amp; npm ci &amp;&amp; node verify.mjs</code></pre>
+<p>Every documented cell names its source URL and the date it was read, so a fact can be re-read at the source. One of the documented cells, offline verifiability, records whether a paying agent can confirm a payment's outcome later without asking anyone.</p>
+<p>The measurement methods are published and pre-registered on the Open Science Framework: <a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a> (settlement finality, method), <a href="https://doi.org/10.17605/OSF.IO/UFQG5">10.17605/OSF.IO/UFQG5</a> (authorization latency) and <a href="https://doi.org/10.17605/OSF.IO/UETFW">10.17605/OSF.IO/UETFW</a> (settlement finality, test-network confirmatory data).</p>
 
-  <h2>What this is not</h2>
-  <div class="posture">
-    <p>The oracle answers "what is true about rail X", never "what should I do for this payment".</p>
-    <p>It carries no scores, no ranking and no recommendation on this surface (ADR-007, ADR-009).</p>
-    <p>The named-rail measurements at <code><a href="results/">results/</a></code> are a measurement and not a recommendation; no rail is endorsed.</p>
-    <p>The results page carries this statement, and it applies to everything here: These figures are a measurement, not a recommendation: no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use.</p>
-    <p>Rails are listed alphabetically by rail name. That ordering is fixed and carries no performance meaning.</p>
-    <p>The same measurement protocol was applied identically to every rail.</p>
-    <p>There is no route from this site to transact: nothing here takes a payment, holds funds or leads to a place that does.</p>
-    <p>A scored query, an answer that would score rails for a particular payment, exists in the code and is switched off on this site; <code><a href="posture.json">posture.json</a></code> shows the gates.</p>
-  </div>
+<h2 id="what-this-is-not">What this is not</h2>
+<p>The oracle answers "what is true about rail X", never "what should I do for this payment".</p>
+<p>It carries no scores, no ranking and no recommendation on this surface (ADR-007, ADR-009).</p>
+<p>The named-rail measurements at <a href="results/">results/</a> are a measurement and not a recommendation; no rail is endorsed. The results page carries these statements, and they apply to everything here:</p>
+<div class="posture" data-posture-set="measurement">
+<p data-posture="measurement-statement">These figures are a measurement, not a recommendation: no rail is endorsed, no ordering implies a best buy, and no rail is being suggested for use.</p>
+<p data-posture="fixed-ordering-statement">Rails are listed alphabetically by rail name. That ordering is fixed and carries no performance meaning.</p>
+<p data-posture="even-handed-protocol-statement">The same measurement protocol was applied identically to every rail.</p>
+</div>
+<p>There is no route from this site to transact: nothing here takes a payment, holds funds or leads to a place that does.</p>
+<p>A scored query, an answer that would score rails for a particular payment, exists in the code and is switched off on this site; <a href="posture.json"><code>posture.json</code></a> shows the gates.</p>
 
-  <p class="note">Where to go next: the research index at <a href="https://agentic-paybench.dev/">agentic-paybench.dev</a> links the repositories, the measurement and the pre-registrations. Contact: <a href="https://everydayai.link/">everydayai.link</a>.</p>
+<p class="meta">Where to go next: the research index at <a href="https://agentic-paybench.dev/">agentic-paybench.dev</a> links the repositories, the measurement and the pre-registrations. Contact: <a href="https://everydayai.link/">everydayai.link</a>.</p>
+<section class="machine" data-theme="dark" aria-labelledby="machine-h">
+<h2 id="machine-h">For agents and software</h2>
+<p>The same facts as data, at these paths.</p>
+<ul class="paths">
+<li><a href="index.json"><code>index.json</code></a> <span>the machine index of every served surface</span></li>
+<li><a href="capabilities/index.json"><code>capabilities/index.json</code></a> <span>the six signed capability credentials, one per rail</span></li>
+<li><a href="schema/capability.schema.json"><code>schema/capability.schema.json</code></a> <span>the JSON Schema every record conforms to</span></li>
+<li><a href="schema/capability.context.jsonld"><code>schema/capability.context.jsonld</code></a> <span>the vocabulary, a JSON-LD context</span></li>
+<li><a href=".well-known/did.json"><code>.well-known/did.json</code></a> <span>the signing key as a DID document</span></li>
+<li><a href="posture.json"><code>posture.json</code></a> <span>which surfaces are live and which are switched off</span></li>
+<li><a href="tier2/statements.md"><code>tier2/statements.md</code></a> <span>the statements every served cell carries</span></li>
+<li><a href="roadmap.md"><code>roadmap.md</code></a> <span>declared directions, none of them measured</span></li>
+</ul>
+</section>
+
+</main>
+<footer class="foot">A family of three: <a href="https://everydayai.link/">everydayai.link</a> (the person), <a href="https://agentic-paybench.dev/">agentic-paybench.dev</a> (the research index), <a href="https://oracle.agentic-paybench.dev/">oracle.agentic-paybench.dev</a> (the data). Everyday AI Ltd.</footer>
+</div>
 </body>
 </html>

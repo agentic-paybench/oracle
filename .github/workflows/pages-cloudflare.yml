@@ -18,7 +18,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Assemble site
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assemble site (copies, the G_S21 decision, the reader pages)
         run: bash docs/site/build-site.sh
       - name: Deploy to Cloudflare Pages
         env:

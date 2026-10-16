@@ -7,3 +7,8 @@
   Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
+
+# The vendored typefaces never change under the same file name (a new face
+# arrives as a new file), so they may be cached for a year.
+/family/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
