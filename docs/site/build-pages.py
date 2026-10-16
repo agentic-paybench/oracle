@@ -217,7 +217,11 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # Results: only what the gate assembled.
     results = site / "results"
     results_md = sorted(results.glob("*.md")) if results.is_dir() else []
-    for md in results_md:
+    # A superseded version (its label says so in docs/results-labels.tsv) stays a
+    # Markdown-only record: it is kept unaltered, and the gate exempts its
+    # superseded sentence by its repository path, not by an assembled one.
+    current_md = [md for md in results_md if "superseded" not in labels.get(md.name, "").casefold()]
+    for md in current_md:
         marker, body, title = family.md_to_html(md.read_text(encoding="utf-8"))
         body += "\n" + family.PLACEHOLDER_MACHINE
         machine = [
@@ -227,11 +231,14 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, f"results/{md.with_suffix('.html').name}", body, title=title or md.stem, posture="none",
                    machine=machine, marker=marker, check=check)
     if results_md:
-        items = [(md.with_suffix(".html").name, (labels.get(md.name) or md.name), "") for md in results_md]
-        body = listing_body("Named-rail measurements", "Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept. Pages are rendered for readers; the Markdown records are listed below for software.", items)
+        items = [(md.with_suffix(".html").name, (labels.get(md.name) or md.name), "") for md in current_md]
+        body = listing_body("Named-rail measurements", "Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.", items)
         machine = [{"href": md.name, "path": f"results/{md.name}", "note": labels.get(md.name, "")} for md in results_md]
+        # A listing, not a measurement artefact: it carries no figure and no
+        # DOI, so it is not declared (no marker); the posture set still rides
+        # with it as on the root page.
         rc |= page(site, "results/index.html", body, title="Named-rail measurements", posture="measurement",
-                   machine=machine, marker="level1-measurement", check=check)
+                   machine=machine, marker=None, check=check)
 
     # Capabilities reader page.
     if assembled or (site / "capabilities" / "index.json").exists():
@@ -278,8 +285,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         {"href": "tier2/statements.md", "path": "tier2/statements.md", "note": "the statements every served cell carries"},
         {"href": "roadmap.md", "path": "roadmap.md", "note": "declared directions, none of them measured"},
     ]
-    if results_md:
-        root_machine.insert(2, {"href": f"results/{results_md[-1].name}", "path": f"results/{results_md[-1].name}", "note": "the current named-rail measurement as Markdown"})
+    if current_md:
+        root_machine.insert(2, {"href": f"results/{current_md[-1].name}", "path": f"results/{current_md[-1].name}", "note": "the current named-rail measurement as Markdown"})
     frag = (HERE / "content" / "index.html").read_text(encoding="utf-8")
     rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="measurement",
                machine=root_machine, marker=None, check=check,
