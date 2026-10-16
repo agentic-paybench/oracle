@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@8e0eb54 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -16,6 +16,7 @@
 
 :root {
   --family-measure: 44rem;
+  --family-wide: 72rem;
 }
 
 html { -webkit-text-size-adjust: 100%; }
@@ -213,29 +214,151 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .links a:hover { color: var(--color-link); text-decoration: underline; }
 .links svg { width: 1em; height: 1em; flex: none; fill: currentColor; }
 
-/* --- stacked records: one documented fact per rail, at the measure -------
-   Used by the oracle's capabilities page in place of a five-column table:
-   the rail name, the value and disposition on one line, the statement as a
-   paragraph, the sources behind a native details disclosure (no script). */
-.record {
-  padding: var(--space-3) 0;
-  border-top: var(--border-hairline) solid var(--color-border-subtle);
+/* --- the wide layout: data pages only (layout="wide" in family.py) -------
+   The container widens so six rails can sit side by side; running prose
+   inside it keeps the reading measure, and everything shares one left edge.
+   The family bar and footer span the same container. */
+.family-page--wide { max-width: var(--family-wide); }
+.family-page--wide :is(main > h1, main > p, main > ul, main > ol, main > .posture, main > .table-scroll, .question > .notes) { max-width: var(--family-measure); }
+
+/* --- the top of a wide page: introduction and contents side by side ----- */
+.lede { display: block; }
+.lede > .intro > :is(h1, p, .posture) { max-width: var(--family-measure); }
+@media (min-width: 64rem) {
+  .lede {
+    display: grid;
+    grid-template-columns: minmax(0, var(--family-measure)) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .lede .toc { margin-top: var(--space-7); }
+  .lede .toc ol { grid-template-columns: minmax(0, 1fr); }
+  .lede + .question { margin-top: var(--space-6); }
 }
-.record h3 { margin: 0 0 var(--space-1); }
-.record .facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-5);
+
+/* --- contents: the questions as jump links ------------------------------ */
+.toc {
+  margin: var(--space-5) 0 var(--space-4);
+  padding: var(--space-3) 0;
+  border-top: var(--border-hairline) solid var(--color-border);
+  border-bottom: var(--border-hairline) solid var(--color-border);
+}
+.toc h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0 var(--space-5);
+  counter-reset: q;
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+}
+.toc li { margin: 0; counter-increment: q; display: flex; gap: var(--space-2); }
+.toc li::before { content: counter(q); color: var(--color-text-faint); font-family: var(--font-mono); min-width: 1.5em; padding: var(--space-1) 0; }
+.toc a { display: inline-block; padding: var(--space-1) 0; color: var(--color-text); text-decoration: none; }
+.toc a:hover { color: var(--color-link); text-decoration: underline; }
+
+/* --- a question: heading, notes, then the six records as cards ---------- */
+.question { margin: var(--space-7) 0 0; scroll-margin-top: var(--space-4); }
+.question > h2 {
+  margin: 0 0 var(--space-3);
+  padding-top: var(--space-4);
+  border-top: var(--border-hairline) solid var(--color-border-strong);
+}
+.question .notes { margin: 0 0 var(--space-4); }
+.lede + .question { margin-top: var(--space-6); }
+.lede + .question > h2 { border-top: 0; padding-top: 0; }
+.question .notes p { margin: 0 0 var(--space-2); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-5) var(--space-5);
+  align-items: start;
+}
+
+/* --- a record: one documented fact for one rail -------------------------- */
+.record {
+  min-width: 0;
+  padding: var(--space-3) 0 0;
+  border-top: var(--border-hairline) solid var(--color-border);
+  scroll-margin-top: var(--space-4);
+}
+.record h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--type-body-size);
+  line-height: var(--type-heading-leading);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-strong);
+}
+.record .value {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-regular);
+  overflow-wrap: anywhere;
+}
+/* f: a machine label keeps the small role so the value face does not jump
+   between questions; medium weight marks it as the answer */
+.record .value code { font-size: var(--type-small-size); font-weight: var(--weight-medium); }
+.record .value ul { margin: 0; padding-left: var(--space-4); font-weight: var(--weight-regular); }
+.record .value li { margin: 0 0 var(--space-1); }
+/* a structured answer (a list of items, each a few keyed facts): compact
+   blocks in the small role, one hairline between items, keys muted */
+.record .value.structured {
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+  font-weight: var(--weight-regular);
+  color: var(--color-text);
+}
+.record .value .items { list-style: none; padding: 0; margin: 0; }
+.record .value .items > li { margin: 0; padding: var(--space-2) 0; border-top: var(--border-hairline) solid var(--color-border-subtle); }
+.record .value .items > li:first-child { border-top: 0; padding-top: 0; }
+.record .kv { margin: 0; }
+.record .kv > div { margin: 0 0 var(--space-1); }
+.record .kv dt { color: var(--color-text-muted); }
+.record .kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.record .extras {
   margin: 0 0 var(--space-2);
   font-size: var(--type-small-size);
   line-height: var(--type-small-leading);
 }
-.record .facts > div { display: flex; gap: var(--space-2); min-width: 0; }
-.record .facts dt { color: var(--color-text-muted); flex: none; }
-.record .facts dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.record .facts ul, .record .facts ol { margin: 0; padding-left: var(--space-4); }
-.record .statement { margin: 0 0 var(--space-2); }
-.record details { font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.record .extras > div { display: flex; gap: var(--space-2); min-width: 0; }
+.record .extras dt { color: var(--color-text-muted); flex: none; }
+.record .extras dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.record .extras ul { margin: 0; padding-left: var(--space-4); }
+.record .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: 0 0 var(--space-3);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+  color: var(--color-text);
+}
+.record .tag { white-space: nowrap; }
+.record .tag .k { color: var(--color-text-muted); }
+.record .statement {
+  margin: 0 0 var(--space-3);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+  color: var(--color-text);
+}
+.record details {
+  padding-top: var(--space-2);
+  border-top: var(--border-hairline) solid var(--color-border-subtle);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+}
 .record summary { cursor: pointer; color: var(--color-text-muted); padding: var(--space-1) 0; }
 .record summary:hover { color: var(--color-text); }
 .record details ul { margin: var(--space-1) 0 0; padding-left: var(--space-4); }
@@ -260,4 +383,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 
 @media (max-width: 640px) {
   .machine .paths { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .cards { gap: var(--space-3); }
+
+  .question { margin-top: var(--space-6); }
 }

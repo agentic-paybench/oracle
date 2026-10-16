@@ -1,4 +1,4 @@
-// vendored from agentic-paybench/design-system-private@8e0eb54 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+// vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 // check.mjs: the network-log, layout and axe-core gates of the public page
 // family (DES-100, founder-approved 2026-10-16). One script, the same in every
 // page repository, vendored from design-system-private packages/family/gates.
