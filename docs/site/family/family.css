@@ -1,13 +1,15 @@
-/* vendored from agentic-paybench/design-system-private@262207a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@dccf561 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
    engine-room panel.
 
    Every colour, space and type size here is a token from packages/tokens.
-   The only literals are the 1fr grid tracks, the 1em icon box (relative to
-   the small type role) and one phone-width breakpoint, which the token layer
-   does not define. The family bar and the footer are emitted by family.py so
+   The only literals are layout measures the token layer does not define: the
+   two page widths (--family-measure, --family-wide), the grid-track minimums
+   of the contents list, the record grid and the by-rail rows, the 1em icon
+   box (relative to the small type role), the two breakpoints (a phone width
+   and the wide-layout width), and the standard clip of .visually-hidden. The family bar and the footer are emitted by family.py so
    their markup exists in one place; this file only styles them.
 
    Theme follows the viewer's OS preference through the token layer; a page
@@ -53,6 +55,15 @@ body {
 a { color: var(--color-link); text-underline-offset: 0.15em; }
 a:hover { text-decoration-thickness: 0.125em; }
 
+/* A visible keyboard-focus ring on every interactive element (links, the
+   sources disclosures), from the accent ring role; mouse clicks do not show it. */
+:is(a, summary, button):focus-visible {
+  outline: var(--border-hairline) solid var(--color-accent-ring);
+  outline-width: calc(var(--border-hairline) * 3);
+  outline-offset: var(--space-1);
+  border-radius: var(--radius-xs);
+}
+
 /* --- the family bar: one line, same place on every surface ------------- */
 .fam {
   display: flex;
@@ -67,7 +78,7 @@ a:hover { text-decoration-thickness: 0.125em; }
 .fam .who { color: var(--color-text-muted); margin-right: auto; padding: var(--space-2) 0; }
 .fam a { display: inline-block; color: var(--color-text-muted); text-decoration: none; padding: var(--space-2) 0; }
 .fam a:hover { color: var(--color-text); text-decoration: underline; }
-.fam a[aria-current="page"] { color: var(--color-text); font-weight: var(--weight-semibold); }
+.fam a[aria-current] { color: var(--color-text); font-weight: var(--weight-semibold); }
 
 /* --- type roles on elements ------------------------------------------- */
 h1 {
@@ -267,6 +278,17 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .toc li::before { content: counter(q); color: var(--color-text-faint); font-family: var(--font-mono); min-width: 1.5em; padding: var(--space-1) 0; }
 .toc a { display: inline-block; padding: var(--space-1) 0; color: var(--color-text); text-decoration: none; }
 .toc a:hover { color: var(--color-link); text-decoration: underline; }
+.toc .extra { list-style: none; margin: var(--space-2) 0 0; padding: var(--space-2) 0 0; border-top: var(--border-hairline) solid var(--color-border-subtle); font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.toc .extra li { margin: 0; }
+.toc .extra li::before { content: none; }
+/* By rail: one row per rail, the thirteen questions as numbered links. */
+.by-rail { margin: 0 0 var(--space-4); padding: var(--space-3) 0; border-bottom: var(--border-hairline) solid var(--color-border); }
+.by-rail h2 { margin: 0 0 var(--space-2); font-size: var(--type-small-size); line-height: var(--type-small-leading); font-weight: var(--weight-semibold); color: var(--color-text-muted); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+.by-rail dl { margin: 0; font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.by-rail dl > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); padding: var(--space-1) 0; border-top: var(--border-hairline) solid var(--color-border-subtle); }
+.by-rail dt { flex: 0 0 18rem; max-width: 100%; color: var(--color-text); font-weight: var(--weight-semibold); }
+.by-rail dd { margin: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-1); }
+.by-rail dd a { display: inline-block; min-width: var(--space-6); padding: var(--space-1) 0; text-align: center; font-family: var(--font-mono); }
 
 /* --- a question: heading, notes, then the six records as cards ---------- */
 .question { margin: var(--space-7) 0 0; scroll-margin-top: var(--space-4); }
@@ -275,9 +297,21 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   padding-top: var(--space-4);
   border-top: var(--border-hairline) solid var(--color-border-strong);
 }
+/* The question heading stays in view while its six records scroll past, so
+   a reader deep in a long section always knows which question it answers.
+   It costs one heading line of reading height. */
+.question > h2 {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-surface);
+  padding-bottom: var(--space-2);
+}
+.question .lead { margin: 0 0 var(--space-4); color: var(--color-text-muted); max-width: var(--family-measure); }
 .question .notes { margin: 0 0 var(--space-4); }
 .lede + .question { margin-top: var(--space-6); }
 .lede + .question > h2 { border-top: 0; padding-top: 0; }
+.by-rail + .question > h2 { border-top: 0; }
 .question .notes p { margin: 0 0 var(--space-2); }
 
 .cards {
@@ -292,7 +326,10 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   min-width: 0;
   padding: var(--space-3) 0 0;
   border-top: var(--border-hairline) solid var(--color-border);
-  scroll-margin-top: var(--space-4);
+  /* A jump to a record must land BELOW the pinned question heading, so the
+     rail's name is visible: the heading's own height (its padding and one
+     heading line, from the same tokens) plus a gap. */
+  scroll-margin-top: calc(var(--space-4) + var(--space-2) + var(--type-heading-size) * var(--type-heading-leading) + var(--border-hairline) + var(--space-3));
 }
 .record h3 {
   margin: 0 0 var(--space-2);
@@ -360,6 +397,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   line-height: var(--type-small-leading);
 }
 .record summary { cursor: pointer; color: var(--color-text-muted); padding: var(--space-1) 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .record summary:hover { color: var(--color-text); }
 .record details ul { margin: var(--space-1) 0 0; padding-left: var(--space-4); }
 .record details a { overflow-wrap: anywhere; }
@@ -384,6 +422,9 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 @media (max-width: 640px) {
   .machine .paths { grid-template-columns: repeat(1, minmax(0, 1fr)); }
   .cards { gap: var(--space-3); }
-
   .question { margin-top: var(--space-6); }
+  /* On a phone the pinned question heading drops its padding so it costs
+     under one body line of reading height. */
+  .question > h2 { padding-top: 0; padding-bottom: 0; }
+  .record { scroll-margin-top: calc(var(--type-heading-size) * var(--type-heading-leading) + var(--border-hairline) + var(--space-3)); }
 }

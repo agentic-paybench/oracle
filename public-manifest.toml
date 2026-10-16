@@ -72,6 +72,13 @@ R4 = "Verifiable right-of-reply fairness"
 "family-gates/package-lock.json" = "R0"
 "family-gates/check.mjs" = "R0"
 "family-gates/lighthouserc.json" = "R0"
+# The decided-assets allowlist (founder ruling 2026-10-16, Register Operating 80 item 8), the
+# matcher both gates share and the Lighthouse post-check against the list; vendored too.
+"family-gates/decided-assets.json" = "R0"
+"family-gates/decided.mjs" = "R0"
+"family-gates/lh-check.mjs" = "R0"
+# What runs when, for this repository (written here, not vendored).
+"family-gates/README.md" = "R1"
 "docs/results/dim02-authorization-latency.level1.md" = "R2"
 # Version 1.1 (2026-10-01) corrects version 1.0 above; version 1.0 is kept unaltered.
 "docs/results/dim02-authorization-latency.v1.1.level1.md" = "R2"

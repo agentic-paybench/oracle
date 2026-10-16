@@ -1,0 +1,14 @@
+{
+  "x-vendored-from": "vendored from agentic-paybench/design-system-private@f2b1319 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
+  "x-about": "The decided-assets allowlist of the public page family. A third-party asset is permitted on a family page only by a founder decision taken BEFORE the asset is incorporated, recorded on Register Operating 80 with the asset, its origin and its purpose (founder ruling 2026-10-16: 'keep analytics, allow third-party assets, bring for decision before incorporating'). The family gates pass exactly these entries and fail everything else. Never add an entry without that decision; an asset found that is not listed is reported, never allowlisted.",
+  "assets": [
+    {
+      "origin": "https://static.cloudflareinsights.com",
+      "path_prefix": "/beacon.min.js",
+      "kind": "script",
+      "decided": "2026-10-16",
+      "register": "Operating 80 item 8",
+      "purpose": "Cloudflare Web Analytics, cookieless, edge-injected by the host"
+    }
+  ]
+}

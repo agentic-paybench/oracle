@@ -57,8 +57,11 @@ jobs:
 
   pages:
     # The family page gates (DES-100) on the ASSEMBLED site, the same tree the
-    # deploy ships. Allowed hosts: the page's own origin only. A failure here
-    # fails ci, and deploy-pages runs only when ci succeeds.
+    # deploy ships. Allowed: the page's own origin and the decided-assets list
+    # (family-gates/decided-assets.json; none of its entries is in the
+    # repository's files, so here the list passes nothing). A failure here
+    # fails ci, and deploy-pages runs only when ci succeeds. The live-URL run
+    # is in deploy-pages, after the deploy (family-gates/README.md).
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -88,6 +91,8 @@ jobs:
             --collect.url=http://127.0.0.1:8080/capabilities/ \
             --collect.url=http://127.0.0.1:8080/tier2/statements.html \
             --collect.url=http://127.0.0.1:8080/roadmap.html
+      - name: Lighthouse third-party and script budgets against the decided list
+        run: cd family-gates && node lh-check.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
