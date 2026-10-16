@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@0ceef1d (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@d61ab99 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -108,6 +108,7 @@ def md_to_html(text: str) -> tuple[str | None, str, str | None]:
         i = 1
     out: list[str] = []
     title: str | None = None
+    used_ids: dict[str, int] = {}
     n = len(lines)
     while i < n:
         line = lines[i]
@@ -120,7 +121,12 @@ def md_to_html(text: str) -> tuple[str | None, str, str | None]:
             body = m.group(2)
             if level == 1 and title is None:
                 title = re.sub(r"[*`]", "", body)
-            out.append(f'<h{level} id="{slug(body)}">{inline(body)}</h{level}>')
+            # Ids are unique per page: a repeated heading (the results page
+            # repeats "Work class" under each primitive) gets a numeric suffix.
+            base_id = slug(body)
+            used_ids[base_id] = used_ids.get(base_id, 0) + 1
+            hid = base_id if used_ids[base_id] == 1 else f"{base_id}-{used_ids[base_id]}"
+            out.append(f'<h{level} id="{hid}">{inline(body)}</h{level}>')
             i += 1
             continue
         if line.lstrip().startswith("<!--"):

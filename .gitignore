@@ -68,6 +68,10 @@ docs/site/capabilities/index.html
 docs/site/tier2/statements.html
 docs/site/roadmap.html
 
+# The family page gates' local output (DES-100)
+.lighthouseci/
+family-gates-report.json
+
 # Logs / temp
 *.log
 .tmp/

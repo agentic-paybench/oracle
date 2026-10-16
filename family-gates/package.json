@@ -1,0 +1,17 @@
+{
+  "x-vendored-from": "vendored from agentic-paybench/design-system-private@0ceef1d (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor",
+  "name": "family-gates",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The mechanical gates of the public page family (DES-100): a Playwright network-log and layout check, axe-core, and Lighthouse CI with budgets. Vendored from agentic-paybench/design-system-private packages/family/gates; re-vendor, never edit here.",
+  "type": "module",
+  "scripts": {
+    "check": "node check.mjs",
+    "lighthouse": "lhci autorun --config=lighthouserc.json"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@lhci/cli": "0.15.1",
+    "playwright": "1.63.0"
+  }
+}

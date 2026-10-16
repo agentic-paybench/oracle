@@ -65,6 +65,13 @@ R4 = "Verifiable right-of-reply fairness"
 "docs/site/content/index.html" = "R1"
 "docs/site/content/404.html" = "R1"
 "tests/test_family_render.py" = "R3"
+# The family page gates (DES-100): the network-log, layout and axe-core check,
+# the Lighthouse CI budgets and the pinned tools; vendored from
+# design-system-private packages/family/gates. Re-vendor, never edit here.
+"family-gates/package.json" = "R0"
+"family-gates/package-lock.json" = "R0"
+"family-gates/check.mjs" = "R0"
+"family-gates/lighthouserc.json" = "R0"
 "docs/results/dim02-authorization-latency.level1.md" = "R2"
 # Version 1.1 (2026-10-01) corrects version 1.0 above; version 1.0 is kept unaltered.
 "docs/results/dim02-authorization-latency.v1.1.level1.md" = "R2"

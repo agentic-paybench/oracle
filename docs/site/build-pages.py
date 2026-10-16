@@ -171,6 +171,19 @@ def machine_for_capabilities(index: dict, subjects: list[dict], prefix: str) -> 
     return paths
 
 
+def wrap_posture_run(body: str) -> str:
+    """Wrap the three ruled sentences, where a frozen artefact carries them as
+    consecutive paragraphs, in the family's posture block with the data-posture
+    markers. The sentence text is untouched; only the wrapper is added."""
+    import re as _re
+    block = family.posture_block("measurement", HERE / "family" / "posture-snippet.html")
+    sentences = _re.findall(r'<p data-posture="([a-z-]+)">(.*?)</p>', block)
+    run = "\n".join(f"<p>{text}</p>" for _key, text in sentences)
+    if run in body:
+        body = body.replace(run, block, 1)
+    return body
+
+
 def read_labels(labels: Path | None) -> dict[str, str]:
     if not labels or not labels.exists():
         return {}
@@ -221,8 +234,11 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # Markdown-only record: it is kept unaltered, and the gate exempts its
     # superseded sentence by its repository path, not by an assembled one.
     current_md = [md for md in results_md if "superseded" not in labels.get(md.name, "").casefold()]
+    titles: dict[str, str] = {}
     for md in current_md:
         marker, body, title = family.md_to_html(md.read_text(encoding="utf-8"))
+        titles[md.name] = title or md.stem
+        body = wrap_posture_run(body)
         body += "\n" + family.PLACEHOLDER_MACHINE
         machine = [
             {"href": md.name, "path": f"results/{md.name}", "note": "this page as the served Markdown artefact, the record the scanner and the right of reply refer to"},
@@ -231,7 +247,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, f"results/{md.with_suffix('.html').name}", body, title=title or md.stem, posture="none",
                    machine=machine, marker=marker, check=check)
     if results_md:
-        items = [(md.with_suffix(".html").name, (labels.get(md.name) or md.name), "") for md in current_md]
+        items = [(md.with_suffix(".html").name, titles.get(md.name, md.name), labels.get(md.name, "")) for md in current_md]
         body = listing_body("Named-rail measurements", "Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.", items)
         # The listing sits under results/, which the gate classifies as a
         # measurement artefact by path, so it carries the measurement set and

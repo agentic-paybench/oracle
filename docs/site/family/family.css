@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@0ceef1d (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@d61ab99 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -44,7 +44,7 @@ body {
 .family-page > main { flex: 1 0 auto; }
 
 a { color: var(--color-link); text-underline-offset: 0.15em; }
-a:hover { color: var(--color-accent-strong); }
+a:hover { text-decoration-thickness: 0.125em; }
 
 /* --- the family bar: one line, same place on every surface ------------- */
 .fam {
@@ -89,10 +89,10 @@ li { margin: 0 0 var(--space-1); }
 strong, b { font-weight: var(--type-emphasis-weight); }
 small, .lead, .meta { font-size: var(--type-small-size); line-height: var(--type-small-leading); }
 .lead, .meta { color: var(--color-text-muted); }
-code { font-family: var(--font-mono); font-size: var(--text-md); }
+code { font-family: var(--font-mono); font-size: var(--type-small-size); }
 pre {
   font-family: var(--font-mono);
-  font-size: var(--text-md);
+  font-size: var(--type-small-size);
   line-height: var(--leading-body);
   background: var(--color-surface-sunken);
   border: var(--border-hairline) solid var(--color-border-subtle);
@@ -177,13 +177,13 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   border-radius: var(--radius-2xl);
   border: var(--border-hairline) solid var(--color-accent-border);
   background: var(--color-accent-surface);
-  color: var(--color-accent-strong);
+  color: var(--color-text-strong);
   font-weight: var(--weight-semibold);
   font-size: var(--type-small-size);
   line-height: var(--type-small-leading);
   text-decoration: none;
 }
-.btn:hover { border-color: var(--color-accent); color: var(--color-accent-strong); }
+.btn:hover { border-color: var(--color-accent); color: var(--color-text-strong); }
 .cta p { margin: 0 0 var(--space-2); }
 .cta .btn { margin-bottom: var(--space-4); }
 .links {
