@@ -102,31 +102,38 @@ def render_value(v) -> str:
     return esc(str(v))
 
 
-def render_cell_row(name: str, cell) -> str:
+def render_record(question_id: str, name: str, cell) -> str:
+    """One stacked record: the rail name, the value and disposition on one
+    line, the statement as a paragraph, the sources behind a native details
+    disclosure (closed by default; no script; the URLs stay in the page)."""
+    rid = f"{question_id}-{family.slug(name)}"
     if not isinstance(cell, dict) or not CELL_KEYS & set(cell):
-        return f"<tr><td>{esc(name)}</td><td colspan=\"4\">{render_value(cell)}</td></tr>"
+        return (f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>'
+                f'<dl class="facts"><div><dt>Value</dt><dd>{render_value(cell)}</dd></div></dl></section>')
     extras = {k: v for k, v in cell.items() if k not in CELL_KEYS}
-    value = render_value(cell.get("value"))
-    if extras:
-        value += "<ul>" + "".join(f"<li><strong>{esc(k)}:</strong> {render_value(v)}</li>" for k, v in extras.items()) + "</ul>"
     prov = cell.get("provenance", {}) or {}
     sources = prov.get("sources", []) or []
-    src_html = "<ul>" + "".join(
-        f'<li><a href="{esc(s.get("url", ""))}">{esc(s.get("url", ""))}</a> <small>(retrieved {esc(s.get("retrievedAt", ""))})</small></li>'
-        for s in sources
-    ) + "</ul>" if sources else ""
-    label = esc(prov.get("label", ""))
-    return (
-        f"<tr><td>{esc(name)}</td><td>{value}</td><td>{esc(str(cell.get('disposition', '')))}</td>"
-        f"<td>{esc(str(cell.get('statement', '')))}</td><td>{label}{src_html}</td></tr>"
-    )
+    facts = [("Value", render_value(cell.get("value"))), ("Disposition", esc(str(cell.get("disposition", ""))))]
+    if prov.get("label"):
+        facts.append(("Provenance", esc(str(prov["label"]))))
+    for k, v in extras.items():
+        facts.append((esc(k), render_value(v)))
+    dl = '<dl class="facts">' + "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in facts) + "</dl>"
+    statement = f'<p class="statement">{esc(str(cell.get("statement", "")))}</p>' if cell.get("statement") else ""
+    details = ""
+    if sources:
+        dates = sorted({str(s.get("retrievedAt", "")) for s in sources if s.get("retrievedAt")})
+        when = f", retrieved {' and '.join(dates)}" if dates else ""
+        items = "".join(f'<li><a href="{esc(s.get("url", ""))}">{esc(s.get("url", ""))}</a></li>' for s in sources)
+        details = f"<details><summary>Sources ({len(sources)}){esc(when)}</summary><ul>{items}</ul></details>"
+    return f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>{dl}{statement}{details}</section>'
 
 
 def capabilities_body(index: dict, subjects: list[dict]) -> str:
     notice = index.get("notice", {})
     parts = [
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
-        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers; the signed records themselves are listed at the end for software.</p>",
+        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one record per rail under each question, with each record's sources folded beneath it; the signed records themselves are listed at the end for software.</p>",
         family.PLACEHOLDER_POSTURE,
     ]
     if notice.get("evenHandedStatement"):
@@ -140,10 +147,9 @@ def capabilities_body(index: dict, subjects: list[dict]) -> str:
             for k in ("quotationStatement", "sourceStatement", "evenHandedStatement"):
                 if fee.get(k):
                     parts.append(f'<p class="meta">{esc(fee[k])}</p>')
-        parts.append('<div class="table-scroll"><table><thead><tr><th>Rail</th><th>Value</th><th>Disposition</th><th>Statement</th><th>Provenance and sources</th></tr></thead><tbody>')
+        qid = family.slug(label)
         for s in subjects:
-            parts.append(render_cell_row(str(s.get("displayName", s.get("railName", ""))), dig(s, key)))
-        parts.append("</tbody></table></div>")
+            parts.append(render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key)))
     parts.append('<h2 id="pending-facts">Facts not yet sourced</h2>')
     parts.append('<p class="meta">These fields are served as "pending" in every credential: roadmap, no measurement, never invented.</p>')
     parts.append('<div class="table-scroll"><table><thead><tr><th>Field</th><th>Status across the six rails</th></tr></thead><tbody>')
