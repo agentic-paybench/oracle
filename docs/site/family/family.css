@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@aea0542 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@9f1f065 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -440,8 +440,10 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
    equal rail columns, so no rail's column grows with longer text; cells
    aligned left and top; row rules only; every value in the same face, colour
    and weight ("not stated" included), so nothing grades a rail. The values
-   link to the full entries with a quiet underline; the accent shows on hover
-   and focus only, so seventy-eight links do not turn the page the accent. */
+   link to the full entries: the text keeps the body colour and the underline
+   takes the accent (founder ruling B, 2026-10-18), so every value reads as a
+   link without seventy-eight accent-coloured words turning the table the
+   accent; hover and focus colour the text too. */
 .cap-table-wrap { margin: var(--space-5) 0 var(--space-6); scroll-margin-top: var(--space-4); }
 /* The table breaks out of the reading column, centred on it, on screens wide
    enough to hold the wide width; the family bar, the prose and the footer stay
@@ -471,7 +473,7 @@ main > .table-scroll.cap-table-wrap { max-width: none; }
 }
 .cap-table tbody th { font-weight: var(--weight-semibold); }
 .cap-table tbody th a { color: var(--color-text-strong); }
-.cap-table td a { color: var(--color-text); text-decoration-color: var(--color-border); text-underline-offset: 0.2em; }
+.cap-table td a { color: var(--color-text); text-decoration-color: var(--color-link); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 .cap-table td a:hover, .cap-table td a:focus-visible { color: var(--color-link); text-decoration-color: currentColor; }
 
 /* "Back to the table" at the end of every question block. */
