@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@dccf561 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@63be0f7 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -163,17 +163,41 @@ def md_to_html(text: str) -> tuple[str | None, str, str | None]:
             while i < n and rx.match(lines[i]):
                 items.append(rx.match(lines[i]).group(1))
                 i += 1
+                # Continuation lines of the same item: indented, not a new item.
+                while i < n and lines[i].startswith(("  ", "\t")) and lines[i].strip() \
+                        and not rx.match(lines[i].lstrip()):
+                    items[-1] += " " + lines[i].strip()
+                    i += 1
             tag = "ol" if ordered else "ul"
             out.append(f"<{tag}>" + "".join(f"<li>{inline(it)}</li>" for it in items) + f"</{tag}>")
             continue
+        if line.startswith("```"):
+            # A fenced block: shown as preformatted text, escaped, never interpreted.
+            j = i + 1
+            while j < n and not lines[j].startswith("```"):
+                j += 1
+            if j >= n:
+                raise MarkdownError(f"line {i + 1}: an unclosed fence")
+            out.append("<pre><code>" + _esc("\n".join(lines[i + 1:j])) + "</code></pre>")
+            i = j + 1
+            continue
+        if line.startswith(">"):
+            # A block quote: the quoted lines are rendered with the same subset.
+            quoted: list[str] = []
+            while i < n and lines[i].startswith(">"):
+                quoted.append(lines[i][2:] if lines[i].startswith("> ") else lines[i][1:])
+                i += 1
+            _m, inner, _t = md_to_html("\n".join(quoted))
+            out.append("<blockquote>" + inner + "</blockquote>")
+            continue
         if line.lstrip().startswith("<") and not line.lstrip().startswith("<http"):
             raise MarkdownError(f"line {i + 1}: raw HTML is outside the subset")
-        if line.startswith(("    ", "\t", "> ", "```")):
-            raise MarkdownError(f"line {i + 1}: indented code, block quotes and fences are outside the subset")
+        if line.startswith(("    ", "\t")):
+            raise MarkdownError(f"line {i + 1}: indented code is outside the subset")
         para: list[str] = []
         while i < n and lines[i].strip() and not HEADING_RE.match(lines[i]) and not lines[i].startswith("|") \
                 and not BULLET_RE.match(lines[i]) and not NUMBERED_RE.match(lines[i]) \
-                and not lines[i].lstrip().startswith("<!--"):
+                and not lines[i].lstrip().startswith("<!--") and not lines[i].startswith((">", "```")):
             para.append(lines[i].strip())
             i += 1
         out.append("<p>" + inline(" ".join(para)) + "</p>")
@@ -340,6 +364,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--machine-intro")
     r.add_argument("--extra-head", help="a file whose lines go into <head> after the stylesheets")
     r.add_argument("--lang", default="en")
+    r.add_argument("--lead-first", action="store_true", help="set the first top-level paragraph of a Markdown page in the lead style")
     r.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
 
@@ -367,6 +392,10 @@ def main(argv: list[str] | None = None) -> int:
         except MarkdownError as e:
             print(f"family: {content_path}: {e}", file=sys.stderr)
             return 2
+        if a.lead_first:
+            # Top-level elements sit on their own lines; a block quote's inner
+            # paragraphs do not start a line, so this is the first top-level one.
+            body = re.sub(r"(?m)^<p>", '<p class="lead">', body, count=1)
     machine = None
     if a.machine:
         mp = Path(a.machine)

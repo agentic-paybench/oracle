@@ -67,6 +67,7 @@ docs/site/results/
 docs/site/capabilities/index.html
 docs/site/tier2/statements.html
 docs/site/roadmap.html
+docs/site/glossary/
 
 # The family page gates' local output (DES-100)
 .lighthouseci/

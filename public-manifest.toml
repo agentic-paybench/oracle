@@ -64,6 +64,9 @@ R4 = "Verifiable right-of-reply fairness"
 "docs/site/build-pages.py" = "R1"
 "docs/site/content/index.html" = "R1"
 "docs/site/content/404.html" = "R1"
+# The capabilities table's short reader values and the glossary entries (content brief 2026-10-18), read by build-pages.py.
+"docs/site/content/short-values.json" = "R1"
+"docs/site/content/glossary.json" = "R1"
 "tests/test_family_render.py" = "R3"
 # The family page gates (DES-100): the network-log, layout and axe-core check,
 # the Lighthouse CI budgets and the pinned tools; vendored from

@@ -61,11 +61,19 @@ def _generated_pages(site: Path):
 
 
 def test_results_pages_carry_the_marker_before_the_doctype(site_with_results):
+    """Each findings page is declared; the results index is not (it names no
+    rail and reports no finding: Decision 1 B, 2026-10-18)."""
     pages = sorted((site_with_results / "results").glob("*.html"))
     assert any(p.name != "index.html" for p in pages)
     for p in pages:
         text = p.read_text(encoding="utf-8")
-        assert text.startswith("<!-- posture-class: level1-measurement -->\n<!doctype html>"), p
+        if p.name == "index.html":
+            assert not text.startswith("<!-- posture-class"), p
+            for s in MEASUREMENT:
+                assert s not in text, s
+            assert "OSF.IO" not in text
+        else:
+            assert text.startswith("<!-- posture-class: level1-measurement -->\n<!doctype html>"), p
 
 
 def test_capabilities_page_marker_and_documentation_set(site_with_results):
@@ -92,8 +100,22 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
         ordered = [n for _, n in sorted(zip(positions, names))]
         assert ordered == sorted(names, key=str.casefold)
     assert text.count('<section class="record"') == 13 * len(names)
-    assert '<nav class="toc"' in text and 'class="family-page family-page--wide"' in text
+    assert 'class="family-page family-page--wide"' in text
     assert "<details><summary>Sources (" in text and " open>" not in text
+    # The table (content brief E3): thirteen rows by six rails, alphabetical,
+    # every cell a link to that rail's entry; the old navigation is gone.
+    table = text.split('<table class="cap-table"', 1)[1].split("</table>", 1)[0]
+    head = re.findall(r'<th scope="col">([^<]+)</th>', table)
+    assert head == sorted(names, key=str.casefold)
+    assert table.count('<th scope="row">') == 13
+    assert len(re.findall(r'<td><a href="#[^"]+">[^<]+</a></td>', table)) == 13 * len(names)
+    assert '<nav class="toc"' not in text and 'class="by-rail"' not in text and "Facts not yet sourced" not in text
+    assert text.count('<a href="#table">Back to the table</a>') == 13
+    # The ruled sentences once, in the Posture foot block, above the machine panel.
+    foot = text.index('<section class="posture-foot"')
+    assert text.count(DOCUMENTATION) == 1 and text.index(DOCUMENTATION) > foot
+    assert foot < text.index('id="machine-h"')
+    assert "The same thirteen questions were put to all six rails, in the same fixed order" in text
     for heading in ("Who pays the network fee", "Finality model class", "Retry and idempotency", "Ambiguity bound",
                     "Outcome knowledge", "Restitution kinds (refund support)", "Observer privacy exposure",
                     "Specification pin", "Declared rate limits", "Status page", "SDK languages",
@@ -101,11 +123,30 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
         assert f">{heading}</h2>" in text, heading
 
 
-def test_root_page_carries_the_measurement_set_once(site_with_results):
+def test_root_page_carries_no_posture_repeat_and_links_the_glossary(site_with_results):
+    """Decision 1 B (2026-10-18): the root no longer repeats the ruled sentences;
+    they stay on the two pages that present named-rail findings."""
     text = (site_with_results / "index.html").read_text(encoding="utf-8")
     for s in MEASUREMENT:
-        assert text.count(s) == 1, s
-    assert 'data-posture-set="measurement"' in text
+        assert s not in text, s
+    assert 'href="glossary/"' in text and "The three tiers" in text
+
+
+def test_dim02_reader_page_rearranged_and_record_unchanged(site_with_results):
+    """Content brief G: the reader page opens with one line, carries the ruled
+    sentences once in the foot block, moves the version and correction text to
+    the end; the Markdown record itself is served unchanged."""
+    html = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.html").read_text(encoding="utf-8")
+    md = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.md").read_text(encoding="utf-8")
+    assert md == (RESULTS_SRC / "dim02-authorization-latency.v1.1.level1.md").read_text(encoding="utf-8")
+    main = html.split("<main>", 1)[1]
+    assert main.split("</h1>", 1)[1].lstrip().startswith("<p>Version 1.1, dated 2026-10-01, for the measurement run of 2026-06-28.</p>")
+    for s in MEASUREMENT:
+        assert html.count(s) == 1, s
+        assert html.index(s) > html.index('<section class="posture-foot"')
+    assert "No ranking is stated on this page" not in html
+    assert html.index("Correction of 2026-10-01.") > html.index('id="corrections-and-right-of-reply"')
+    assert 'href="mailto:mblake@everydayai.link"' in html
 
 
 class _Refs(HTMLParser):
@@ -215,7 +256,7 @@ def test_lead_lines_are_the_schemas_first_sentences_with_two_omitted(site_with_r
     # docs/site/schema/, which is gitignored and absent on a fresh clone.
     schema = json.loads((site_with_results / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
     props = schema["properties"]["credentialSubject"]["properties"]
-    leads = re.findall(r'<p class="lead">(.*?)</p>', text)
+    leads = [re.sub(r"<[^>]+>", "", x) for x in re.findall(r'<p class="lead">(.*?)</p>', text)]
     assert len(leads) == 11
     for line in leads:
         assert any(line.replace("&#x27;", "'") in (props[k].get("description", "") if k in props else "")
@@ -238,7 +279,8 @@ def test_every_in_page_link_on_the_capabilities_page_resolves(site_with_results)
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
     ids = set(re.findall(r'id="([^"]+)"', text))
     anchors = re.findall(r'href="#([^"]+)"', text)
-    by_rail = text.split('class="by-rail"', 1)[1].split("</nav>", 1)[0]
-    assert len(re.findall(r'<a href="#', by_rail)) == 13 * 6
+    assert len(anchors) >= 13 * 6 + 13 + 13
     for a in anchors:
         assert a in ids, a
+    for g in set(re.findall(r'href="\.\./glossary/#([^"]+)"', text)):
+        assert f'id="{g}"' in (site_with_results / "glossary" / "index.html").read_text(encoding="utf-8"), g

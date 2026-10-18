@@ -1,0 +1,117 @@
+{
+  "x-about": "The short plain-word value per cell for the capabilities table (content brief section E item 3): drafted from each cell's served value; the same words as the full entry where that entry's value is a fixed term; both cases named where a cell has two; no counts and no dates; languages alphabetical; 'not stated' where the documentation read states nothing, 'not at this layer' where the documentation places the matter outside the protocol's layer. DRAFT for the founder's approval (2026-10-18 mockup). The signed credentials are the record; these are reader labels, each linking to its full entry.",
+  "rails": [
+    "Google Cloud with AP2",
+    "Machine Payments Protocol on Lightning",
+    "Machine Payments Protocol on Tempo",
+    "x402 on Base",
+    "x402 on Solana",
+    "x402 on Stellar"
+  ],
+  "values": {
+    "feeBearer": [
+      "not at this layer",
+      "payer",
+      "payer or server, per challenge",
+      "facilitator, or payer (Permit2)",
+      "server or facilitator",
+      "facilitator"
+    ],
+    "finalityModelClass": [
+      "not at this layer",
+      "preimage on settlement",
+      "deterministic",
+      "staged",
+      "staged",
+      "deterministic"
+    ],
+    "retryIdempotency": [
+      "overlapping mandates barred",
+      "once per preimage",
+      "once per credential",
+      "once per authorization",
+      "once per transaction",
+      "once per authorization"
+    ],
+    "ambiguityBound": [
+      "not at this layer",
+      "bounded per route",
+      "bounded in the signed artefact",
+      "bounded in the signed artefact",
+      "bounded in the signed artefact",
+      "bounded in the signed artefact"
+    ],
+    "outcomeKnowledge": [
+      "mediated",
+      "mediated",
+      "mediated, then trustless",
+      "mediated, then trustless",
+      "mediated, then trustless",
+      "mediated, then trustless"
+    ],
+    "bundle.refundSupport": [
+      "dispute",
+      "cancellation; refund",
+      "refund; cancellation",
+      "cancellation; refund",
+      "not stated",
+      "not stated"
+    ],
+    "observerPrivacyExposure": [
+      "no public ledger at this layer",
+      "no public ledger; wallets public by default",
+      "public ledger: payer and amount",
+      "public ledger: payer and amount",
+      "public ledger: payer and amount",
+      "public ledger: payer and amount"
+    ],
+    "specificationPin": [
+      "AP2 v0.2",
+      "Lightning method draft 00, and related",
+      "Tempo method draft 00, and related",
+      "x402 Protocol Version 2, and related",
+      "x402 Protocol Version 2, and related",
+      "x402 Protocol Version 2, and related"
+    ],
+    "declaredRateLimits": [
+      "not stated",
+      "not stated",
+      "declared for the hosted API",
+      "declared for the operator API",
+      "declared for the public RPC",
+      "fee limit per API key"
+    ],
+    "statusPage": [
+      "not stated",
+      "published",
+      "published",
+      "published",
+      "not stated",
+      "published"
+    ],
+    "sdkLanguages": [
+      "Python; samples in Go and Kotlin",
+      "TypeScript",
+      "Go, Python, Ruby, Rust, TypeScript",
+      "Go, Python, TypeScript",
+      "Go, Python, TypeScript",
+      "TypeScript"
+    ],
+    "errorCatalogue": [
+      "published",
+      "published",
+      "published",
+      "published",
+      "published",
+      "published"
+    ],
+    "offlineVerifiability": [
+      "signed receipt",
+      "preimage check",
+      "unsigned receipt; chain read",
+      "optional signed receipt",
+      "optional signed receipt",
+      "optional signed receipt; Stellar use not stated"
+    ]
+  }
+}
