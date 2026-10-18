@@ -109,11 +109,11 @@ SLUG_VALUE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 URL_VALUE = re.compile(r"https?://[^\s<>\"]+")
 
 # D3: each question's lead line is the FIRST sentence of the schema's own
-# served description (schema/capability.schema.json), moved verbatim. Two are
-# omitted by the founder's ruling of 2026-10-16 (Register Operating 80 item
-# 14): Restitution kinds (its first sentence is schema-internal) and SDK
-# languages.
-LEAD_OMIT = {"bundle.refundSupport", "sdkLanguages"}
+# served description (schema/capability.schema.json), moved verbatim. One is
+# omitted by the founder's ruling of 2026-10-16: Restitution kinds (its first
+# sentence is schema-internal). SDK languages carries its lead line again
+# (build brief of 2026-10-18: its first sentence carries no internal term).
+LEAD_OMIT = {"bundle.refundSupport"}
 FIRST_SENTENCE = re.compile(r"(.+?[.!?])(?=\s+[A-Z(]|\s*$)", re.S)
 
 
@@ -229,8 +229,8 @@ QUESTION_SET_SENTENCE = ("The same thirteen questions were put to all six rails,
 def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = None, short: dict | None = None) -> str:
     """Content brief section E (2026-10-18): the lead, the question-set sentence,
     ONE table (thirteen questions by six rails, short values linking to the full
-    entries), the thirteen question blocks each ending with a back link, the
-    Posture foot block above the machine panel. No posture box at the top, no
+    entries), the Posture block directly below the table, the thirteen question
+    blocks each ending with a back link, then the machine panel. No posture box at the top, no
     by-rail block, no thirteen-questions list, no 'Facts not yet sourced'."""
     leads = leads or {}
     short = short or {}
@@ -257,6 +257,16 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
         f'<div class="table-scroll cap-table-wrap" id="table"><table class="cap-table" aria-describedby="question-set">{cols}'
         f'<thead><tr><th scope="col"><span class="visually-hidden">Question</span></th>{head}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table></div>')
+    # The Posture block (Decision 1 B) directly below the table it protects,
+    # before the first question block (build brief of 2026-10-18, point A):
+    # the ruled sentences once, the source-and-retrieval sentence inside the
+    # box (moved there by posture_extra after rendering).
+    sources_sentence = notice.get("sourcesStatement", "")
+    parts.append('<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>')
+    parts.append(family.PLACEHOLDER_POSTURE)
+    parts.append("</section>")
+    if sources_sentence:
+        parts.append(f"<!-- posture-extra: {esc(sources_sentence)} -->")
     fee = notice.get("feeQuotation", {}) or {}
     for key, label, _ in QUESTIONS:
         qid = family.slug(label)
@@ -277,15 +287,6 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
                          lambda m: m.group(1) + link_terms(m.group(2), CAP_TERMS, used, "../") + m.group(3), rec, count=1, flags=re.S)
             parts.append(rec)
         parts.append('</div><p class="back"><a href="#table">Back to the table</a></p></section>')
-    # The Posture foot block (Decision 1 B): the ruled sentences once, above the machine panel.
-    sources_sentence = notice.get("sourcesStatement", "")
-    parts.append('<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>')
-    # The source-and-retrieval sentence goes INSIDE the posture box, after the
-    # ruled pair (the box is inserted at the placeholder; see posture_foot).
-    parts.append(family.PLACEHOLDER_POSTURE)
-    parts.append("</section>")
-    if sources_sentence:
-        parts.append(f"<!-- posture-extra: {esc(sources_sentence)} -->")
     parts.append(family.PLACEHOLDER_MACHINE)
     return "\n".join(parts)
 

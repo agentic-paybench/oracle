@@ -103,6 +103,18 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
     # The standard page width, so the family bar sits where it sits on every
     # page; only the table breaks out (design lens on the renders, 2026-10-18).
     assert 'class="family-page"' in text and "family-page--wide" not in text
+    # Indigo by the family-scope attribute, on the wrapper and the themed
+    # island, never on <html> (founder ruling, 2026-10-18).
+    assert '<div class="family-page" data-accent="indigo">' in text
+    assert '<section class="machine" data-theme="dark" data-accent="indigo"' in text
+    assert "<html" in text and "data-accent" not in text.split("<html", 1)[1].split(">", 1)[0]
+    # The Posture block directly below the table, before the first question
+    # block (build brief of 2026-10-18, point A), and only once.
+    assert text.count('<section class="posture-foot"') == 1
+    assert text.index("</table>") < text.index('<section class="posture-foot"') < text.index('<section class="question"')
+    # The SDK languages lead line: the schema's own first sentence.
+    sdk = text.split('<h2 id="sdk-languages">', 1)[1].split('<div class="cards">', 1)[0]
+    assert "Languages for which the protocol authors or the operator document an official SDK or reference implementation." in re.sub(r"<[^>]+>", "", sdk)
     assert "<details><summary>Sources (" in text and " open>" not in text
     # The table (content brief E3): thirteen rows by six rails, alphabetical,
     # every cell a link to that rail's entry; the old navigation is gone.
@@ -250,22 +262,23 @@ def test_disposition_off_the_reader_cards_and_kept_in_every_credential(site_with
             assert _dig(subj, key).get("disposition") in {"positive", "partial-absence", "confirmed-absence", "void"}, (subj["displayName"], key)
 
 
-def test_lead_lines_are_the_schemas_first_sentences_with_two_omitted(site_with_results):
-    """D3: eleven lead lines, each the first sentence of the served schema
-    description, verbatim; none for Restitution kinds or SDK languages."""
+def test_lead_lines_are_the_schemas_first_sentences_with_one_omitted(site_with_results):
+    """D3: twelve lead lines, each the first sentence of the served schema
+    description, verbatim; none for Restitution kinds (SDK languages carries
+    its lead line again, build brief of 2026-10-18)."""
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
     # The fixture's assembled copy (built from the tracked schema/), never
     # docs/site/schema/, which is gitignored and absent on a fresh clone.
     schema = json.loads((site_with_results / "schema" / "capability.schema.json").read_text(encoding="utf-8"))
     props = schema["properties"]["credentialSubject"]["properties"]
     leads = [re.sub(r"<[^>]+>", "", x) for x in re.findall(r'<p class="lead">(.*?)</p>', text)]
-    assert len(leads) == 11
+    assert len(leads) == 12
     for line in leads:
         assert any(line.replace("&#x27;", "'") in (props[k].get("description", "") if k in props else "")
                    for k in props), line
     sections = text.split('<section class="question"')[1:]
-    for i in (5, 10):  # Restitution kinds, SDK languages (zero-based in the fixed order)
-        assert '<p class="lead">' not in sections[i]
+    assert '<p class="lead">' not in sections[5]  # Restitution kinds (zero-based in the fixed order)
+    assert '<p class="lead">' in sections[10]  # SDK languages
 
 
 def test_family_bar_marks_the_page_only_on_the_root(site_with_results):
