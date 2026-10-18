@@ -100,7 +100,9 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
         ordered = [n for _, n in sorted(zip(positions, names))]
         assert ordered == sorted(names, key=str.casefold)
     assert text.count('<section class="record"') == 13 * len(names)
-    assert 'class="family-page family-page--wide"' in text
+    # The standard page width, so the family bar sits where it sits on every
+    # page; only the table breaks out (design lens on the renders, 2026-10-18).
+    assert 'class="family-page"' in text and "family-page--wide" not in text
     assert "<details><summary>Sources (" in text and " open>" not in text
     # The table (content brief E3): thirteen rows by six rails, alphabetical,
     # every cell a link to that rail's entry; the old navigation is gone.

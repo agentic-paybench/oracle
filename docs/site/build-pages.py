@@ -475,8 +475,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, "capabilities/index.html", body, title="Capability records: documented facts per rail",
                    posture="documentation", machine=machine_for_capabilities(index, subjects, "../"),
                    marker="level1-documentation-profile", check=check,
-                   machine_intro="The same facts as signed data, verifiable offline against the published key.",
-                   layout="wide")
+                   machine_intro="The same facts as signed data, verifiable offline against the published key.")
 
     # Statements and roadmap as reader pages beside their Markdown.
     for rel in ("tier2/statements.md", "roadmap.md"):
