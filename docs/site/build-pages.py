@@ -551,7 +551,7 @@ def decision_records(site: Path, check: bool) -> int:
     body = ('<h1 id="decision-records">Decision records</h1>\n'
             '<p class="lead">A scored query, an answer that would score rails for a particular payment, exists in the code and is switched off on this site.</p>\n'
             '<p>Why the oracle is intent-free (ADR-007) and how its gates work (ADR-009).</p>\n'
-            '<p>Which surfaces are live and which are switched off is published as data at <a href="../posture.json"><code>posture.json</code></a>; <a href="../posture.json"><code>posture.json</code></a> shows the gates.</p>\n'
+            '<p>Which surfaces are live and which are switched off is published as data at <a href="../posture.json"><code>posture.json</code></a>, which shows the gates.</p>\n'
             f'<ul class="dir">{"".join(items)}</ul>\n' + family.PLACEHOLDER_MACHINE)
     machine = [{"href": md.name, "path": f"adr/{md.name}", "note": "the decision record as Markdown"} for md in mds]
     rc |= page(site, "adr/index.html", body, title="Decision records", posture="none", machine=machine, marker=None, check=check)
