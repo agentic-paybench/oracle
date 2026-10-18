@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@63be0f7 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@c0b8456 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -496,7 +496,7 @@ a.gloss:hover, a.gloss:focus-visible { color: var(--color-link); text-decoration
 /* The glossary page: an A to Z line, then one entry per term. */
 .az { display: flex; flex-wrap: wrap; gap: 0 var(--space-3); margin: 0 0 var(--space-5); padding: 0; list-style: none; font-size: var(--type-small-size); line-height: var(--type-small-leading); }
 .az li { margin: 0; }
-.az a { display: inline-block; padding: var(--space-1) 0; }
+.az a { display: inline-block; min-width: var(--space-6); padding: var(--space-1) 0; text-align: center; }
 .glossary dt { margin: var(--space-5) 0 var(--space-1); font-weight: var(--weight-semibold); color: var(--color-text-strong); scroll-margin-top: var(--space-4); }
 .glossary dd { margin: 0; }
 
