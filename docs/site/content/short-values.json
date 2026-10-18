@@ -1,5 +1,5 @@
 {
-  "x-about": "The short plain-word value per cell for the capabilities table (content brief section E item 3): drafted from each cell's served value; the same words as the full entry where that entry's value is a fixed term; both cases named where a cell has two; no counts and no dates; languages alphabetical; 'not stated' where the documentation read states nothing, 'not at this layer' where the documentation places the matter outside the protocol's layer. DRAFT for the founder's approval (2026-10-18 mockup). The signed credentials are the record; these are reader labels, each linking to its full entry.",
+  "x-about": "The short plain-word value per cell for the capabilities table (content brief section E item 3): drafted from each cell's served value; the same words as the full entry where that entry's value is a fixed term; both cases named where a cell has two; no counts and no dates; languages alphabetical; absences in the entry's own terms: 'none defined' where the documentation states the protocol defines none, 'none found' and 'not declared' where nothing was found in the documents read, 'not stated' where a detail is not stated, 'not at this layer' where the documentation places the matter outside the protocol's layer. DRAFT for the founder's approval (2026-10-18 mockup). The signed credentials are the record; these are reader labels, each linking to its full entry.",
   "rails": [
     "Google Cloud with AP2",
     "Machine Payments Protocol on Lightning",
@@ -26,8 +26,8 @@
       "deterministic"
     ],
     "retryIdempotency": [
-      "overlapping mandates barred",
-      "once per preimage",
+      "overlap barred for the Shopping Agent",
+      "preimage consumed once",
       "once per credential",
       "once per authorization",
       "once per transaction",
@@ -51,11 +51,11 @@
     ],
     "bundle.refundSupport": [
       "dispute",
-      "cancellation; refund",
-      "refund; cancellation",
-      "cancellation; refund",
-      "not stated",
-      "not stated"
+      "cancellation; refund (out of protocol)",
+      "cancellation; refund (out of protocol)",
+      "cancellation; refund by the seller",
+      "none defined",
+      "none defined"
     ],
     "observerPrivacyExposure": [
       "no public ledger at this layer",
@@ -74,19 +74,19 @@
       "x402 Protocol Version 2, and related"
     ],
     "declaredRateLimits": [
-      "not stated",
-      "not stated",
+      "not declared",
+      "not declared",
       "declared for the hosted API",
       "declared for the operator API",
       "declared for the public RPC",
       "fee limit per API key"
     ],
     "statusPage": [
-      "not stated",
+      "none found",
       "published",
       "published",
       "published",
-      "not stated",
+      "none found",
       "published"
     ],
     "sdkLanguages": [
@@ -106,7 +106,7 @@
       "published"
     ],
     "offlineVerifiability": [
-      "signed receipt",
+      "signed receipt; key trust not stated",
       "preimage check",
       "unsigned receipt; chain read",
       "optional signed receipt",

@@ -280,10 +280,12 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
     # The Posture foot block (Decision 1 B): the ruled sentences once, above the machine panel.
     sources_sentence = notice.get("sourcesStatement", "")
     parts.append('<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>')
-    parts.append(family.PLACEHOLDER_POSTURE.replace("-->", "-->"))
-    if sources_sentence:
-        parts.append(f'<p class="meta">{esc(sources_sentence)}</p>')
+    # The source-and-retrieval sentence goes INSIDE the posture box, after the
+    # ruled pair (the box is inserted at the placeholder; see posture_foot).
+    parts.append(family.PLACEHOLDER_POSTURE)
     parts.append("</section>")
+    if sources_sentence:
+        parts.append(f"<!-- posture-extra: {esc(sources_sentence)} -->")
     parts.append(family.PLACEHOLDER_MACHINE)
     return "\n".join(parts)
 
@@ -348,6 +350,9 @@ def dim02_reader(body: str) -> str:
     assert repeated in correction_p, "the correction paragraph no longer carries the sentence the Provenance section repeats"
     correction_moved = correction_p.replace(repeated, "", 1)
     body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    # The DOIs and the reply address, as links (markup only; the text unchanged).
+    body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
+    body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
     used: set = set()
     body = "\n".join(link_terms(chunk, DIM02_TERMS, used, "../") if chunk.startswith(("<p>", "<ul>", "<li>")) else chunk
                      for chunk in re.split(r"(?=<p>|<ul>|<h[1-3])", body))
@@ -376,6 +381,19 @@ def listing_body(title: str, intro: str, items: list[tuple[str, str, str]]) -> s
     return f'<h1 id="{family.slug(title)}">{esc(title)}</h1>\n<p>{esc(intro)}</p>\n<ul class="dir">{lis}</ul>\n{family.PLACEHOLDER_MACHINE}'
 
 
+def posture_extra(html: str) -> str:
+    """Move a '<!-- posture-extra: S -->' sentence inside the posture box that
+    the renderer inserted, as its last paragraph, so every sentence of the foot
+    block sits in one box (as on the DIM-02 page)."""
+    m = re.search(r"<!-- posture-extra: (.*?) -->", html)
+    if not m:
+        return html
+    html = html.replace(m.group(0), "", 1)
+    i = html.index('<section class="posture-foot"')
+    j = html.index("</div>", html.index('<div class="posture"', i))
+    return html[:j] + f"<p>{m.group(1)}</p>\n" + html[j:]
+
+
 def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machine: list[dict] | None,
          marker: str | None, description: str | None = None, check: bool, root_relative: bool = False,
          machine_intro: str | None = None, layout: str = "measure", at_root: bool = False) -> int:
@@ -395,6 +413,7 @@ def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machi
         layout=layout,
         at_root=at_root,
     )
+    html = posture_extra(html)
     return family.write_or_check(site / rel_out, html, check)
 
 
@@ -567,11 +586,11 @@ def methodology_pages(site: Path, check: bool) -> int:
                    {"href": "../prereg-manifest.sha256", "path": "methodology/prereg-manifest.sha256", "note": "the anchored manifest of hashes"}]
         rc |= page(site, f"methodology/{rel[:-3]}.html", banner + body + "\n" + family.PLACEHOLDER_MACHINE, title=title,
                    posture="none", machine=machine, marker=None, check=check)
-        links.append(f'<li><a href="{esc(rel[:-3] + ".html")}">{esc(label)}</a> <span class="label">rendered for reading; the original is listed for software</span></li>')
+        links.append(f'<li><a href="{esc(rel[:-3] + ".html")}">{esc(label)}</a></li>')
     files = sorted(p for p in d.rglob("*") if p.is_file() and p.suffix != ".html")
     body = ('<h1 id="settlement-finality-methodology-frozen-v1-2">Settlement-finality methodology (frozen v1.2)</h1>\n'
             f'<p class="lead">{esc(METHODOLOGY_EXPLAINER.split(". ", 1)[0])}.</p>\n'
-            f'<p>{esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1])}</p>\n'
+            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>') + '</p>\n'
             f'<ul class="dir">{"".join(links)}</ul>\n' + family.PLACEHOLDER_MACHINE)
     machine = [{"href": str(p.relative_to(d)), "path": f"methodology/{p.relative_to(d)}", "note": ""} for p in files]
     rc |= page(site, "methodology/index.html", body, title="Settlement-finality methodology (frozen v1.2)", posture="none",

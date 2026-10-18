@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@c0b8456 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@9f9d696 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -446,7 +446,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 /* The table takes the full wide container (the reading-measure cap on a
    scrolling table wrapper does not apply to it). */
 .family-page--wide main > .table-scroll.cap-table-wrap { max-width: none; }
-.cap-table { table-layout: fixed; width: 100%; border-collapse: collapse; }
+.cap-table { table-layout: fixed; width: 100%; min-width: 60rem; border-collapse: collapse; }
 .cap-table col.q { width: 12rem; }
 .cap-table th, .cap-table td {
   text-align: left;
