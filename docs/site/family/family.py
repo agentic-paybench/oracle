@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@a543cd8 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@6ce2e79 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -47,6 +47,9 @@ SURFACES = (
 )
 POSTURE_SETS = ("measurement", "documentation", "none")
 PLACEHOLDER_POSTURE = "<!-- family:posture -->"
+# The same block, set as the labelled "Posture" block the oracle pages use
+# (small type, its own heading): the page places it where it belongs.
+PLACEHOLDER_POSTURE_LABELLED = "<!-- family:posture labelled -->"
 PLACEHOLDER_MACHINE = "<!-- family:machine -->"
 
 MARKER_RE = re.compile(r"^\s*(?:<!--\s*)?posture-class:\s*([A-Za-z0-9_-]+)\s*(?:-->)?\s*$")
@@ -313,7 +316,13 @@ def render_page(
     if layout not in ("measure", "wide"):
         raise ValueError(f"unknown layout {layout!r}")
     page_class = "family-page family-page--wide" if layout == "wide" else "family-page"
-    body = _insert(body, PLACEHOLDER_POSTURE, posture_block(posture, snippet_path), True)
+    if PLACEHOLDER_POSTURE_LABELLED in body:
+        block = posture_block(posture, snippet_path)
+        body = body.replace(PLACEHOLDER_POSTURE_LABELLED,
+                            '<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>\n'
+                            + block + "\n</section>", 1)
+    else:
+        body = _insert(body, PLACEHOLDER_POSTURE, posture_block(posture, snippet_path), True)
     body = _insert(body, PLACEHOLDER_MACHINE, machine_panel(machine or [], machine_intro), False)
     head_marker = f"<!-- posture-class: {marker} -->\n" if marker else ""
     extra = (extra_head.strip() + "\n") if extra_head.strip() else ""

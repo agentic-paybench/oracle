@@ -14,7 +14,7 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 - Structural facts per rail, sourced 2026-10-09 from primary documentation and served in the capability credentials as a documentation profile, not a measurement: fee bearer, finality model class, retry and idempotency, ambiguity bound, outcome knowledge, restitution kinds, observer privacy exposure, specification pin, declared rate limits, status page, SDK languages, error catalogue; and offline verifiability (whether the paying agent can check the outcome later without asking anyone), sourced 2026-10-10 on the same terms.
 - Supported assets per rail: roadmap.
 - Custody model per rail: roadmap.
-- Headline fee facts: roadmap.
+- Headline fee amounts per rail: roadmap.
 - Authorization, dispute and sanctions bundle: roadmap.
 
 ## Tier-3 declared directions

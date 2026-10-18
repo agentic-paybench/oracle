@@ -112,6 +112,11 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
     # block, and only once (2026-10-18).
     assert text.count('<section class="posture-foot"') == 1
     assert text.index("</table>") < text.index('<section class="posture-foot"') < text.index('<section class="question"')
+    # The cards show readers the table's wording, never a schema token; the
+    # fee notice is one compact box (2026-10-18).
+    assert '<div class="value"><code>' not in text
+    assert text.count('<div class="value">mediated, then trustless</div>') == 4
+    assert text.count('<div class="notes notice">') == 1
     # The SDK languages lead line: the schema's own first sentence.
     sdk = text.split('<h2 id="sdk-languages">', 1)[1].split('<div class="cards">', 1)[0]
     assert "Languages for which the protocol authors or the operator document an official SDK or reference implementation." in re.sub(r"<[^>]+>", "", sdk)
@@ -135,6 +140,14 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
                     "Specification pin", "Declared rate limits", "Status page", "SDK languages",
                     "Error catalogue", "Offline verifiability"):
         assert f">{heading}</h2>" in text, heading
+
+
+def test_dim02_reader_names_r6_and_the_record_is_unchanged(site_with_results):
+    """2026-10-18: the reader page names the rail behind R6; the dated record keeps its words."""
+    page = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.html").read_text(encoding="utf-8")
+    record = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.md").read_text(encoding="utf-8")
+    assert "against which R6 (Google Cloud with AP2) was measured" in page
+    assert "against which R6 was measured" in record and "(Google Cloud with AP2) was measured" not in record
 
 
 def test_root_page_carries_no_posture_repeat_and_links_the_glossary(site_with_results):

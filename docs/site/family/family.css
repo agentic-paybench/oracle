@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@a543cd8 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@6ce2e79 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -321,6 +321,17 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .lede + .question > h2 { border-top: 0; padding-top: 0; }
 .by-rail + .question > h2 { border-top: 0; }
 .question .notes p { margin: 0 0 var(--space-2); }
+/* A notice of fixed sentences inside a question block (the fee quotation
+   notice): a compact box styled like the posture box. */
+.question .notes.notice {
+  background: var(--color-canvas);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  max-width: var(--family-measure);
+}
+.question .notes.notice p { color: var(--color-text); }
+.question .notes.notice p:last-child { margin: 0; }
 
 .cards {
   display: grid;

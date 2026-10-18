@@ -189,7 +189,7 @@ def render_record_value(v) -> tuple[str, str]:
     return "value", render_value(v)
 
 
-def render_record(question_id: str, name: str, cell, question: str = "") -> str:
+def render_record(question_id: str, name: str, cell, question: str = "", reader_value: str | None = None) -> str:
     """One record card: the rail name, the value, the disposition and provenance
     as labelled tags, the statement, the sources behind a native details
     disclosure (closed by default; no script; the URLs stay in the page)."""
@@ -202,6 +202,10 @@ def render_record(question_id: str, name: str, cell, question: str = "") -> str:
     prov = cell.get("provenance", {}) or {}
     sources = prov.get("sources", []) or []
     cls, html_value = render_record_value(cell.get("value"))
+    # A schema token (for example "mediated-then-trustless") is shown to readers
+    # in the table's approved wording; the token stays in the signed record.
+    if reader_value and isinstance(cell.get("value"), str) and SLUG_VALUE.fullmatch(cell["value"]):
+        cls, html_value = "value", esc(reader_value)
     value = f'<div class="{cls}">{html_value}</div>'
     extras_html = ""
     if extras:
@@ -270,6 +274,7 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
         parts.append(f"<!-- posture-extra: {esc(sources_sentence)} -->")
     fee = notice.get("feeQuotation", {}) or {}
     for key, label, _ in QUESTIONS:
+        reader_values = short.get("values", {}).get(key) or [None] * len(names)
         qid = family.slug(label)
         used: set = set()
         parts.append(f'<section class="question" aria-labelledby="{qid}">')
@@ -280,10 +285,10 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
             notes = "".join(f'<p class="meta">{esc(fee[k])}</p>'
                             for k in ("quotationStatement", "sourceStatement", "evenHandedStatement") if fee.get(k))
             if notes:
-                parts.append(f'<div class="notes">{notes}</div>')
+                parts.append(f'<div class="notes notice">{notes}</div>')
         parts.append('<div class="cards">')
-        for s in subjects:
-            rec = render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key), label)
+        for s, reader_value in zip(subjects, reader_values):
+            rec = render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key), label, reader_value)
             rec = re.sub(r'(<p class="statement">)(.*?)(</p>)',
                          lambda m: m.group(1) + link_terms(m.group(2), CAP_TERMS, used, "../") + m.group(3), rec, count=1, flags=re.S)
             parts.append(rec)
@@ -352,6 +357,9 @@ def dim02_reader(body: str) -> str:
     assert repeated in correction_p, "the correction paragraph no longer carries the sentence the Provenance section repeats"
     correction_moved = correction_p.replace(repeated, "", 1)
     body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    # R6 named on the reader page only (2026-10-18); the dated record is unchanged.
+    assert body.count("against which R6 was measured") == 1
+    body = body.replace("against which R6 was measured", "against which R6 (Google Cloud with AP2) was measured", 1)
     # The DOIs and the reply address, as links (markup only; the text unchanged).
     body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
     body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
