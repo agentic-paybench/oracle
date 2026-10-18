@@ -13,7 +13,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,7 +35,7 @@ jobs:
 
   worker:
     # Right-of-reply channel Worker: lint / typecheck / test / bundle-dry-run.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: worker
@@ -63,7 +63,7 @@ jobs:
     # fails ci, and deploy-pages runs only when ci succeeds. The live-URL run
     # is in deploy-pages, after the deploy (family-gates/README.md).
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

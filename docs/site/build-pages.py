@@ -10,7 +10,8 @@ Outputs (build outputs, gitignored): results/<name>.html beside each
 assembled results .md, results/index.html, capabilities/index.html,
 tier2/statements.html, roadmap.html, adr/index.html, methodology/index.html.
 The root index.html and 404.html are TRACKED rendered files built from the
-tracked fragments under content/; this script rewrites them, and the Python
+tracked fragments under docs/site-content/ (outside the deployed tree, so the
+sources are never served); this script rewrites them, and the Python
 suite runs it in --check mode so a drift between fragment and page fails.
 
     python3 docs/site/build-pages.py --site docs/site --labels docs/results-labels.tsv [--check]
@@ -26,6 +27,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+# The page sources live beside the deployed tree, never inside it.
+CONTENT = HERE.parent / "site-content"
 sys.path.insert(0, str(HERE / "family"))
 import family  # noqa: E402  (the vendored renderer)
 
@@ -109,11 +112,10 @@ SLUG_VALUE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 URL_VALUE = re.compile(r"https?://[^\s<>\"]+")
 
 # D3: each question's lead line is the FIRST sentence of the schema's own
-# served description (schema/capability.schema.json), moved verbatim. Two are
-# omitted by the founder's ruling of 2026-10-16 (Register Operating 80 item
-# 14): Restitution kinds (its first sentence is schema-internal) and SDK
-# languages.
-LEAD_OMIT = {"bundle.refundSupport", "sdkLanguages"}
+# served description (schema/capability.schema.json), moved verbatim, except
+# Restitution kinds, whose first sentence describes the schema's own structure
+# rather than the fact.
+LEAD_OMIT = {"bundle.refundSupport"}
 FIRST_SENTENCE = re.compile(r"(.+?[.!?])(?=\s+[A-Z(]|\s*$)", re.S)
 
 
@@ -133,6 +135,37 @@ def lead_lines(site: Path) -> dict:
         if m:
             out[key] = m.group(1)
     return out
+
+
+# Glossary terms, linked (dotted underline) on first use: per question block on
+# the capabilities page, per page on the DIM-02 page.
+CAP_TERMS = ["probabilistic finality", "deterministic finality", "finality", "idempotency", "ambiguity bound",
+             "outcome knowledge", "restitution", "observer privacy exposure", "specification pin", "rate limit",
+             "error catalogue", "offline verifiability", "documentation profile", "provenance label"]
+DIM02_TERMS = ["authorization primitive", "payment validation", "challenge issuance", "local-complete",
+               "network-dependent", "lognormal parameters", "confidence interval", "pre-registration"]
+
+
+def link_terms(html_text: str, terms: list[str], used: set, prefix: str) -> str:
+    """Wrap the first occurrence of each not-yet-used term in a glossary link.
+    Only text outside tags and outside existing links is searched, and the
+    text is re-split after every insertion, so a term is never matched inside a
+    link already made (longer terms come first in the list)."""
+    for term in terms:
+        if term in used:
+            continue
+        pieces = re.split(r"(<a\b.*?</a>|<[^>]+>)", html_text, flags=re.S)
+        for i, piece in enumerate(pieces):
+            if not piece or piece.startswith("<"):
+                continue
+            m = re.search(r"(?<![\w-])(" + re.escape(term) + r")(?![\w-])", piece, re.I)
+            if m:
+                link = f'<a class="gloss" href="{prefix}glossary/#{family.slug(term)}">{m.group(1)}</a>'
+                pieces[i] = piece[:m.start()] + link + piece[m.end():]
+                used.add(term)
+                html_text = "".join(pieces)
+                break
+    return html_text
 
 
 def render_kv(d: dict) -> str:
@@ -156,7 +189,7 @@ def render_record_value(v) -> tuple[str, str]:
     return "value", render_value(v)
 
 
-def render_record(question_id: str, name: str, cell, question: str = "") -> str:
+def render_record(question_id: str, name: str, cell, question: str = "", reader_value: str | None = None) -> str:
     """One record card: the rail name, the value, the disposition and provenance
     as labelled tags, the statement, the sources behind a native details
     disclosure (closed by default; no script; the URLs stay in the page)."""
@@ -169,12 +202,16 @@ def render_record(question_id: str, name: str, cell, question: str = "") -> str:
     prov = cell.get("provenance", {}) or {}
     sources = prov.get("sources", []) or []
     cls, html_value = render_record_value(cell.get("value"))
+    # A schema token (for example "mediated-then-trustless") is shown to readers
+    # in the table's approved wording; the token stays in the signed record.
+    if reader_value and isinstance(cell.get("value"), str) and SLUG_VALUE.fullmatch(cell["value"]):
+        cls, html_value = "value", esc(reader_value)
     value = f'<div class="{cls}">{html_value}</div>'
     extras_html = ""
     if extras:
         extras_html = '<dl class="extras">' + "".join(
             f"<div><dt>{esc(k)}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
-    # D2 (founder ruling 2026-10-16): the disposition is not shown on the
+    # D2 (2026-10-16): the disposition is not shown on the
     # reader card; it stays in the signed credential, where software needs it.
     tags = []
     if prov.get("label"):
@@ -191,57 +228,71 @@ def render_record(question_id: str, name: str, cell, question: str = "") -> str:
     return f'<section class="record" id="{rid}"><h3>{esc(name)}</h3>{value}{extras_html}{tags_html}{statement}{details}</section>'
 
 
-def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = None) -> str:
+QUESTION_SET_SENTENCE = ("The same thirteen questions were put to all six rails, in the same fixed order, against each rail's "
+                         "own primary documentation, between the dates of 2026-10-09 and 2026-10-10.")
+
+
+def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = None, short: dict | None = None) -> str:
+    """Content brief section E (2026-10-18): the lead, the question-set sentence,
+    ONE table (thirteen questions by six rails, short values linking to the full
+    entries), the Posture block directly below the table, the thirteen question
+    blocks each ending with a back link, then the machine panel. No posture box at the top, no
+    by-rail block, no thirteen-questions list, no 'Facts not yet sourced'."""
     leads = leads or {}
+    short = short or {}
     notice = index.get("notice", {})
+    names = [str(s.get("displayName", s.get("railName", ""))) for s in subjects]
     parts = [
-        '<div class="lede"><div class="intro">',
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
         "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one card per rail under each question, rails in alphabetical order, with each card's sources folded beneath it; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
-        family.PLACEHOLDER_POSTURE,
+        f'<p id="question-set">{esc(QUESTION_SET_SENTENCE)}</p>',
     ]
-    if notice.get("evenHandedStatement"):
-        parts.append(f"<p>{esc(notice['evenHandedStatement'])}</p>")
-    if notice.get("sourcesStatement"):
-        parts.append(f"<p>{esc(notice['sourcesStatement'])}</p>")
-    fee = notice.get("feeQuotation", {}) or {}
-    toc = "".join(f'<li><a href="#{family.slug(label)}">{esc(label)}</a></li>' for _, label, _ in QUESTIONS)
-    parts.append("</div>")
-    extra = ('<ul class="extra"><li><a href="#pending-facts">Facts not yet sourced</a></li>'
-             '<li><a href="#machine-h">For agents and software</a></li></ul>')
-    parts.append(f'<nav class="toc" aria-labelledby="questions"><h2 id="questions">The thirteen questions</h2><ol>{toc}</ol>{extra}</nav>')
-    parts.append("</div>")
+    # The table.
+    order = short.get("rails", names)
+    assert order == names, f"short-values rail order {order} does not match the credentials {names}"
+    head = "".join(f'<th scope="col">{esc(n)}</th>' for n in names)
     rows = []
-    for s in subjects:
-        name = str(s.get("displayName", s.get("railName", "")))
-        links = "".join(
-            f'<a href="#{family.slug(label)}-{family.slug(name)}" title="{esc(label)}">{n}<span class="visually-hidden">, {esc(name)}: {esc(label)}</span></a>'
-            for n, (_, label, _) in enumerate(QUESTIONS, 1))
-        rows.append(f"<div><dt>{esc(name)}</dt><dd>{links}</dd></div>")
-    parts.append(f'<nav class="by-rail" aria-labelledby="by-rail"><h2 id="by-rail">By rail</h2><dl>{"".join(rows)}</dl></nav>')
     for key, label, _ in QUESTIONS:
         qid = family.slug(label)
+        vals = short.get("values", {}).get(key) or ["see entry"] * len(names)
+        cells = "".join(
+            f'<td><a href="#{qid}-{family.slug(n)}">{esc(v)}</a></td>' for n, v in zip(names, vals))
+        rows.append(f'<tr><th scope="row"><a href="#{qid}">{esc(label)}</a></th>{cells}</tr>')
+    cols = '<colgroup><col class="q">' + "<col>" * len(names) + "</colgroup>"
+    parts.append(
+        f'<div class="table-scroll cap-table-wrap" id="table"><table class="cap-table" aria-describedby="question-set">{cols}'
+        f'<thead><tr><th scope="col"><span class="visually-hidden">Question</span></th>{head}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></div>')
+    # The Posture block directly below the table it protects, before the
+    # first question block: the required sentences once, the source-and-retrieval sentence inside the
+    # box (moved there by posture_extra after rendering).
+    sources_sentence = notice.get("sourcesStatement", "")
+    parts.append('<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>')
+    parts.append(family.PLACEHOLDER_POSTURE)
+    parts.append("</section>")
+    if sources_sentence:
+        parts.append(f"<!-- posture-extra: {esc(sources_sentence)} -->")
+    fee = notice.get("feeQuotation", {}) or {}
+    for key, label, _ in QUESTIONS:
+        reader_values = short.get("values", {}).get(key) or [None] * len(names)
+        qid = family.slug(label)
+        used: set = set()
         parts.append(f'<section class="question" aria-labelledby="{qid}">')
         parts.append(f'<h2 id="{qid}">{esc(label)}</h2>')
         if leads.get(key):
-            parts.append(f'<p class="lead">{esc(leads[key])}</p>')
+            parts.append(link_terms(f'<p class="lead">{esc(leads[key])}</p>', CAP_TERMS, used, "../"))
         if key == "feeBearer" and fee:
             notes = "".join(f'<p class="meta">{esc(fee[k])}</p>'
                             for k in ("quotationStatement", "sourceStatement", "evenHandedStatement") if fee.get(k))
             if notes:
-                parts.append(f'<div class="notes">{notes}</div>')
+                parts.append(f'<div class="notes notice">{notes}</div>')
         parts.append('<div class="cards">')
-        for s in subjects:
-            parts.append(render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key), label))
-        parts.append("</div></section>")
-    parts.append('<h2 id="pending-facts">Facts not yet sourced</h2>')
-    parts.append('<p class="meta">These fields are served as "pending" in every credential: roadmap, no measurement, never invented.</p>')
-    parts.append('<div class="table-scroll"><table><thead><tr><th>Field</th><th>Status across the six rails</th></tr></thead><tbody>')
-    for key, label in PENDING_FIELDS:
-        vals = {json.dumps(dig(s, key), sort_keys=True) for s in subjects}
-        status = "pending for every rail" if vals == {'"pending"'} else "; ".join(sorted(esc(v) for v in vals))
-        parts.append(f"<tr><td>{esc(label)}</td><td>{status}</td></tr>")
-    parts.append("</tbody></table></div>")
+        for s, reader_value in zip(subjects, reader_values):
+            rec = render_record(qid, str(s.get("displayName", s.get("railName", ""))), dig(s, key), label, reader_value)
+            rec = re.sub(r'(<p class="statement">)(.*?)(</p>)',
+                         lambda m: m.group(1) + link_terms(m.group(2), CAP_TERMS, used, "../") + m.group(3), rec, count=1, flags=re.S)
+            parts.append(rec)
+        parts.append('</div><p class="back"><a href="#table">Back to the table</a></p></section>')
     parts.append(family.PLACEHOLDER_MACHINE)
     return "\n".join(parts)
 
@@ -274,6 +325,53 @@ def wrap_posture_run(body: str) -> str:
     return body
 
 
+# The DIM-02 reader page. The Markdown record is NOT
+# changed: it is the frozen, dated artefact. Only its reader rendering is
+# rearranged: a one-line opening; the version and correction paragraphs moved
+# to after "Corrections and right of reply", shortened only by removing whole
+# sentences the page already carries; the ruled sentences and the
+# "No ranking is stated..." sentence removed from the top and the ruled
+# sentences placed once in the Posture foot block; the email as a mailto.
+DIM02_READER = {"dim02-authorization-latency.v1.1.level1.md"}
+DIM02_OPENING = "Version 1.1, dated 2026-10-01, for the measurement run of 2026-06-28."
+
+
+def dim02_reader(body: str) -> str:
+    paras = re.findall(r"<p>.*?</p>", body, re.S)
+    version_p = next(p for p in paras if p.startswith("<p>Version 1.1, dated 2026-10-01"))
+    correction_p = next(p for p in paras if p.startswith("<p>Correction of 2026-10-01."))
+    no_rank_p = next(p for p in paras if p.startswith("<p>No ranking is stated on this page"))
+    body = body.replace(version_p, f"<p>{esc(DIM02_OPENING)}</p>", 1)
+    body = body.replace(correction_p, "", 1)
+    body = body.replace(no_rank_p, "", 1)
+    block = family.posture_block("measurement", HERE / "family" / "posture-snippet.html")
+    sentences = re.findall(r'<p data-posture="[a-z-]+">(.*?)</p>', block)
+    for s in sentences:
+        body = body.replace(f"<p>{s}</p>", "", 1)
+    # The moved paragraphs, shortened by removing whole repeated sentences only.
+    # Kept whole: removing its first sentence would leave "It corrects ..."
+    # with no subject, and rewording it would be new wording.
+    version_moved = version_p
+    repeated = (" The dated record shows that the method was refined during the pilot runs of 22 to 28 June 2026, "
+                "which are the runs this page reports, and was frozen and externally anchored afterwards, on 29 and 30 June 2026.")
+    assert repeated in correction_p, "the correction paragraph no longer carries the sentence the Provenance section repeats"
+    correction_moved = correction_p.replace(repeated, "", 1)
+    body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    # R6 named on the reader page only (2026-10-18); the dated record is unchanged.
+    assert body.count("against which R6 was measured") == 1
+    body = body.replace("against which R6 was measured", "against which R6 (Google Cloud with AP2) was measured", 1)
+    # The DOIs and the reply address, as links (markup only; the text unchanged).
+    body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
+    body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
+    used: set = set()
+    body = "\n".join(link_terms(chunk, DIM02_TERMS, used, "../") if chunk.startswith(("<p>", "<ul>", "<li>")) else chunk
+                     for chunk in re.split(r"(?=<p>|<ul>|<h[1-3])", body))
+    body += ("\n" + version_moved + "\n" + correction_moved)
+    body += ('\n<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>\n'
+             + block + "\n</section>\n" + family.PLACEHOLDER_MACHINE)
+    return body
+
+
 def read_labels(labels: Path | None) -> dict[str, str]:
     if not labels or not labels.exists():
         return {}
@@ -291,6 +389,19 @@ def listing_body(title: str, intro: str, items: list[tuple[str, str, str]]) -> s
         for href, text, label in items
     )
     return f'<h1 id="{family.slug(title)}">{esc(title)}</h1>\n<p>{esc(intro)}</p>\n<ul class="dir">{lis}</ul>\n{family.PLACEHOLDER_MACHINE}'
+
+
+def posture_extra(html: str) -> str:
+    """Move a '<!-- posture-extra: S -->' sentence inside the posture box that
+    the renderer inserted, as its last paragraph, so every sentence of the foot
+    block sits in one box (as on the DIM-02 page)."""
+    m = re.search(r"<!-- posture-extra: (.*?) -->", html)
+    if not m:
+        return html
+    html = html.replace(m.group(0), "", 1)
+    i = html.index('<section class="posture-foot"')
+    j = html.index("</div>", html.index('<div class="posture"', i))
+    return html[:j] + f"<p>{m.group(1)}</p>\n" + html[j:]
 
 
 def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machine: list[dict] | None,
@@ -312,6 +423,7 @@ def page(site: Path, rel_out: str, body: str, *, title: str, posture: str, machi
         layout=layout,
         at_root=at_root,
     )
+    html = posture_extra(html)
     return family.write_or_check(site / rel_out, html, check)
 
 
@@ -330,8 +442,11 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     for md in current_md:
         marker, body, title = family.md_to_html(md.read_text(encoding="utf-8"))
         titles[md.name] = title or md.stem
-        body = wrap_posture_run(body)
-        body += "\n" + family.PLACEHOLDER_MACHINE
+        if md.name in DIM02_READER:
+            body = dim02_reader(body)
+        else:
+            body = wrap_posture_run(body)
+            body += "\n" + family.PLACEHOLDER_MACHINE
         machine = [
             {"href": md.name, "path": f"results/{md.name}", "note": "this page as the served Markdown artefact, the record the scanner and the right of reply refer to"},
             {"href": "../index.json", "path": "index.json", "note": "the machine index of every served surface"},
@@ -339,31 +454,38 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, f"results/{md.with_suffix('.html').name}", body, title=title or md.stem, posture="none",
                    machine=machine, marker=marker, check=check)
     if results_md:
-        items = [(md.with_suffix(".html").name, titles.get(md.name, md.name), labels.get(md.name, "")) for md in current_md]
-        body = listing_body("Named-rail measurements", "Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.", items)
-        # The listing sits under results/, which the gate classifies as a
-        # measurement artefact by path, so it carries the measurement set and
-        # the pre-registration pointers the profile requires, and the marker.
-        body = body.replace(
-            family.PLACEHOLDER_MACHINE,
-            '<p class="meta">The measurement methods are published and pre-registered on the Open Science Framework: '
-            '<a href="https://doi.org/10.17605/OSF.IO/UFQG5">10.17605/OSF.IO/UFQG5</a> (authorization latency), '
-            '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a> (settlement finality, method) and '
-            '<a href="https://doi.org/10.17605/OSF.IO/UETFW">10.17605/OSF.IO/UETFW</a> (settlement finality, test-network confirmatory data).</p>\n'
-            + family.PLACEHOLDER_MACHINE, 1)
+        # De-declared (2026-10-18): the index names no rail and
+        # reports no finding, so it carries no gate marker, no posture sentences
+        # and no OSF line; one reader line per measurement.
+        reader_lines = {
+            "dim02-authorization-latency.v1.1.level1.md":
+                "Authorization-primitive latency (DIM-02), six rails. Version 1.1 (2026-10-01) is current; version 1.0 is kept unaltered as the record.",
+        }
+        lis = []
+        for md in current_md:
+            line = reader_lines.get(md.name)
+            if line:
+                first, rest = line.split(". ", 1)
+                lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(first)}</a>. {esc(rest)}</li>')
+            else:
+                lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(titles.get(md.name, md.name))}</a></li>')
+        body = ('<h1 id="named-rail-measurements">Named-rail measurements</h1>\n'
+                '<p>Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.</p>\n'
+                f'<ul class="dir">{"".join(lis)}</ul>\n' + family.PLACEHOLDER_MACHINE)
         machine = [{"href": md.name, "path": f"results/{md.name}", "note": labels.get(md.name, "")} for md in results_md]
-        rc |= page(site, "results/index.html", body, title="Named-rail measurements", posture="measurement",
-                   machine=machine, marker="level1-measurement", check=check)
+        rc |= page(site, "results/index.html", body, title="Named-rail measurements", posture="none",
+                   machine=machine, marker=None, check=check)
 
     # Capabilities reader page.
     if assembled or (site / "capabilities" / "index.json").exists():
         index, subjects = load_subjects(site)
-        body = capabilities_body(index, subjects, lead_lines(site))
+        short_path = CONTENT / "short-values.json"
+        short = json.loads(short_path.read_text(encoding="utf-8")) if short_path.exists() else {}
+        body = capabilities_body(index, subjects, lead_lines(site), short)
         rc |= page(site, "capabilities/index.html", body, title="Capability records: documented facts per rail",
                    posture="documentation", machine=machine_for_capabilities(index, subjects, "../"),
                    marker="level1-documentation-profile", check=check,
-                   machine_intro="The same facts as signed data, verifiable offline against the published key.",
-                   layout="wide")
+                   machine_intro="The same facts as signed data, verifiable offline against the published key.")
 
     # Statements and roadmap as reader pages beside their Markdown.
     for rel in ("tier2/statements.md", "roadmap.md"):
@@ -377,18 +499,12 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
             rc |= page(site, rel[:-3] + ".html", body, title=title or src.stem, posture="none", machine=machine,
                        marker=marker, check=check)
 
-    # Directory indexes for the copied trees.
-    for rel, title, intro in (
-        ("adr", "Decision records", "Why the oracle is intent-free (ADR-007) and how its gates work (ADR-009)."),
-        ("methodology", "Settlement-finality methodology (frozen v1.2)", "The frozen method, harness and calibrated fixtures, byte-verifiable against the anchored manifest. The method only; no results table."),
-    ):
-        d = site / rel
-        if d.is_dir():
-            files = sorted(p for p in d.rglob("*") if p.is_file() and p.name != "index.html")
-            items = [(str(p.relative_to(d)), str(p.relative_to(d)), "") for p in files]
-            body = listing_body(title, intro, items)
-            machine = [{"href": str(p.relative_to(d)), "path": f"{rel}/{p.relative_to(d)}", "note": ""} for p in files[:40]]
-            rc |= page(site, f"{rel}/index.html", body, title=title, posture="none", machine=machine, marker=None, check=check)
+    # Decision records and the methodology: an explainer
+    # or the ruled sentences above the list, the Markdown rendered for readers
+    # beside the unchanged originals, every file listed once, for software.
+    rc |= decision_records(site, check)
+    rc |= methodology_pages(site, check)
+    rc |= glossary_page(site, check)
 
     # The root page and the 404 page, from tracked fragments.
     root_machine = [
@@ -404,14 +520,111 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # The root page is a TRACKED rendered file, so it must not depend on
     # whether the gate assembled results/: the reader list links results/ as
     # the page always has, and index.json carries the gated pointer.
-    frag = (HERE / "content" / "index.html").read_text(encoding="utf-8")
-    rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="measurement",
+    frag = (CONTENT / "index.html").read_text(encoding="utf-8")
+    rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="none",
                machine=root_machine, marker=None, check=check, at_root=True,
-               description="Published facts and measurements about the payment rails that software agents use, signed so they can be checked, with nothing on this site that tells you which rail to use.")
-    frag404 = (HERE / "content" / "404.html").read_text(encoding="utf-8")
+               description="Published facts and measurements about the payment rails that software agents use, signed so they can be validated.")
+    frag404 = (CONTENT / "404.html").read_text(encoding="utf-8")
     rc |= page(site, "404.html", frag404, title="Not found: agentic-paybench oracle", posture="none", machine=None,
                marker=None, check=check, root_relative=True, description="No such artefact on this surface.")
     return rc
+
+
+RENDERING_BANNER = "Rendering of a frozen file; the original at {path} is the record and matches the anchored manifest."
+
+
+def render_md_file(src: Path) -> tuple[str, str]:
+    """A Markdown file as reader HTML through the family renderer; a construct
+    the strict subset cannot render falls back to the text in a pre block, so
+    nothing is ever dropped or altered."""
+    text = src.read_text(encoding="utf-8")
+    try:
+        _marker, body, title = family.md_to_html(text)
+        return body, title or src.stem
+    except Exception:  # noqa: BLE001
+        return f"<pre>{esc(text)}</pre>", src.stem
+
+
+def decision_records(site: Path, check: bool) -> int:
+    d = site / "adr"
+    if not d.is_dir():
+        return 0
+    rc = 0
+    mds = sorted(p for p in d.glob("*.md"))
+    items = []
+    for md in mds:
+        body, title = render_md_file(md)
+        body += "\n" + family.PLACEHOLDER_MACHINE
+        machine = [{"href": md.name, "path": f"adr/{md.name}", "note": "the decision record as Markdown"}]
+        rc |= page(site, f"adr/{md.with_suffix('.html').name}", body, title=title, posture="none", machine=machine, marker=None, check=check)
+        items.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(title)}</a></li>')
+    body = ('<h1 id="decision-records">Decision records</h1>\n'
+            '<p class="lead">A scored query, an answer that would score rails for a particular payment, exists in the code and is switched off on this site.</p>\n'
+            '<p>Why the oracle is intent-free (ADR-007) and how its gates work (ADR-009).</p>\n'
+            '<p>Which surfaces are live and which are switched off is published as data at <a href="../posture.json"><code>posture.json</code></a>, which shows the gates.</p>\n'
+            f'<ul class="dir">{"".join(items)}</ul>\n' + family.PLACEHOLDER_MACHINE)
+    machine = [{"href": md.name, "path": f"adr/{md.name}", "note": "the decision record as Markdown"} for md in mds]
+    rc |= page(site, "adr/index.html", body, title="Decision records", posture="none", machine=machine, marker=None, check=check)
+    return rc
+
+
+METHODOLOGY_EXPLAINER = (
+    "Settlement-finality methodology, version 1.2. The method, its analysis plan, the harness and the calibrated fixtures were "
+    "frozen as one artefact set on 2026-06-06 and anchored in three independent places: an OpenTimestamps proof in Bitcoin block "
+    "952636, a Rekor transparency-log entry (1740328355) and a public registration on the Open Science Framework "
+    "(10.17605/OSF.IO/XGFUJ). The files below are byte-identical to that set; the manifest lists their hashes. Read first: the "
+    "methodology text. Then the calibration plan. The fixtures and provenance files are the inputs; the harness code is what ran. "
+    "No results table is published here.")
+
+
+def methodology_pages(site: Path, check: bool) -> int:
+    d = site / "methodology"
+    if not d.is_dir():
+        return 0
+    rc = 0
+    read_first = [("methodology/methodology.md", "The methodology text"), ("calibration/calibration-plan.md", "The calibration plan")]
+    links = []
+    for rel, label in read_first:
+        src = d / rel
+        if not src.exists():
+            continue
+        body, title = render_md_file(src)
+        banner = f'<p class="rendering">{esc(RENDERING_BANNER.format(path="methodology/" + rel))}</p>\n'
+        depth = ("methodology/" + rel).count("/")
+        machine = [{"href": src.name, "path": f"methodology/{rel}", "note": "the frozen original"},
+                   {"href": "../prereg-manifest.sha256", "path": "methodology/prereg-manifest.sha256", "note": "the anchored manifest of hashes"}]
+        rc |= page(site, f"methodology/{rel[:-3]}.html", banner + body + "\n" + family.PLACEHOLDER_MACHINE, title=title,
+                   posture="none", machine=machine, marker=None, check=check)
+        links.append(f'<li><a href="{esc(rel[:-3] + ".html")}">{esc(label)}</a></li>')
+    files = sorted(p for p in d.rglob("*") if p.is_file() and p.suffix != ".html")
+    body = ('<h1 id="settlement-finality-methodology-frozen-v1-2">Settlement-finality methodology (frozen v1.2)</h1>\n'
+            f'<p class="lead">{esc(METHODOLOGY_EXPLAINER.split(". ", 1)[0])}.</p>\n'
+            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>') + '</p>\n'
+            f'<ul class="dir">{"".join(links)}</ul>\n' + family.PLACEHOLDER_MACHINE)
+    machine = [{"href": str(p.relative_to(d)), "path": f"methodology/{p.relative_to(d)}", "note": ""} for p in files]
+    rc |= page(site, "methodology/index.html", body, title="Settlement-finality methodology (frozen v1.2)", posture="none",
+               machine=machine, marker=None, check=check)
+    return rc
+
+
+def glossary_page(site: Path, check: bool) -> int:
+    src = CONTENT / "glossary.json"
+    if not src.exists():
+        return 0
+    entries = sorted(json.loads(src.read_text(encoding="utf-8"))["entries"], key=lambda e: e["term"].casefold())
+    letters = []
+    for e in entries:
+        ch = e["term"][0].upper()
+        if ch not in [l for l, _ in letters]:
+            letters.append((ch, family.slug(e["term"])))
+    az = "".join(f'<li><a href="#{slug}">{esc(ch)}</a></li>' for ch, slug in letters)
+    dl = "".join(f'<dt id="{family.slug(e["term"])}">{esc(e["term"])}</dt><dd>{esc(e["text"])}</dd>' for e in entries)
+    body = ('<h1 id="glossary">Glossary</h1>\n'
+            f'<ul class="az" aria-label="Terms by first letter">{az}</ul>\n'
+            f'<dl class="glossary">{dl}</dl>\n' + family.PLACEHOLDER_MACHINE)
+    machine = [{"href": "../index.json", "path": "index.json", "note": "the machine index of every served surface"}]
+    return page(site, "glossary/index.html", body, title="Glossary", posture="none", machine=machine, marker=None, check=check,
+                description="Plain-word definitions of the terms used on the oracle's capability and measurement pages.")
 
 
 def main(argv=None) -> int:

@@ -1,0 +1,32 @@
+<h1 id="agentic-paybench-capability-oracle">agentic-paybench capability oracle</h1>
+<p class="lead">Published facts and measurements about the payment rails that software agents use, signed so they can be validated.</p>
+
+<h2 id="what-this-is">What this is</h2>
+<p>A research data layer over agent-payment rails. For an agent developer, it is a set of signed, machine-readable records of what each rail documents about itself, plus the published method and results of one neutral measurement applied to every rail in the same way. For a payments-strategy reader looking for a neutral measurement, it is that measurement: the method is published and pre-registered, the figures carry confidence intervals, and no figure is presented to influence your choice of rail.</p>
+<p>Terms used across this site (finality, idempotency, ambiguity bound and the rest) are defined in the <a href="glossary/">glossary</a>.</p>
+
+<h2 id="the-three-tiers">The three tiers</h2>
+<p><strong>Tier-1, measured:</strong> dimensions measured by a method that was frozen and anchored before publication, shown with confidence intervals and without ordering by result.</p>
+<p><strong>Tier-2, documented:</strong> facts each rail states about itself in its specification or its operator's documentation, every cell naming its source and the date it was read; the statements every cell carries are at <a href="tier2/statements.html">tier2/statements</a>.</p>
+<p><strong>Tier-3, declared:</strong> directions stated on the roadmap, none of them measured.</p>
+
+<h2 id="what-you-can-read-here">What you can read here</h2>
+<ul>
+<li><strong>Capability records, one per rail.</strong> Documented facts about each rail (who pays the network fee, how finality is modelled, retry and idempotency rules, declared rate limits, status page, error catalogue, and more), every cell naming the source it rests on and the date it was read. <a href="capabilities/">Read the records</a>.</li>
+<li><strong>Named-rail measurements.</strong> Authorization latency: the time a rail takes to complete its authorization step, the permission part of a payment before settlement, measured the same way on every rail and shown with confidence intervals and no ordering by result. <a href="results/">Read the measurements</a>.</li>
+<li><strong>Settlement-finality method.</strong> The frozen method, harness and calibrated fixtures for measuring when a payment becomes final. The method only; no results table. <a href="methodology/">Read the method</a>.</li>
+<li><strong>Roadmap.</strong> Declared directions, none of them measured. <a href="roadmap.html">Read the roadmap</a>.</li>
+</ul>
+
+<h2 id="how-to-check-it">How to check it</h2>
+<p>Every capability record is a signed credential (ES256 over the P-256 curve). The signing key is published at <code>.well-known/did.json</code>; that document states the key's status. The credentials verify offline against the published key with the repository's own script and no key of your own; from a clone of <a href="https://github.com/agentic-paybench/oracle">github.com/agentic-paybench/oracle</a>:</p>
+<pre><code>cd ingest/signer &amp;&amp; npm ci &amp;&amp; node verify.mjs</code></pre>
+<p>Every documented cell names its source URL and the date it was read, so a fact can be re-read at the source.</p>
+<p>The measurement methods are published and pre-registered on the Open Science Framework: <a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a> (settlement finality, method), <a href="https://doi.org/10.17605/OSF.IO/UFQG5">10.17605/OSF.IO/UFQG5</a> (authorization latency) and <a href="https://doi.org/10.17605/OSF.IO/UETFW">10.17605/OSF.IO/UETFW</a> (settlement finality, test-network confirmatory data).</p>
+
+<h2 id="what-this-is-not">What this is not</h2>
+<p>The oracle answers "what is true about rail X", never "what should I do for this payment".</p>
+<p>It carries no scores, no ranking and no recommendation on this surface (ADR-007, ADR-009).</p>
+<p>Why the oracle is intent-free, that is, why it answers questions about rails and never questions about what to do (ADR-007), and how its gates work (ADR-009). <a href="adr/">Read the decision records</a>.</p>
+<p>There is no route from this site to transact: nothing here takes a payment, holds funds or leads to a place that does.</p>
+<!-- family:machine -->

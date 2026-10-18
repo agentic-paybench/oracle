@@ -10,8 +10,11 @@ _FORBIDDEN = ["median", "sigma", "σ", "μ", "bradley", "rank", "pass@k", "wilso
 
 
 def test_roadmap_is_labelled():
-    text = ROADMAP.read_text(encoding="utf-8").lower()
-    assert "roadmap (no measurement)" in text
+    """The '(no measurement)' labels were removed on 2026-10-18; the page
+    still says, in its own
+    words, that nothing on it is measured."""
+    text = " ".join(ROADMAP.read_text(encoding="utf-8").lower().split())
+    assert "declared direction, not a benchmarked result" in text
 
 
 def test_roadmap_has_no_measurements():

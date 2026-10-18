@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@dccf561 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@2f5da79 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -105,8 +105,11 @@ p, ul, ol { margin: 0 0 var(--space-3); }
 ul, ol { padding-left: var(--space-5); }
 li { margin: 0 0 var(--space-1); }
 strong, b { font-weight: var(--type-emphasis-weight); }
-small, .lead, .meta { font-size: var(--type-small-size); line-height: var(--type-small-leading); }
-.lead, .meta { color: var(--color-text-muted); }
+small, .meta { font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.meta { color: var(--color-text-muted); }
+/* The lead: the one sentence under a page title, at body size in the strong
+   text role (it was small and muted, the same as meta text). */
+.lead { font-size: var(--type-body-size); line-height: var(--type-body-leading); color: var(--color-text-strong); }
 code { font-family: var(--font-mono); font-size: var(--type-small-size); }
 pre {
   font-family: var(--font-mono);
@@ -120,6 +123,8 @@ pre {
   margin: 0 0 var(--space-3);
 }
 pre code { font-size: inherit; }
+blockquote { margin: 0 0 var(--space-3); padding: 0 0 0 var(--space-4); border-left: var(--border-hairline) solid var(--color-border-strong); }
+blockquote p:last-child { margin-bottom: 0; }
 hr { border: 0; border-top: var(--border-hairline) solid var(--color-border); margin: var(--space-6) 0; }
 
 /* --- tables: never the page scrolling sideways ------------------------ */
@@ -139,7 +144,10 @@ th, td {
 th { font-weight: var(--weight-semibold); color: var(--color-text-muted); }
 th:last-child, td:last-child { padding-right: 0; }
 td.num, th.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-td a, .machine .paths a { overflow-wrap: anywhere; }
+td a { overflow-wrap: anywhere; }
+/* A path breaks after a slash or at its own hyphens, never between two
+   characters of a name (R10 must never read as R1). */
+.machine .paths a { overflow-wrap: break-word; }
 td ul, td ol { padding-left: var(--space-4); margin: 0; }
 
 /* --- the posture block: the ruled sentences, from the shared snippet --- */
@@ -307,12 +315,23 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   background: var(--color-surface);
   padding-bottom: var(--space-2);
 }
-.question .lead { margin: 0 0 var(--space-4); color: var(--color-text-muted); max-width: var(--family-measure); }
+.question .lead { margin: 0 0 var(--space-4); color: var(--color-text-muted); max-width: var(--family-measure); font-size: var(--type-small-size); line-height: var(--type-small-leading); }
 .question .notes { margin: 0 0 var(--space-4); }
 .lede + .question { margin-top: var(--space-6); }
 .lede + .question > h2 { border-top: 0; padding-top: 0; }
 .by-rail + .question > h2 { border-top: 0; }
 .question .notes p { margin: 0 0 var(--space-2); }
+/* A notice of fixed sentences inside a question block (the fee quotation
+   notice): a compact box styled like the posture box. */
+.question .notes.notice {
+  background: var(--color-canvas);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  max-width: var(--family-measure);
+}
+.question .notes.notice p { color: var(--color-text); }
+.question .notes.notice p:last-child { margin: 0; }
 
 .cards {
   display: grid;
@@ -408,6 +427,9 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .dir .label { color: var(--color-text-muted); }
 .dir a, td li > a { display: inline-block; padding: var(--space-1) 0; }
 
+/* Headings wrap in balanced lines, never one orphaned word. */
+h1, h2, h3 { text-wrap: balance; }
+
 /* --- the footer line, same on every surface ---------------------------- */
 .foot {
   margin-top: var(--space-7);
@@ -417,7 +439,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   line-height: var(--type-small-leading);
   color: var(--color-text-muted);
 }
-.foot a { color: var(--color-text-muted); }
+.foot a { color: var(--color-text-muted); white-space: nowrap; }
 
 @media (max-width: 640px) {
   .machine .paths { grid-template-columns: repeat(1, minmax(0, 1fr)); }
@@ -428,3 +450,82 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   .question > h2 { padding-top: 0; padding-bottom: 0; }
   .record { scroll-margin-top: calc(var(--type-heading-size) * var(--type-heading-leading) + var(--border-hairline) + var(--space-3)); }
 }
+
+/* --- the restart (2026-10-18): one question across six rails ------------- */
+
+/* The capabilities table: thirteen questions by six rails. Fixed layout with
+   equal rail columns, so no rail's column grows with longer text; cells
+   aligned left and top; row rules only; every value in the same face, colour
+   and weight ("not stated" included), so nothing grades a rail. The values
+   link to the full entries: the text keeps the body colour and the underline
+   takes the accent (founder ruling B, 2026-10-18), so every value reads as a
+   link without seventy-eight accent-coloured words turning the table the
+   accent; hover and focus colour the text too. */
+.cap-table-wrap { margin: var(--space-5) 0 var(--space-6); scroll-margin-top: var(--space-4); }
+/* The table breaks out of the reading column, centred on it, on screens wide
+   enough to hold the wide width; the family bar, the prose and the footer stay
+   where they sit on every other page of the family. Narrower, the table stays
+   in the column and scrolls sideways inside its own box. */
+main > .table-scroll.cap-table-wrap { max-width: none; }
+@media (min-width: 78rem) {
+  main > .table-scroll.cap-table-wrap {
+    width: var(--family-wide);
+    margin-inline: calc((100% - var(--family-wide)) / 2);
+  }
+}
+.cap-table { table-layout: fixed; width: 100%; min-width: 60rem; border-collapse: collapse; }
+.cap-table col.q { width: 12rem; }
+.cap-table th, .cap-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+  overflow-wrap: break-word;
+}
+.cap-table thead th {
+  vertical-align: bottom;
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+  border-bottom: var(--border-hairline) solid var(--color-border-strong);
+}
+.cap-table tbody th { font-weight: var(--weight-semibold); }
+.cap-table tbody th a { color: var(--color-text-strong); }
+.cap-table td a { color: var(--color-text); text-decoration-color: var(--color-link); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.cap-table td a:hover, .cap-table td a:focus-visible { color: var(--color-link); text-decoration-color: currentColor; }
+
+/* "Back to the table" at the end of every question block. */
+.back { margin: var(--space-4) 0 0; font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+
+/* A glossary term: dotted underline, the text colour; the accent on hover. */
+a.gloss { color: inherit; text-decoration: underline dotted; text-decoration-color: var(--color-text-muted); text-underline-offset: 0.2em; }
+a.gloss:hover, a.gloss:focus-visible { color: var(--color-link); text-decoration-color: currentColor; }
+
+/* The Posture foot block: the ruled sentences once, in the small type, in
+   the recessed posture box, in the ordinary text colour (not muted), headed. */
+.posture-foot { margin: var(--space-7) 0 var(--space-5); max-width: var(--family-measure); }
+.posture-foot h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+.posture-foot .posture { margin: 0; font-size: var(--type-small-size); line-height: var(--type-small-leading); color: var(--color-text); }
+.posture-foot > p { margin: var(--space-2) 0 0; color: var(--color-text); }
+
+/* The start-here block on the research index. */
+.start { margin: var(--space-5) 0 var(--space-5); padding: var(--space-4) var(--space-5); border-left: var(--border-hairline) solid var(--color-accent-border); background: var(--color-canvas); border-radius: var(--radius-lg); max-width: var(--family-measure); box-sizing: border-box; }
+.start h2 { margin: 0 0 var(--space-2); font-size: var(--type-small-size); line-height: var(--type-small-leading); font-weight: var(--weight-semibold); color: var(--color-text-muted); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+.start p { margin: 0; color: var(--color-text-strong); }
+
+/* The glossary page: an A to Z line, then one entry per term. */
+.az { display: flex; flex-wrap: wrap; gap: 0 var(--space-3); margin: 0 0 var(--space-5); padding: 0; list-style: none; font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.az li { margin: 0; }
+.az a { display: inline-block; min-width: var(--space-6); padding: var(--space-1) 0; text-align: center; }
+.glossary dt { margin: var(--space-5) 0 var(--space-1); font-weight: var(--weight-semibold); color: var(--color-text-strong); scroll-margin-top: var(--space-4); }
+.glossary dd { margin: 0; }
+
+/* A rendering of a frozen or recorded file: the banner above it. */
+.rendering { font-size: var(--type-small-size); line-height: var(--type-small-leading); color: var(--color-text-muted); border-bottom: var(--border-hairline) solid var(--color-border-subtle); padding: 0 0 var(--space-3); margin: 0 0 var(--space-4); }

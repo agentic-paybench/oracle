@@ -1,6 +1,6 @@
-# Roadmap (Tier-3): declared, not measured
+# Roadmap
 
-**Label: roadmap (no measurement).** Every item on this page is a declared
+Every item on this page is a declared
 direction, not a benchmarked result. No comparative results or calibrated numbers
 appear here or are implied. Tier-1 measured dimensions land on their own schedule
 with pre-registered methodology; Tier-2 factual facts fill in as sourced.
@@ -12,15 +12,11 @@ with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 
 ## Tier-2 factual coverage (documented facts per rail; "pending" where not yet sourced)
 - Structural facts per rail, sourced 2026-10-09 from primary documentation and served in the capability credentials as a documentation profile, not a measurement: fee bearer, finality model class, retry and idempotency, ambiguity bound, outcome knowledge, restitution kinds, observer privacy exposure, specification pin, declared rate limits, status page, SDK languages, error catalogue; and offline verifiability (whether the paying agent can check the outcome later without asking anyone), sourced 2026-10-10 on the same terms.
-- Supported assets per rail: roadmap (no measurement).
-- Custody model per rail: roadmap (no measurement).
-- Headline fee facts: roadmap (no measurement).
-- Authorization, dispute and sanctions bundle: roadmap (no measurement).
+- Supported assets per rail: roadmap.
+- Custody model per rail: roadmap.
+- Headline fee amounts per rail: roadmap.
+- Authorization, dispute and sanctions bundle: roadmap.
 
 ## Tier-3 declared directions
-- Multi-dimension routing evaluation (offline, testnet): roadmap (no measurement).
-- Additional rails and asset classes: roadmap (no measurement).
-
-The right-of-reply channel for named rails is live at <https://reply.agentic-paybench.dev/>; it is not a measurement and is not a declared direction.
-
-Nothing on this page is a measured comparison or a league result.
+- Multi-dimension routing evaluation (offline, testnet): roadmap.
+- Additional rails and asset classes: roadmap.
