@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@7956f1e (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@a543cd8 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -144,7 +144,10 @@ th, td {
 th { font-weight: var(--weight-semibold); color: var(--color-text-muted); }
 th:last-child, td:last-child { padding-right: 0; }
 td.num, th.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-td a, .machine .paths a { overflow-wrap: anywhere; }
+td a { overflow-wrap: anywhere; }
+/* A path breaks after a slash or at its own hyphens, never between two
+   characters of a name (R10 must never read as R1). */
+.machine .paths a { overflow-wrap: break-word; }
 td ul, td ol { padding-left: var(--space-4); margin: 0; }
 
 /* --- the posture block: the ruled sentences, from the shared snippet --- */
@@ -413,6 +416,9 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .dir .label { color: var(--color-text-muted); }
 .dir a, td li > a { display: inline-block; padding: var(--space-1) 0; }
 
+/* Headings wrap in balanced lines, never one orphaned word. */
+h1, h2, h3 { text-wrap: balance; }
+
 /* --- the footer line, same on every surface ---------------------------- */
 .foot {
   margin-top: var(--space-7);
@@ -422,7 +428,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   line-height: var(--type-small-leading);
   color: var(--color-text-muted);
 }
-.foot a { color: var(--color-text-muted); }
+.foot a { color: var(--color-text-muted); white-space: nowrap; }
 
 @media (max-width: 640px) {
   .machine .paths { grid-template-columns: repeat(1, minmax(0, 1fr)); }

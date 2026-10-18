@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@7956f1e (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@a543cd8 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -59,6 +59,9 @@ CODE_SPLIT_RE = re.compile(r"(`[^`\n]+`)")
 AUTOLINK_RE = re.compile(r"&lt;(https?://[^&\s]+)&gt;")
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
 BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
+# Emphasis: *word* or *a few words*, the asterisks hugging the text and not
+# touching a word character outside, so "2 * 3" and a lone "*" stay literal.
+EM_RE = re.compile(r"(?<![*\w])\*(?![\s*])(.+?)(?<![\s*])\*(?![*\w])")
 
 
 class MarkdownError(ValueError):
@@ -80,6 +83,7 @@ def inline(text: str) -> str:
         seg = AUTOLINK_RE.sub(lambda m: f'<a href="{m.group(1)}">{m.group(1)}</a>', seg)
         seg = LINK_RE.sub(lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>', seg)
         seg = BOLD_RE.sub(r"<strong>\1</strong>", seg)
+        seg = EM_RE.sub(r"<em>\1</em>", seg)
         out.append(seg)
     return "".join(out)
 
@@ -227,7 +231,7 @@ def machine_panel(paths: list[dict], intro: str | None = None) -> str:
     for p in paths:
         href = _esc(p["href"]).replace('"', "&quot;")
         lis.append(
-            f'<li><a href="{href}"><code>{_esc(p["path"])}</code></a> <span>{_esc(p.get("note", ""))}</span></li>'
+            f'<li><a href="{href}"><code>{_esc(p["path"]).replace("/", "/<wbr>")}</code></a> <span>{_esc(p.get("note", ""))}</span></li>'
         )
     lead = _esc(intro) if intro else "The same facts as data, at these paths."
     return (

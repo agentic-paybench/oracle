@@ -458,7 +458,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
             line = reader_lines.get(md.name)
             if line:
                 first, rest = line.split(". ", 1)
-                lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(first)}.</a> {esc(rest)}</li>')
+                lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(first)}</a>. {esc(rest)}</li>')
             else:
                 lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(titles.get(md.name, md.name))}</a></li>')
         body = ('<h1 id="named-rail-measurements">Named-rail measurements</h1>\n'
