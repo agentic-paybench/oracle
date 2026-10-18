@@ -340,7 +340,9 @@ def dim02_reader(body: str) -> str:
     for s in sentences:
         body = body.replace(f"<p>{s}</p>", "", 1)
     # The moved paragraphs, shortened by removing whole repeated sentences only.
-    version_moved = version_p.replace(DIM02_OPENING + " ", "", 1)
+    # Kept whole: removing its first sentence would leave "It corrects ..."
+    # with no subject, and rewording it would be new wording.
+    version_moved = version_p
     repeated = (" The dated record shows that the method was refined during the pilot runs of 22 to 28 June 2026, "
                 "which are the runs this page reports, and was frozen and externally anchored afterwards, on 29 and 30 June 2026.")
     assert repeated in correction_p, "the correction paragraph no longer carries the sentence the Provenance section repeats"
@@ -349,7 +351,7 @@ def dim02_reader(body: str) -> str:
     used: set = set()
     body = "\n".join(link_terms(chunk, DIM02_TERMS, used, "../") if chunk.startswith(("<p>", "<ul>", "<li>")) else chunk
                      for chunk in re.split(r"(?=<p>|<ul>|<h[1-3])", body))
-    body += ("\n<h2 id=\"versions\">Versions</h2>\n" + version_moved + "\n" + correction_moved)
+    body += ("\n" + version_moved + "\n" + correction_moved)
     body += ('\n<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>\n'
              + block + "\n</section>\n" + family.PLACEHOLDER_MACHINE)
     return body
