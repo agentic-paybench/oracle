@@ -57,12 +57,12 @@ def site_without_results(tmp_path_factory):
 
 
 def _generated_pages(site: Path):
-    return sorted(p for p in site.rglob("*.html") if "family" not in p.parts and "content" not in p.parts)
+    return sorted(p for p in site.rglob("*.html") if "family" not in p.parts)
 
 
 def test_results_pages_carry_the_marker_before_the_doctype(site_with_results):
     """Each findings page is declared; the results index is not (it names no
-    rail and reports no finding: Decision 1 B, 2026-10-18)."""
+    rail and reports no finding; 2026-10-18)."""
     pages = sorted((site_with_results / "results").glob("*.html"))
     assert any(p.name != "index.html" for p in pages)
     for p in pages:
@@ -101,22 +101,22 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
         assert ordered == sorted(names, key=str.casefold)
     assert text.count('<section class="record"') == 13 * len(names)
     # The standard page width, so the family bar sits where it sits on every
-    # page; only the table breaks out (design lens on the renders, 2026-10-18).
+    # page; only the table breaks out (2026-10-18).
     assert 'class="family-page"' in text and "family-page--wide" not in text
     # Indigo by the family-scope attribute, on the wrapper and the themed
-    # island, never on <html> (founder ruling, 2026-10-18).
+    # island, never on <html> (2026-10-18).
     assert '<div class="family-page" data-accent="indigo">' in text
     assert '<section class="machine" data-theme="dark" data-accent="indigo"' in text
     assert "<html" in text and "data-accent" not in text.split("<html", 1)[1].split(">", 1)[0]
     # The Posture block directly below the table, before the first question
-    # block (build brief of 2026-10-18, point A), and only once.
+    # block, and only once (2026-10-18).
     assert text.count('<section class="posture-foot"') == 1
     assert text.index("</table>") < text.index('<section class="posture-foot"') < text.index('<section class="question"')
     # The SDK languages lead line: the schema's own first sentence.
     sdk = text.split('<h2 id="sdk-languages">', 1)[1].split('<div class="cards">', 1)[0]
     assert "Languages for which the protocol authors or the operator document an official SDK or reference implementation." in re.sub(r"<[^>]+>", "", sdk)
     assert "<details><summary>Sources (" in text and " open>" not in text
-    # The table (content brief E3): thirteen rows by six rails, alphabetical,
+    # The table: thirteen rows by six rails, alphabetical,
     # every cell a link to that rail's entry; the old navigation is gone.
     table = text.split('<table class="cap-table"', 1)[1].split("</table>", 1)[0]
     head = re.findall(r'<th scope="col">([^<]+)</th>', table)
@@ -138,7 +138,7 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
 
 
 def test_root_page_carries_no_posture_repeat_and_links_the_glossary(site_with_results):
-    """Decision 1 B (2026-10-18): the root no longer repeats the ruled sentences;
+    """2026-10-18: the root no longer repeats the required sentences;
     they stay on the two pages that present named-rail findings."""
     text = (site_with_results / "index.html").read_text(encoding="utf-8")
     for s in MEASUREMENT:
@@ -251,7 +251,7 @@ def _dig(d, dotted):
 
 
 def test_disposition_off_the_reader_cards_and_kept_in_every_credential(site_with_results):
-    """D2 (founder ruling 2026-10-16): the reader page shows no disposition; the
+    """D2 (2026-10-16): the reader page shows no disposition; the
     signed credentials keep one on every one of the thirteen cells per rail."""
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
     assert "Disposition" not in text
@@ -264,8 +264,7 @@ def test_disposition_off_the_reader_cards_and_kept_in_every_credential(site_with
 
 def test_lead_lines_are_the_schemas_first_sentences_with_one_omitted(site_with_results):
     """D3: twelve lead lines, each the first sentence of the served schema
-    description, verbatim; none for Restitution kinds (SDK languages carries
-    its lead line again, build brief of 2026-10-18)."""
+    description, verbatim; none for Restitution kinds."""
     text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
     # The fixture's assembled copy (built from the tracked schema/), never
     # docs/site/schema/, which is gitignored and absent on a fresh clone.

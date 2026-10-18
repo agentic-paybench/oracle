@@ -10,7 +10,8 @@ Outputs (build outputs, gitignored): results/<name>.html beside each
 assembled results .md, results/index.html, capabilities/index.html,
 tier2/statements.html, roadmap.html, adr/index.html, methodology/index.html.
 The root index.html and 404.html are TRACKED rendered files built from the
-tracked fragments under content/; this script rewrites them, and the Python
+tracked fragments under docs/site-content/ (outside the deployed tree, so the
+sources are never served); this script rewrites them, and the Python
 suite runs it in --check mode so a drift between fragment and page fails.
 
     python3 docs/site/build-pages.py --site docs/site --labels docs/results-labels.tsv [--check]
@@ -26,6 +27,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+# The page sources live beside the deployed tree, never inside it.
+CONTENT = HERE.parent / "site-content"
 sys.path.insert(0, str(HERE / "family"))
 import family  # noqa: E402  (the vendored renderer)
 
@@ -109,10 +112,9 @@ SLUG_VALUE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 URL_VALUE = re.compile(r"https?://[^\s<>\"]+")
 
 # D3: each question's lead line is the FIRST sentence of the schema's own
-# served description (schema/capability.schema.json), moved verbatim. One is
-# omitted by the founder's ruling of 2026-10-16: Restitution kinds (its first
-# sentence is schema-internal). SDK languages carries its lead line again
-# (build brief of 2026-10-18: its first sentence carries no internal term).
+# served description (schema/capability.schema.json), moved verbatim, except
+# Restitution kinds, whose first sentence describes the schema's own structure
+# rather than the fact.
 LEAD_OMIT = {"bundle.refundSupport"}
 FIRST_SENTENCE = re.compile(r"(.+?[.!?])(?=\s+[A-Z(]|\s*$)", re.S)
 
@@ -136,7 +138,7 @@ def lead_lines(site: Path) -> dict:
 
 
 # Glossary terms, linked (dotted underline) on first use: per question block on
-# the capabilities page, per page on the DIM-02 page (content brief E6, G5).
+# the capabilities page, per page on the DIM-02 page.
 CAP_TERMS = ["probabilistic finality", "deterministic finality", "finality", "idempotency", "ambiguity bound",
              "outcome knowledge", "restitution", "observer privacy exposure", "specification pin", "rate limit",
              "error catalogue", "offline verifiability", "documentation profile", "provenance label"]
@@ -205,7 +207,7 @@ def render_record(question_id: str, name: str, cell, question: str = "") -> str:
     if extras:
         extras_html = '<dl class="extras">' + "".join(
             f"<div><dt>{esc(k)}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
-    # D2 (founder ruling 2026-10-16): the disposition is not shown on the
+    # D2 (2026-10-16): the disposition is not shown on the
     # reader card; it stays in the signed credential, where software needs it.
     tags = []
     if prov.get("label"):
@@ -257,9 +259,8 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
         f'<div class="table-scroll cap-table-wrap" id="table"><table class="cap-table" aria-describedby="question-set">{cols}'
         f'<thead><tr><th scope="col"><span class="visually-hidden">Question</span></th>{head}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table></div>')
-    # The Posture block (Decision 1 B) directly below the table it protects,
-    # before the first question block (build brief of 2026-10-18, point A):
-    # the ruled sentences once, the source-and-retrieval sentence inside the
+    # The Posture block directly below the table it protects, before the
+    # first question block: the required sentences once, the source-and-retrieval sentence inside the
     # box (moved there by posture_extra after rendering).
     sources_sentence = notice.get("sourcesStatement", "")
     parts.append('<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>')
@@ -319,7 +320,7 @@ def wrap_posture_run(body: str) -> str:
     return body
 
 
-# The DIM-02 reader page (content brief section G). The Markdown record is NOT
+# The DIM-02 reader page. The Markdown record is NOT
 # changed: it is the frozen, dated artefact. Only its reader rendering is
 # rearranged: a one-line opening; the version and correction paragraphs moved
 # to after "Corrections and right of reply", shortened only by removing whole
@@ -445,7 +446,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         rc |= page(site, f"results/{md.with_suffix('.html').name}", body, title=title or md.stem, posture="none",
                    machine=machine, marker=marker, check=check)
     if results_md:
-        # De-declared (content brief F, Decision 1 B): the index names no rail and
+        # De-declared (2026-10-18): the index names no rail and
         # reports no finding, so it carries no gate marker, no posture sentences
         # and no OSF line; one reader line per measurement.
         reader_lines = {
@@ -470,7 +471,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # Capabilities reader page.
     if assembled or (site / "capabilities" / "index.json").exists():
         index, subjects = load_subjects(site)
-        short_path = HERE / "content" / "short-values.json"
+        short_path = CONTENT / "short-values.json"
         short = json.loads(short_path.read_text(encoding="utf-8")) if short_path.exists() else {}
         body = capabilities_body(index, subjects, lead_lines(site), short)
         rc |= page(site, "capabilities/index.html", body, title="Capability records: documented facts per rail",
@@ -490,7 +491,7 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
             rc |= page(site, rel[:-3] + ".html", body, title=title or src.stem, posture="none", machine=machine,
                        marker=marker, check=check)
 
-    # Decision records (content brief K) and the methodology (H): an explainer
+    # Decision records and the methodology: an explainer
     # or the ruled sentences above the list, the Markdown rendered for readers
     # beside the unchanged originals, every file listed once, for software.
     rc |= decision_records(site, check)
@@ -511,11 +512,11 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
     # The root page is a TRACKED rendered file, so it must not depend on
     # whether the gate assembled results/: the reader list links results/ as
     # the page always has, and index.json carries the gated pointer.
-    frag = (HERE / "content" / "index.html").read_text(encoding="utf-8")
+    frag = (CONTENT / "index.html").read_text(encoding="utf-8")
     rc |= page(site, "index.html", frag, title="agentic-paybench capability oracle", posture="none",
                machine=root_machine, marker=None, check=check, at_root=True,
                description="Published facts and measurements about the payment rails that software agents use, signed so they can be validated.")
-    frag404 = (HERE / "content" / "404.html").read_text(encoding="utf-8")
+    frag404 = (CONTENT / "404.html").read_text(encoding="utf-8")
     rc |= page(site, "404.html", frag404, title="Not found: agentic-paybench oracle", posture="none", machine=None,
                marker=None, check=check, root_relative=True, description="No such artefact on this surface.")
     return rc
@@ -599,7 +600,7 @@ def methodology_pages(site: Path, check: bool) -> int:
 
 
 def glossary_page(site: Path, check: bool) -> int:
-    src = HERE / "content" / "glossary.json"
+    src = CONTENT / "glossary.json"
     if not src.exists():
         return 0
     entries = sorted(json.loads(src.read_text(encoding="utf-8"))["entries"], key=lambda e: e["term"].casefold())

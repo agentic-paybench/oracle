@@ -63,7 +63,7 @@ docs/site/results/
 
 # Reader pages rendered by docs/site/build-pages.py from the assembled tree
 # (DES-103). The root index.html and 404.html are tracked rendered files
-# built from docs/site/content/ and checked for drift by the test suite.
+# built from docs/site-content/ and checked for drift by the test suite.
 docs/site/capabilities/index.html
 docs/site/tier2/statements.html
 docs/site/roadmap.html

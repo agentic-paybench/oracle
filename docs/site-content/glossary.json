@@ -1,5 +1,5 @@
 {
-  "x-about": "The glossary entries (content brief section L): one per term, two sentences, plain words first and the technical phrase second, drafted from the published statements (tier2/statements, the DIM-02 'Reading the columns' and 'What was measured' sections, the frozen methodology text, the capability schema's own descriptions). DRAFT for the founder's approval (2026-10-18 mockup).",
+  "x-about": "The glossary entries of the oracle site: one per term, two sentences, plain words first and the technical phrase second, drawn from the published statements (the Tier-2 statements, the DIM-02 'Reading the columns' and 'What was measured' sections, the frozen methodology text, and the capability schema's own descriptions).",
   "entries": [
     {"term": "Ambiguity bound", "text": "The longest time a paying agent can be left not knowing whether its payment went through. The question asked of each rail is whether its documentation bounds that window, and where the bound lives, for example an expiry field inside the signed payment."},
     {"term": "Authorization primitive", "text": "The step in which a rail checks a payment, or asks for one, before anything is delivered. The DIM-02 measurement times two such steps separately and never combines them: payment validation and challenge issuance."},
