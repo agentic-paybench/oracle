@@ -83,7 +83,7 @@ jobs:
           python3 -m http.server 8080 --directory docs/site > /tmp/http.log 2>&1 &
           sleep 1
       - name: Network-log, layout and axe-core checks
-        run: node family-gates/check.mjs --base http://127.0.0.1:8080 --out family-gates-report.json --paths / /capabilities/ /tier2/statements.html /roadmap.html /adr/ /methodology/ /404.html '/results/?' '/results/dim02-authorization-latency.v1.1.level1.html?'
+        run: node family-gates/check.mjs --base http://127.0.0.1:8080 --out family-gates-report.json --paths / /capabilities/ /tier2/statements.html /roadmap.html /adr/ /methodology/ /404.html '/results/?' '/results/dim01-settlement-finality.level1.html?' '/results/dim02-authorization-latency.v1.1.level1.html?'
       - name: Lighthouse CI with budgets
         run: |
           cd family-gates && npx lhci autorun --config=lighthouserc.json \

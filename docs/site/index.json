@@ -9,7 +9,7 @@
       "context": "schema/capability.context.jsonld",
       "credential": "schema/capability.schema.json"
     },
-    "named_rail_results_table": "results/dim02-authorization-latency.v1.1.level1.md",
+    "named_rail_results_table": "results/",
     "adr": "adr/",
     "roadmap": "roadmap.md",
     "did": ".well-known/did.json"
@@ -17,5 +17,5 @@
   "gated_off": {
     "scored_query": "withheld: inert on live (G_AUTH/G_QF closed)"
   },
-  "note": "Intent-free Tier-2 factual lookup, de-ranked Tier-1 methodology, and named-rail authorization-latency measurements published as a measurement and not a recommendation: rails are listed alphabetically, that ordering carries no performance meaning, and no scored, ranked or recommended output appears on this live surface."
+  "note": "Intent-free Tier-2 factual lookup, de-ranked Tier-1 methodology, and named-rail authorization-latency and test-network settlement-finality measurements published as a measurement and not a recommendation: rails are listed alphabetically, that ordering carries no performance meaning, and no scored, ranked or recommended output appears on this live surface."
 }

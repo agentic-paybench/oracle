@@ -372,6 +372,58 @@ def dim02_reader(body: str) -> str:
     return body
 
 
+# The DIM-01 reader page, on the DIM-02 pattern. The Markdown record is NOT
+# changed. Only its reader rendering is rearranged: a one-line opening; the
+# version paragraph moved to the end; the ruled sentences and the "No ranking
+# is stated..." sentence removed from the top and the ruled sentences placed
+# once in the Posture foot block; the DOIs, the reply address and the email as
+# links.
+DIM01_READER = {"dim01-settlement-finality.level1.md"}
+DIM01_OPENING = "Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28."
+DIM01_TERMS = ["pre-registration", "rate limit", "finality"]
+
+
+def dim01_reader(body: str) -> str:
+    paras = re.findall(r"<p>.*?</p>", body, re.S)
+    version_p = next(p for p in paras if p.startswith("<p>" + DIM01_OPENING))
+    no_rank_p = next(p for p in paras if p.startswith("<p>No ranking is stated on this page"))
+    body = body.replace(version_p, f"<p>{esc(DIM01_OPENING)}</p>", 1)
+    body = body.replace(no_rank_p, "", 1)
+    block = family.posture_block("measurement", HERE / "family" / "posture-snippet.html")
+    sentences = re.findall(r'<p data-posture="[a-z-]+">(.*?)</p>', block)
+    for s in sentences:
+        assert body.count(f"<p>{s}</p>") == 1, "a ruled sentence is missing from, or repeated on, the DIM-01 page"
+        body = body.replace(f"<p>{s}</p>", "", 1)
+    body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
+    body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
+    body = re.sub(r"(?<![\"\w])(https://github\.com/agentic-paybench/payhelm/blob/[^\s<),]+)",
+                  r'<a href="\1">\1</a>', body)
+    used: set = set()
+    body = "\n".join(link_terms(chunk, DIM01_TERMS, used, "../") if chunk.startswith(("<p>", "<ul>", "<li>")) else chunk
+                     for chunk in re.split(r"(?=<p>|<ul>|<h[1-3])", body))
+    # A 64-character hash is one unbreakable word that widens the page on a
+    # phone; soft break points let it wrap and copy as the same 64 characters.
+    body = re.sub(r"\b([0-9a-f]{64})\b", lambda m: "<wbr>".join(m.group(1)[i:i + 16] for i in range(0, 64, 16)), body)
+    # A table box that scrolls sideways must be reachable by keyboard (axe
+    # scrollable-region-focusable); each is a labelled region named after the
+    # heading above it.
+    parts = re.split(r'(<div class="table-scroll">)', body)
+    heading = "Table"
+    for i, part in enumerate(parts):
+        if part == '<div class="table-scroll">':
+            parts[i] = f'<div class="table-scroll" tabindex="0" role="region" aria-label="{esc(heading)}">'
+        else:
+            found = re.findall(r"<h[23][^>]*>(.*?)</h[23]>", part, re.S)
+            if found:
+                heading = re.sub(r"<[^>]+>", "", found[-1])
+    body = "".join(parts)
+    body += "\n" + version_p
+    body += ('\n<section class="posture-foot" aria-labelledby="posture-h"><h2 id="posture-h">Posture</h2>\n'
+             + block + "\n</section>\n" + family.PLACEHOLDER_MACHINE)
+    return body
+
+
 def read_labels(labels: Path | None) -> dict[str, str]:
     if not labels or not labels.exists():
         return {}
@@ -444,6 +496,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         titles[md.name] = title or md.stem
         if md.name in DIM02_READER:
             body = dim02_reader(body)
+        elif md.name in DIM01_READER:
+            body = dim01_reader(body)
         else:
             body = wrap_posture_run(body)
             body += "\n" + family.PLACEHOLDER_MACHINE
@@ -458,6 +512,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         # reports no finding, so it carries no gate marker, no posture sentences
         # and no OSF line; one reader line per measurement.
         reader_lines = {
+            "dim01-settlement-finality.level1.md":
+                "Settlement finality (DIM-01) on test networks, five rails. Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28.",
             "dim02-authorization-latency.v1.1.level1.md":
                 "Authorization-primitive latency (DIM-02), six rails. Version 1.1 (2026-10-01) is current; version 1.0 is kept unaltered as the record.",
         }
@@ -574,7 +630,7 @@ METHODOLOGY_EXPLAINER = (
     "952636, a Rekor transparency-log entry (1740328355) and a public registration on the Open Science Framework "
     "(10.17605/OSF.IO/XGFUJ). The files below are byte-identical to that set; the manifest lists their hashes. Read first: the "
     "methodology text. Then the calibration plan. The fixtures and provenance files are the inputs; the harness code is what ran. "
-    "No results table is published here.")
+    "No results table is published on this page; the test-network measurement of settlement finality is listed under results/.")
 
 
 def methodology_pages(site: Path, check: bool) -> int:
