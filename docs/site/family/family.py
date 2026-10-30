@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@3afcc30 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@4fc92d7 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -268,13 +268,25 @@ def family_bar(surface: str, at_root: bool = True) -> str:
     )
 
 
-def footer_line() -> str:
+# The licence line of the measurement surfaces (founder ruling SiteLicence A,
+# 2026-10-30): the published measurements and the served methodology are CC BY
+# 4.0, the licence the pre-registrations carry; the person's page carries none.
+LICENCE_URL = "https://creativecommons.org/licenses/by/4.0/"
+LICENCE_SURFACES = ("index", "oracle")
+
+
+def footer_line(surface: str | None = None) -> str:
     e, i, o = SURFACES
+    licence = (
+        f' <span class="licence">Measurements and methodology: <a href="{LICENCE_URL}">CC BY 4.0</a>, '
+        f'attribute {ENTITY}.</span>'
+        if surface in LICENCE_SURFACES else ""
+    )
     return (
         '<footer class="foot">A family of three: '
         f'<a href="{e[1]}">{e[2]}</a> (the person), '
         f'<a href="{i[1]}">{i[2]}</a> (the research index), '
-        f'<a href="{o[1]}">{o[2]}</a> (the data). {ENTITY}.</footer>'
+        f'<a href="{o[1]}">{o[2]}</a> (the data). {ENTITY}.{licence}</footer>'
     )
 
 
@@ -345,7 +357,7 @@ def render_page(
         f'<link rel="stylesheet" href="{family_prefix}family.css">\n'
         f"{icon}{extra}</head>\n<body>\n"
         f'<div class="{page_class}" data-accent="{ACCENT}">\n'
-        f"{family_bar(surface, at_root)}\n<main>\n{body}\n</main>\n{footer_line()}\n</div>\n</body>\n</html>\n"
+        f"{family_bar(surface, at_root)}\n<main>\n{body}\n</main>\n{footer_line(surface)}\n</div>\n</body>\n</html>\n"
     )
 
 

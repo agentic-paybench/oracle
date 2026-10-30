@@ -533,6 +533,14 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
                 lis.append(f'<li><a href="{esc(md.with_suffix(".html").name)}">{esc(titles.get(md.name, md.name))}</a></li>')
         body = ('<h1 id="named-rail-measurements">Named-rail measurements</h1>\n'
                 '<p>Each measurement is a dated, frozen artefact: a correction or a re-measurement is published as a new dated version and the earlier one is kept, as Markdown, below. Pages are rendered for readers; every Markdown record is listed for software.</p>\n'
+                # The licence statement (founder ruling SiteLicence A, 2026-10-30), verbatim; the
+                # licence URL and LICENSE are links, the text is unchanged.
+                '<p id="licence">Text and figures of the published measurements and the served methodology are licensed under the '
+                'Creative Commons Attribution 4.0 International licence (CC BY 4.0, '
+                '<a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>), '
+                'the licence the pre-registrations carry on the Open Science Framework. Attribute Everyday AI Ltd and link the page '
+                'you cite. Code in this repository is licensed separately under Apache-2.0 (see '
+                '<a href="https://github.com/agentic-paybench/oracle/blob/main/LICENSE">LICENSE</a>).</p>\n'
                 f'<ul class="dir">{"".join(lis)}</ul>\n' + family.PLACEHOLDER_MACHINE)
         machine = [{"href": md.name, "path": f"results/{md.name}", "note": labels.get(md.name, "")} for md in results_md]
         rc |= page(site, "results/index.html", body, title="Named-rail measurements", posture="none",
