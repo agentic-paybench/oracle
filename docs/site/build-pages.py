@@ -344,6 +344,9 @@ def dim02_reader(body: str) -> str:
     body = body.replace(version_p, f"<p>{esc(DIM02_OPENING)}</p>", 1)
     body = body.replace(correction_p, "", 1)
     body = body.replace(no_rank_p, "", 1)
+    # The ruled "No ranking is stated..." sentence is shown once, as the last
+    # line of the Posture box beside the other ruled sentences (posture_extra).
+    body += f"\n<!-- posture-extra: {no_rank_p[3:-4]} -->"
     block = family.posture_block("measurement", HERE / "family" / "posture-snippet.html")
     sentences = re.findall(r'<p data-posture="[a-z-]+">(.*?)</p>', block)
     for s in sentences:
@@ -389,6 +392,9 @@ def dim01_reader(body: str) -> str:
     no_rank_p = next(p for p in paras if p.startswith("<p>No ranking is stated on this page"))
     body = body.replace(version_p, f"<p>{esc(DIM01_OPENING)}</p>", 1)
     body = body.replace(no_rank_p, "", 1)
+    # The ruled "No ranking is stated..." sentence is shown once, as the last
+    # line of the Posture box beside the other ruled sentences (posture_extra).
+    body += f"\n<!-- posture-extra: {no_rank_p[3:-4]} -->"
     block = family.posture_block("measurement", HERE / "family" / "posture-snippet.html")
     sentences = re.findall(r'<p data-posture="[a-z-]+">(.*?)</p>', block)
     for s in sentences:

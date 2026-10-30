@@ -171,9 +171,28 @@ def test_dim02_reader_page_rearranged_and_record_unchanged(site_with_results):
     for s in MEASUREMENT:
         assert html.count(s) == 1, s
         assert html.index(s) > html.index('<section class="posture-foot"')
-    assert "No ranking is stated on this page" not in html
+    # The fourth ruled sentence is shown once, in the same foot block.
+    assert html.count("No ranking is stated on this page") == 1
+    assert html.index("No ranking is stated on this page") > html.index('<section class="posture-foot"')
     assert html.index("Correction of 2026-10-01.") > html.index('id="corrections-and-right-of-reply"')
     assert 'href="mailto:mblake@everydayai.link"' in html
+
+
+def test_dim01_reader_page_posture_once_and_tables_reachable(site_with_results):
+    """The DIM-01 reader page: one-line opening; the three ruled sentences and
+    the "No ranking is stated..." sentence once each, in the foot block; every
+    sideways-scrolling table box keyboard-reachable; the record served unchanged."""
+    html = (site_with_results / "results" / "dim01-settlement-finality.level1.html").read_text(encoding="utf-8")
+    md = (site_with_results / "results" / "dim01-settlement-finality.level1.md").read_text(encoding="utf-8")
+    assert md == (RESULTS_SRC / "dim01-settlement-finality.level1.md").read_text(encoding="utf-8")
+    main = html.split("<main>", 1)[1]
+    assert main.split("</h1>", 1)[1].lstrip().startswith("<p>Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28.</p>")
+    foot = html.index('<section class="posture-foot"')
+    for s in MEASUREMENT + ["No ranking is stated on this page, no winner is named, and there is no route from this page to transact on any rail."]:
+        assert html.count(s) == 1, s
+        assert html.index(s) > foot, s
+    assert html.count('<div class="table-scroll">') == 0
+    assert html.count('<div class="table-scroll" tabindex="0" role="region" aria-label="') == md.count("\n|---")
 
 
 class _Refs(HTMLParser):
