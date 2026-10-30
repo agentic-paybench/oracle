@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@2f5da79 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@3afcc30 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -368,6 +368,10 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .record .value code { font-size: var(--type-small-size); font-weight: var(--weight-medium); }
 .record .value ul { margin: 0; padding-left: var(--space-4); font-weight: var(--weight-regular); }
 .record .value li { margin: 0 0 var(--space-1); }
+/* every card leads with the table's plain-word value; the full entry follows in
+   the body type, so the card reads headline first, then the detail */
+.record .value.headline { font-weight: var(--weight-medium); }
+.record .value.full { font-size: var(--type-small-size); line-height: var(--type-small-leading); color: var(--color-text); }
 /* a structured answer (a list of items, each a few keyed facts): compact
    blocks in the small role, one hairline between items, keys muted */
 .record .value.structured {
@@ -462,17 +466,9 @@ h1, h2, h3 { text-wrap: balance; }
    link without seventy-eight accent-coloured words turning the table the
    accent; hover and focus colour the text too. */
 .cap-table-wrap { margin: var(--space-5) 0 var(--space-6); scroll-margin-top: var(--space-4); }
-/* The table breaks out of the reading column, centred on it, on screens wide
-   enough to hold the wide width; the family bar, the prose and the footer stay
-   where they sit on every other page of the family. Narrower, the table stays
-   in the column and scrolls sideways inside its own box. */
+/* Below desktop width the table stays in the column and scrolls sideways
+   inside its own box; at desktop width the whole page is wide (below). */
 main > .table-scroll.cap-table-wrap { max-width: none; }
-@media (min-width: 78rem) {
-  main > .table-scroll.cap-table-wrap {
-    width: var(--family-wide);
-    margin-inline: calc((100% - var(--family-wide)) / 2);
-  }
-}
 .cap-table { table-layout: fixed; width: 100%; min-width: 60rem; border-collapse: collapse; }
 .cap-table col.q { width: 12rem; }
 .cap-table th, .cap-table td {
@@ -529,3 +525,16 @@ a.gloss:hover, a.gloss:focus-visible { color: var(--color-link); text-decoration
 
 /* A rendering of a frozen or recorded file: the banner above it. */
 .rendering { font-size: var(--type-small-size); line-height: var(--type-small-leading); color: var(--color-text-muted); border-bottom: var(--border-hairline) solid var(--color-border-subtle); padding: 0 0 var(--space-3); margin: 0 0 var(--space-4); }
+
+/* --- desktop width: the founder's rule (2026-10-18) ----------------------
+   Desktop first: at 1280 px and wider every family page uses the wide column,
+   the family bar, title, lead, sections, posture block, question blocks,
+   machine panel and footer alike; nothing narrows back to the reading column.
+   The rail cards then sit three to a row. Below 1280 px the responsive
+   behaviour above is unchanged. */
+@media (min-width: 80rem) {
+  .family-page { max-width: var(--family-wide); }
+  .family-page :is(.posture-foot, .start, .question .lead, .question .notes.notice, .lede > .intro > h1, .lede > .intro > p, .lede > .intro > .posture),
+  .family-page--wide :is(main > h1, main > p, main > ul, main > ol, main > .posture, main > .table-scroll, .question > .notes) { max-width: none; }
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

@@ -13,9 +13,10 @@ from the tagged tree, not a working checkout.
   (the Bradley-Terry league table). A league table is a merit ordering of named
   rails and none is published on this surface.
 - **What is published about named rails:** the authorization-primitive latency
-  (DIM-02) findings, at `results/`, as a measurement with a fixed alphabetical
-  ordering that carries no performance meaning. Settlement-finality results stay
-  unpublished. The `G_S21` gate governs the published measurement and reflects
+  (DIM-02) findings and the settlement-finality (DIM-01) measurement on test
+  networks, at `results/`, each as a measurement with a fixed alphabetical
+  ordering that carries no performance meaning. The settlement-finality league
+  table stays unpublished. The `G_S21` gate governs the published measurements and reflects
   the firm's own section 21 (financial promotion) assessment; the gate is what
   moves, never the methodology.
 
