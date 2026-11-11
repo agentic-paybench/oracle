@@ -168,9 +168,10 @@ def link_terms(html_text: str, terms: list[str], used: set, prefix: str) -> str:
     return html_text
 
 
-# Three field names of the signed records read as plain words on the page
+# Four field names of the signed records read as plain words on the page
 # (founder, 2026-11-11); the records themselves keep their field names.
-FIELD_LABELS = {"feeBorneBy": "fee borne by", "initiatedBy": "initiated by", "lastChanged": "last changed"}
+FIELD_LABELS = {"feeBorneBy": "fee borne by", "initiatedBy": "initiated by", "lastChanged": "last changed",
+                "boundField": "bound field"}
 
 
 def field_label(k: str) -> str:
@@ -179,9 +180,12 @@ def field_label(k: str) -> str:
 
 def render_kv(d: dict) -> str:
     """One structured item as a compact key and value list (keys as served,
-    except the field names FIELD_LABELS reads as plain words)."""
+    except the field names FIELD_LABELS reads as plain words). The "kind"
+    line comes first and the other keys keep their order (founder,
+    2026-11-11); render order only, the signed record is unchanged."""
+    keys = (["kind"] if "kind" in d else []) + [k for k in d if k != "kind"]
     return '<dl class="kv">' + "".join(
-        f"<div><dt>{esc(field_label(k))}</dt><dd>{render_value(x)}</dd></div>" for k, x in d.items()) + "</dl>"
+        f"<div><dt>{esc(field_label(k))}</dt><dd>{render_value(d[k])}</dd></div>" for k in keys) + "</dl>"
 
 
 def render_record_value(v) -> tuple[str, str]:
@@ -248,6 +252,10 @@ QUESTION_SET_SENTENCE = ("The same thirteen questions were put to all six rails,
                          "own primary documentation, between the dates of 2026-10-09 and 2026-10-10.")
 
 
+# The table's hidden caption for screen readers (founder, 2026-11-11).
+CAP_TABLE_CAPTION = "The thirteen questions across the six rails; each value links to that rail's record"
+
+
 def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = None, short: dict | None = None) -> str:
     """Content brief section E (2026-10-18): the lead, the question-set sentence,
     ONE table (thirteen questions by six rails, short values linking to the full
@@ -260,7 +268,7 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
     names = [str(s.get("displayName", s.get("railName", ""))) for s in subjects]
     parts = [
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
-        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers: a table of the thirteen questions across the six rails, and under each question one record per rail, rails in alphabetical order, each headed by the table's wording with the full documented entry beneath it and its sources folded; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
+        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers: a table of the thirteen questions across the six rails, and under each question one record per rail, rails in alphabetical order, each headed by the table's wording, with the full documented entry beneath it where it says more, and its sources folded; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
         f'<p id="question-set">{esc(QUESTION_SET_SENTENCE)}</p>',
     ]
     # The table.
@@ -276,7 +284,8 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
         rows.append(f'<tr><th scope="row"><a href="#{qid}">{esc(label)}</a></th>{cells}</tr>')
     cols = '<colgroup><col class="q">' + "<col>" * len(names) + "</colgroup>"
     parts.append(
-        f'<div class="table-scroll cap-table-wrap" id="table"><table class="cap-table" aria-describedby="question-set">{cols}'
+        f'<div class="table-scroll cap-table-wrap" id="table"><table class="cap-table" aria-describedby="question-set">'
+        f'<caption class="visually-hidden">{esc(CAP_TABLE_CAPTION)}</caption>{cols}'
         f'<thead><tr><th scope="col"><span class="visually-hidden">Question</span></th>{head}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table></div>')
     # The Posture block directly below the table it protects, before the
