@@ -168,10 +168,20 @@ def link_terms(html_text: str, terms: list[str], used: set, prefix: str) -> str:
     return html_text
 
 
+# Three field names of the signed records read as plain words on the page
+# (founder, 2026-11-11); the records themselves keep their field names.
+FIELD_LABELS = {"feeBorneBy": "fee borne by", "initiatedBy": "initiated by", "lastChanged": "last changed"}
+
+
+def field_label(k: str) -> str:
+    return FIELD_LABELS.get(k, k)
+
+
 def render_kv(d: dict) -> str:
-    """One structured item as a compact key and value list (keys as served)."""
+    """One structured item as a compact key and value list (keys as served,
+    except the field names FIELD_LABELS reads as plain words)."""
     return '<dl class="kv">' + "".join(
-        f"<div><dt>{esc(k)}</dt><dd>{render_value(x)}</dd></div>" for k, x in d.items()) + "</dl>"
+        f"<div><dt>{esc(field_label(k))}</dt><dd>{render_value(x)}</dd></div>" for k, x in d.items()) + "</dl>"
 
 
 def render_record_value(v) -> tuple[str, str]:
@@ -202,15 +212,21 @@ def render_record(question_id: str, name: str, cell, question: str = "", reader_
     prov = cell.get("provenance", {}) or {}
     sources = prov.get("sources", []) or []
     cls, html_value = render_record_value(cell.get("value"))
-    # A schema token (for example "mediated-then-trustless") is shown to readers
-    # in the table's approved wording; the token stays in the signed record.
-    if reader_value and isinstance(cell.get("value"), str) and SLUG_VALUE.fullmatch(cell["value"]):
-        cls, html_value = "value", esc(reader_value)
-    value = f'<div class="{cls}">{html_value}</div>'
+    # Every record opens with the table's approved wording as its headline
+    # (founder, 2026-11-11); the full documented entry follows beneath it,
+    # unless the raw value is the same words or the schema token the headline
+    # already renders. The signed record keeps its own value.
+    if reader_value:
+        raw = cell.get("value")
+        same = isinstance(raw, str) and (raw == reader_value or SLUG_VALUE.fullmatch(raw))
+        body = "" if same else f'<div class="{cls} full">{html_value}</div>'
+        value = f'<div class="value headline">{esc(reader_value)}</div>{body}'
+    else:
+        value = f'<div class="{cls}">{html_value}</div>'
     extras_html = ""
     if extras:
         extras_html = '<dl class="extras">' + "".join(
-            f"<div><dt>{esc(k)}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
+            f"<div><dt>{esc(field_label(k))}</dt><dd>{render_value(v)}</dd></div>" for k, v in extras.items()) + "</dl>"
     # D2 (2026-10-16): the disposition is not shown on the
     # reader card; it stays in the signed credential, where software needs it.
     tags = []
@@ -244,7 +260,7 @@ def capabilities_body(index: dict, subjects: list[dict], leads: dict | None = No
     names = [str(s.get("displayName", s.get("railName", ""))) for s in subjects]
     parts = [
         '<h1 id="capability-records">Capability records: documented facts per rail</h1>',
-        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers, one card per rail under each question, rails in alphabetical order, with each card's sources folded beneath it; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
+        "<p>Thirteen documented structural facts for each of six payment rails, read from each rail's own primary documentation and served as signed credentials. This page renders them for readers: a table of the thirteen questions across the six rails, and under each question one record per rail, rails in alphabetical order, each headed by the table's wording with the full documented entry beneath it and its sources folded; the signed records themselves are <a href=\"#machine-h\">listed at the end for software</a>.</p>",
         f'<p id="question-set">{esc(QUESTION_SET_SENTENCE)}</p>',
     ]
     # The table.

@@ -115,7 +115,7 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
     # The cards show readers the table's wording, never a schema token; the
     # fee notice is one compact box (2026-10-18).
     assert '<div class="value"><code>' not in text
-    assert text.count('<div class="value">mediated, then trustless</div>') == 4
+    assert text.count('<div class="value headline">mediated, then trustless</div>') == 4
     assert text.count('<div class="notes notice">') == 1
     # The SDK languages lead line: the schema's own first sentence.
     sdk = text.split('<h2 id="sdk-languages">', 1)[1].split('<div class="cards">', 1)[0]
@@ -140,6 +140,54 @@ def test_capabilities_page_lists_rails_alphabetically_with_every_question(site_w
                     "Specification pin", "Declared rate limits", "Status page", "SDK languages",
                     "Error catalogue", "Offline verifiability"):
         assert f">{heading}</h2>" in text, heading
+
+
+def _headline_mismatches(text: str) -> list:
+    """Every table cell against the headline of the record it links to; returns
+    the (record id, cell text, headline text) of each record that differs."""
+    import html as _html
+    table = text.split('<table class="cap-table"', 1)[1].split("</table>", 1)[0]
+    out = []
+    for rid, cell in re.findall(r'<td><a href="#([^"]+)">([^<]+)</a></td>', table):
+        sec = text.split(f'<section class="record" id="{rid}">', 1)
+        m = re.search(r'<div class="value headline">([^<]*)</div>', sec[1].split("</section>", 1)[0]) if len(sec) == 2 else None
+        got = _html.unescape(m.group(1)) if m else None
+        if got != _html.unescape(cell):
+            out.append((rid, _html.unescape(cell), got))
+    return out
+
+
+def test_every_record_is_headed_by_its_table_cell(site_with_results):
+    """2026-11-11: each of the 78 records opens with the table's wording."""
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    assert text.count('<div class="value headline">') == 78
+    table = text.split('<table class="cap-table"', 1)[1].split("</table>", 1)[0]
+    assert len(re.findall(r'<td><a href="#[^"]+">[^<]+</a></td>', table)) == 78
+    assert _headline_mismatches(text) == []
+
+
+def test_headline_check_fails_on_a_blanked_reader_value(site_with_results):
+    """Negative control: blank one record's headline; the check above must fail."""
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    i = text.index('<div class="value headline">') + len('<div class="value headline">')
+    broken = text[:i] + text[text.index("</div>", i):]
+    assert len(_headline_mismatches(broken)) == 1
+
+
+def test_field_labels_read_as_plain_words_and_the_lead_follows(site_with_results):
+    """2026-11-11: three field names read as plain words (render only); the
+    lead paragraph describes the table and the headed records."""
+    text = (site_with_results / "capabilities" / "index.html").read_text(encoding="utf-8")
+    visible = re.sub(r"<[^>]+>", " ", text)
+    for name in ("feeBorneBy", "initiatedBy", "lastChanged"):
+        assert name not in visible, name
+    for words in ("fee borne by", "initiated by", "last changed"):
+        assert f"<dt>{words}</dt>" in text, words
+    assert ("This page renders them for readers: a table of the thirteen questions across the six rails, and under each "
+            "question one record per rail, rails in alphabetical order, each headed by the table's wording with the full "
+            "documented entry beneath it and its sources folded; the signed records themselves are "
+            '<a href="#machine-h">listed at the end for software</a>.') in text
+    assert "one card per rail under each question" not in text
 
 
 def test_dim02_reader_names_r6_and_the_record_is_unchanged(site_with_results):
