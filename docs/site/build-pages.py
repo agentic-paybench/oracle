@@ -455,6 +455,36 @@ def dim01_reader(body: str) -> str:
     return body
 
 
+# The DIM-04 Half B reader page. The Markdown record is NOT changed. Its
+# reader rendering keeps the record's order and wording (the three ruled
+# sentences stay where the record carries them, the second extended by the
+# record's own definition of "identically"); only markup is added: the DOIs,
+# the reply address, the email and the payhelm links as links; soft break
+# points in each 64-character hash; and a focusable, labelled region on every
+# table box, as on the DIM-01 page.
+DIM04_READER = {"dim04-half-b-conformance.level1.md"}
+
+
+def dim04_reader(body: str) -> str:
+    body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
+    body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
+    body = re.sub(r"(?<![\"\w])(https://github\.com/agentic-paybench/payhelm/blob/[^\s<),]+)",
+                  r'<a href="\1">\1</a>', body)
+    body = re.sub(r"\b([0-9a-f]{64})\b", lambda m: "<wbr>".join(m.group(1)[i:i + 16] for i in range(0, 64, 16)), body)
+    parts = re.split(r'(<div class="table-scroll">)', body)
+    heading = "Table"
+    for i, part in enumerate(parts):
+        if part == '<div class="table-scroll">':
+            parts[i] = f'<div class="table-scroll" tabindex="0" role="region" aria-label="{esc(heading)}">'
+        else:
+            found = re.findall(r"<h[23][^>]*>(.*?)</h[23]>", part, re.S)
+            if found:
+                heading = re.sub(r"<[^>]+>", "", found[-1])
+    body = "".join(parts)
+    return body + "\n" + family.PLACEHOLDER_MACHINE
+
+
 def read_labels(labels: Path | None) -> dict[str, str]:
     if not labels or not labels.exists():
         return {}
@@ -529,6 +559,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
             body = dim02_reader(body)
         elif md.name in DIM01_READER:
             body = dim01_reader(body)
+        elif md.name in DIM04_READER:
+            body = dim04_reader(body)
         else:
             body = wrap_posture_run(body)
             body += "\n" + family.PLACEHOLDER_MACHINE
