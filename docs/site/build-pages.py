@@ -547,6 +547,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
                 "Settlement finality (DIM-01) on test networks, five rails. Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28.",
             "dim02-authorization-latency.v1.1.level1.md":
                 "Authorization-primitive latency (DIM-02), six rails. Version 1.1 (2026-10-01) is current; version 1.0 is kept unaltered as the record.",
+            "dim04-half-b-conformance.level1.md":
+                "Conformance checks (DIM-04 Half B) on test networks, five rails. Version 1.0, for the confirmatory run of 2026-11-12.",
         }
         lis = []
         for md in current_md:
