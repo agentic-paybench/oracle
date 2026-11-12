@@ -6,7 +6,7 @@ Version 1.0, for the confirmatory run of 2026-11-12. This artefact is frozen per
 
 The data pre-registration is the signed git tag `paybench-dim4-halfb-prereg-v1` in the public payhelm repository (https://github.com/agentic-paybench/payhelm/blob/paybench-dim4-halfb-prereg-v1/paybench/methodology/dim4-halfb-PRE-REGISTRATION.md), registered on the Open Science Framework with digital object identifier 10.17605/OSF.IO/BMT8P (https://doi.org/10.17605/OSF.IO/BMT8P), its manifest anchored by an OpenTimestamps proof in Bitcoin blocks 975195 and 975221 and by Rekor transparency-log entry 3773957892. It is called "the registration" below.
 
-### 1. What this report covers
+## 1. What this report covers
 
 This report gives the counts of the confirmatory run registered in the document above. The run was made by Everyday AI Ltd (the company, below). The company is the only payer and the only payee of every payment. The run used test networks only, with test tokens that carry no monetary value.
 
@@ -26,7 +26,7 @@ Each cell tests a different documented bound on a different software stack, so c
 
 These conformance checks are a different kind of measurement from the DIM-02 authorization-latency figures: each result here is a count of binary outcomes for one rail under one fault, and none is comparable with, or to be combined with, any figure in that table.
 
-### 2. The run
+## 2. The run
 
 The run started on 2026-11-12.
 
@@ -64,7 +64,7 @@ The rails did not all run at the same time throughout, as section 7.1 intends; t
 
 No block stopped on the funds rule.
 
-### 3. Results per cell
+## 3. Results per cell
 
 Each cell is one of three kinds (registration, section 4.9): a network-enforcement detector, which "can be VIOLATED only if the test network diverges from its own documented rule"; library or service behaviour, "genuinely open on the stack the company runs"; and a descriptive observation, "with no documented bound to hold or violate". A HELD result from a network-enforcement detector confirms the documented rule on that test network; it is expected, and it is reported as a confirmation, not as a discovery.
 
@@ -72,7 +72,7 @@ Where the run's records give a cell a different kind from the registration's sec
 
 No cell recorded a VIOLATED repetition, and no cell recorded an unclassified state (registration, section 5.7). The descriptive cells are check 3 on every rail and check 2b on Machine Payments Protocol on Lightning.
 
-#### Machine Payments Protocol on Lightning (Spark regtest)
+### Machine Payments Protocol on Lightning (Spark regtest)
 
 | Cell | Kind | K | Attempts | Valid | k | VIOLATED | VOID, by cause | NOT EXERCISED, by cause | Complete |
 |---|---|---|---|---|---|---|---|---|---|
@@ -87,7 +87,7 @@ Beside every result on this rail: this rail's settlement and death evidence is t
 
 On this rail, whose documents define no definitive failure signal, the death read in check 4 is a measured death observation the company defines, never a documented signal (registration, section 4.4).
 
-#### Machine Payments Protocol on Tempo (Moderato testnet)
+### Machine Payments Protocol on Tempo (Moderato testnet)
 
 | Cell | Kind | K | Attempts | Valid | k | VIOLATED | VOID, by cause | NOT EXERCISED, by cause | Complete |
 |---|---|---|---|---|---|---|---|---|---|
@@ -134,7 +134,7 @@ The 20 attempts, each reported as the registration's section 5.3 requires of an 
 | 2 | 9 | yes | 1 | "expiring nonce transaction already included" | tempo/v1.18.3-5c71a4c |
 | 2 | 10 | yes | 1 | "expiring nonce transaction already included" | tempo/v1.18.3-5c71a4c |
 
-#### x402 on Base (Sepolia)
+### x402 on Base (Sepolia)
 
 | Cell | Kind | K | Attempts | Valid | k | VIOLATED | VOID, by cause | NOT EXERCISED, by cause | Complete |
 |---|---|---|---|---|---|---|---|---|---|
@@ -150,7 +150,7 @@ The 20 attempts, each reported as the registration's section 5.3 requires of an 
 | Check 6d, the facilitator pauses past the seller's timeout | library or service behaviour | 10 | 10 | 10 | 10 HELD | 0 | 0 | 0 | complete |
 | Check 7, a settlement outcome after a settle that cannot succeed | library or service behaviour | 10 | 10 | 10 | 10 HELD | 0 | 0 | 0 | complete |
 
-#### x402 on Solana (devnet, Alpenglow)
+### x402 on Solana (devnet, Alpenglow)
 
 | Cell | Kind | K | Attempts | Valid | k | VIOLATED | VOID, by cause | NOT EXERCISED, by cause | Complete |
 |---|---|---|---|---|---|---|---|---|---|
@@ -169,7 +169,7 @@ The one VOID on this rail is block 2, check 4b, attempt 4. A read needed to deci
 
 Checks 1a and 4a on this rail: the reason recorded is stated below the x402 on Stellar table.
 
-#### x402 on Stellar (testnet)
+### x402 on Stellar (testnet)
 
 | Cell | Kind | K | Attempts | Valid | k | VIOLATED | VOID, by cause | NOT EXERCISED, by cause | Complete |
 |---|---|---|---|---|---|---|---|---|---|
@@ -185,11 +185,11 @@ Checks 1a and 4a on this rail: the reason recorded is stated below the x402 on S
 | Check 6d, the facilitator pauses past the seller's timeout | library or service behaviour | 10 | 10 | 10 | 10 HELD | 0 | 0 | 0 | complete |
 | Check 7, a settlement outcome after a settle that cannot succeed | library or service behaviour | 10 | 10 | 10 | 10 HELD | 0 | 0 | 0 | complete |
 
-#### Checks 1a and 4a on x402 on Solana and x402 on Stellar: the reason recorded
+### Checks 1a and 4a on x402 on Solana and x402 on Stellar: the reason recorded
 
 On these two rails the pinned facilitator's answer names no mechanism. The recorded reason for a seller refusal in checks 1a and 4a is therefore that answer followed by the company's facilitator's own verify message, which is the network's simulation error as transcribed by the company's facilitator. In both blocks on both rails, the matching below-seller cell (1b beside 1a, 4b beside 4a) recorded the network's own reason naming the same mechanism.
 
-### 4. Check 3 beside each rail's documented statement
+## 4. Check 3 beside each rail's documented statement
 
 Check 3 counts one observable event, SECOND SETTLED: whether a second payment, made against one challenge inside the validity window with a fresh signature, also settled. None of the five documents rules out either answer, so this check can produce no divergence. Where the second payment settled, the company's seller also served the resource twice.
 
@@ -211,7 +211,7 @@ Check 2b on Machine Payments Protocol on Lightning is the other descriptive cell
 
 Machine Payments Protocol on Lightning: its evidence limit is stated below its table in section 3 above.
 
-### 5. Check 6: both outcomes
+## 5. Check 6: both outcomes
 
 A V6 void is a repetition voided because the check's action has no recorded response (registration, section 5.3).
 
@@ -239,7 +239,7 @@ Machine Payments Protocol on Lightning: its evidence limit is stated below its t
 
 A check 6 safety HELD says only this: no more than one transfer bound to the original artefact's identifier moved value, and no terminal state read was later contradicted. It does not say which component kept a second transfer from moving (registration, section 9.5). The recovery cost is reported beside the recovery outcome and never counts toward safety.
 
-### 6. Recorded invariants (registration, section 4.10)
+## 6. Recorded invariants (registration, section 4.10)
 
 | Rail | Invariant | Records | Hold | Do not hold |
 |---|---|---|---|---|
@@ -259,7 +259,7 @@ What each row counts:
 
 Machine Payments Protocol on Lightning: its evidence limit is stated below its table in section 3 above.
 
-### 7. Assurance sweep (registration, section 5.4)
+## 7. Assurance sweep (registration, section 5.4)
 
 Every block was re-read no sooner than two hours after its end. The times are from the sweep's log, to the second (UTC).
 
@@ -273,7 +273,7 @@ Every block was re-read no sooner than two hours after its end. The times are fr
 
 Every attempt on every rail had a sweep row; no re-read failed; no repetition was reclassified or annotated; live and sweep transfer counts were equal for every attempt with a live count; the one attempt without one is the VOID attempt on x402 on Solana in section 3 above, whose sweep count is 0.
 
-### 8. Software versions reported by the endpoints
+## 8. Software versions reported by the endpoints
 
 Void V5 compares the version an endpoint reports at a repetition's start with the version at its end. On every rail where V5 applies, no repetition recorded a change, so V5 fired 0 times.
 
@@ -292,7 +292,7 @@ On x402 on Solana, two records lack one version read:
 - Block 2, check 4b, attempt 4 has no end read. It is the VOID attempt above.
 - Block 2, check 1b, attempt 5 has no start read. Under the frozen rule, V5 fires only when both reads exist and differ, so this attempt is HELD; whether the version changed during it cannot be decided from its record.
 
-### 9. Limits
+## 9. Limits
 
 The places where the company's instrument or the run departed from the registration, each with its effect; each is recorded in Addendum 1 to the registration [ADDENDUM 1 CITATION: its tag, DOI and anchors are entered here once it is signed and anchored]:
 
@@ -306,7 +306,7 @@ The places where the company's instrument or the run departed from the registrat
 
 The evidence limit of Machine Payments Protocol on Lightning is stated beside its results in section 3 above.
 
-### 10. What this run does not say
+## 10. What this run does not say
 
 - No rail is ranked, and no recommendation is made. No rail is compared with another.
 - It states no latency figure. The test-network settlement finality of the same five rails on the same test networks is the subject of a separate registered run (https://doi.org/10.17605/OSF.IO/UETFW).
@@ -316,6 +316,6 @@ The evidence limit of Machine Payments Protocol on Lightning is stated beside it
 - No result is claimed to have been fixed before any run. The claim is that the design was frozen and anchored after the declared exploratory runs and before the confirmatory run or any publication. The places where the company's instrument or the run departed from the registered design are listed in section 9 above and recorded in Addendum 1 to the registration [ADDENDUM 1 CITATION: its tag, DOI and anchors are entered here once it is signed and anchored].
 - The mapping of these cells to the cells of the Half A structural profile is made after this report (registration, section 10); this report states only, where the registration requires it, that a cell moves no label.
 
-### 11. Corrections and right of reply
+## 11. Corrections and right of reply
 
 Any operator of a rail or facilitator named on this page may respond through the structured right-of-reply channel at https://reply.agentic-paybench.dev/. Replies about a factual data error, a methodology defect, a mischaracterisation, a confidentiality objection, or a jurisdictional objection are reviewed before publication; replies about methodology framing, a change since the measurement window, or the scope of the environment tested are published promptly with a badge saying the review is pending. The response cap and visibility policy is linked from that page. Corrections to anything here are also welcome by email at mblake@everydayai.link.
