@@ -17,5 +17,5 @@
   "gated_off": {
     "scored_query": "withheld: inert on live (G_AUTH/G_QF closed)"
   },
-  "note": "Intent-free Tier-2 factual lookup, de-ranked Tier-1 methodology, and named-rail authorization-latency and test-network settlement-finality measurements published as a measurement and not a recommendation: rails are listed alphabetically, that ordering carries no performance meaning, and no scored, ranked or recommended output appears on this live surface."
+  "note": "Intent-free Tier-2 factual lookup, de-ranked Tier-1 methodology, and named-rail authorization-latency measurements, test-network settlement-finality measurements and test-network conformance-check counts published as a measurement and not a recommendation: rails are listed alphabetically, that ordering carries no performance meaning, and no scored, ranked or recommended output appears on this live surface."
 }
