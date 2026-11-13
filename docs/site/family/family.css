@@ -1,4 +1,4 @@
-/* vendored from agentic-paybench/design-system-private@d131c4f (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
+/* vendored from agentic-paybench/design-system-private@d341d9a (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor */
 /* family.css: the shared layout of the public page family (everydayai.link,
    agentic-paybench.dev, oracle.agentic-paybench.dev). Direction A, "Ledger",
    picked by the founder on 2026-10-16, with the machine section as the
@@ -315,7 +315,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
   background: var(--color-surface);
   padding-bottom: var(--space-2);
 }
-.question .lead { margin: 0 0 var(--space-4); color: var(--color-text-muted); max-width: var(--family-measure); font-size: var(--type-small-size); line-height: var(--type-small-leading); }
+.question .lead { margin: 0 0 var(--space-4); color: var(--color-text-muted); max-width: var(--family-measure); font-size: var(--type-body-size); line-height: var(--type-body-leading); }
 .question .notes { margin: 0 0 var(--space-4); }
 .lede + .question { margin-top: var(--space-6); }
 .lede + .question > h2 { border-top: 0; padding-top: 0; }
@@ -369,13 +369,14 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 .record .value ul { margin: 0; padding-left: var(--space-4); font-weight: var(--weight-regular); }
 .record .value li { margin: 0 0 var(--space-1); }
 /* every card leads with the table's plain-word value; the full entry follows in
-   the body role, so the card reads headline first, then the detail. The gap
-   below the headline is smaller than the rail name's gap above it, so the
-   headline groups with its entry (canon rule 6; founder ruling 2026-11-13). */
-.record .value.headline { font-weight: var(--weight-medium); margin-bottom: var(--space-1); }
+   the body role, so the card reads headline first, then the detail. The
+   headline takes no bottom margin: the visible gap below it (the two lines'
+   half-leading, about 9 px) is smaller than the gap above it (the rail name's
+   margin plus half-leading, about 14 px), so the headline groups with its entry. */
+.record .value.headline { font-weight: var(--weight-medium); margin-bottom: 0; }
 .record .value.full { font-size: var(--type-body-size); line-height: var(--type-body-leading); color: var(--color-text); }
 /* a structured answer (a list of items, each a few keyed facts): blocks in
-   the body role (founder ruling 2026-11-13), one hairline between items; the
+   the body role, one hairline between items; the
    field labels keep the small role, muted */
 .record .value.structured {
   font-size: var(--type-body-size);
@@ -424,7 +425,7 @@ td ul, td ol { padding-left: var(--space-4); margin: 0; }
 }
 .record summary { cursor: pointer; color: var(--color-text-muted); padding: var(--space-1) 0; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-/* The skip-to-content link (WCAG 2.4.1; founder ruling 2026-11-13), emitted
+/* The skip-to-content link (WCAG 2.4.1), emitted
    by family.py as the first child of body: hidden with the clip above until it
    takes keyboard focus, then shown at the top left of the viewport in the body
    text on the surface ground, with the family focus ring. A mouse reader never
