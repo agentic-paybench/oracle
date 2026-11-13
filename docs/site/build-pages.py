@@ -458,8 +458,9 @@ def dim01_reader(body: str) -> str:
 # The DIM-04 Half B reader page. The Markdown record is NOT changed. Its
 # reader rendering keeps the record's order and wording (the three ruled
 # sentences stay where the record carries them, the second extended by the
-# record's own definition of "identically"); only markup is added: the DOIs,
-# the reply address, the email and the payhelm links as links; soft break
+# record's own definition of "identically"); only markup is added: the DOIs
+# (bare, and the full https://doi.org/ addresses, each a link to itself), the
+# reply address, the email and the payhelm links as links; soft break
 # points in each 64-character hash; and a focusable, labelled region on every
 # table box, as on the DIM-01 page.
 DIM04_READER = {"dim04-half-b-conformance.level1.md"}
@@ -467,6 +468,7 @@ DIM04_READER = {"dim04-half-b-conformance.level1.md"}
 
 def dim04_reader(body: str) -> str:
     body = body.replace("mblake@everydayai.link", '<a href="mailto:mblake@everydayai.link">mblake@everydayai.link</a>', 1)
+    body = re.sub(r"(?<![\"\w>])(https://doi\.org/10\.[0-9]+/[A-Za-z0-9./]*[A-Za-z0-9])", r'<a href="\1">\1</a>', body)
     body = re.sub(r"(?<![\w/\">])(10\.17605/OSF\.IO/[A-Z0-9]+)", r'<a href="https://doi.org/\1">\1</a>', body)
     body = body.replace("https://reply.agentic-paybench.dev/.", '<a href="https://reply.agentic-paybench.dev/">https://reply.agentic-paybench.dev/</a>.', 1)
     body = re.sub(r"(?<![\"\w])(https://github\.com/agentic-paybench/payhelm/blob/[^\s<),]+)",
