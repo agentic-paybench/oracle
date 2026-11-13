@@ -1,4 +1,4 @@
-# vendored from agentic-paybench/design-system-private@4fc92d7 (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
+# vendored from agentic-paybench/design-system-private@d131c4f (packages/tokens, packages/family, packages/posture) by packages/family/vendor.mjs; do not edit here, re-vendor
 """family.py: the shared page renderer of the public page family.
 
 One file, Python 3.11 or later, standard library only. It wraps a content file
@@ -356,8 +356,14 @@ def render_page(
         f'<link rel="stylesheet" href="{family_prefix}tokens.css">\n'
         f'<link rel="stylesheet" href="{family_prefix}family.css">\n'
         f"{icon}{extra}</head>\n<body>\n"
+        # The skip-to-content link is the first child of body on every family
+        # page (WCAG 2.4.1; founder ruling 2026-11-13); family.css hides it
+        # until it takes keyboard focus. Its target is main's id. It sits
+        # outside the page wrapper, so it carries the family accent itself
+        # (else its focus ring falls back to the root accent).
+        f'<a class="skip" href="#main" data-accent="{ACCENT}">Skip to content</a>\n'
         f'<div class="{page_class}" data-accent="{ACCENT}">\n'
-        f"{family_bar(surface, at_root)}\n<main>\n{body}\n</main>\n{footer_line(surface)}\n</div>\n</body>\n</html>\n"
+        f'{family_bar(surface, at_root)}\n<main id="main">\n{body}\n</main>\n{footer_line(surface)}\n</div>\n</body>\n</html>\n'
     )
 
 

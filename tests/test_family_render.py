@@ -235,7 +235,7 @@ def test_dim02_reader_page_rearranged_and_record_unchanged(site_with_results):
     html = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.html").read_text(encoding="utf-8")
     md = (site_with_results / "results" / "dim02-authorization-latency.v1.1.level1.md").read_text(encoding="utf-8")
     assert md == (RESULTS_SRC / "dim02-authorization-latency.v1.1.level1.md").read_text(encoding="utf-8")
-    main = html.split("<main>", 1)[1]
+    main = html.split('<main id="main">', 1)[1]
     assert main.split("</h1>", 1)[1].lstrip().startswith("<p>Version 1.1, dated 2026-10-01, for the measurement run of 2026-06-28.</p>")
     for s in MEASUREMENT:
         assert html.count(s) == 1, s
@@ -254,7 +254,7 @@ def test_dim01_reader_page_posture_once_and_tables_reachable(site_with_results):
     html = (site_with_results / "results" / "dim01-settlement-finality.level1.html").read_text(encoding="utf-8")
     md = (site_with_results / "results" / "dim01-settlement-finality.level1.md").read_text(encoding="utf-8")
     assert md == (RESULTS_SRC / "dim01-settlement-finality.level1.md").read_text(encoding="utf-8")
-    main = html.split("<main>", 1)[1]
+    main = html.split('<main id="main">', 1)[1]
     assert main.split("</h1>", 1)[1].lstrip().startswith("<p>Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28.</p>")
     foot = html.index('<section class="posture-foot"')
     for s in MEASUREMENT + ["No ranking is stated on this page, no winner is named, and there is no route from this page to transact on any rail."]:
