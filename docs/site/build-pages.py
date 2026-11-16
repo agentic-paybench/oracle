@@ -750,12 +750,13 @@ def glossary_page(site: Path, check: bool) -> int:
             letters.append((ch, family.slug(e["term"])))
     az = "".join(f'<li><a href="#{slug}">{esc(ch)}</a></li>' for ch, slug in letters)
     # One list per letter, each followed by a link back to the letter index (a p may not sit inside a dl);
-    # the back link uses the family's .back class, as the capabilities page's "Back to the table" does.
+    # the link reads "Index ^", the caret hidden from screen readers so they announce "Index"; it uses the
+    # family's .back class, as the capabilities page's "Back to the table" does.
     groups = "".join(
         '<dl class="glossary">'
         + "".join(f'<dt id="{family.slug(e["term"])}">{esc(e["term"])}</dt><dd>{esc(e["text"])}</dd>'
                   for e in entries if e["term"][0].upper() == ch)
-        + '</dl>\n<p class="back"><a href="#letter-index">Back to the letter index</a></p>\n'
+        + '</dl>\n<p class="back"><a href="#letter-index">Index <span aria-hidden="true">^</span></a></p>\n'
         for ch, _slug in letters)
     body = ('<h1 id="glossary">Glossary</h1>\n'
             f'<ul class="az" id="letter-index" aria-label="Terms by first letter">{az}</ul>\n'
