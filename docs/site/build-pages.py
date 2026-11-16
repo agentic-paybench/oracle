@@ -730,7 +730,7 @@ def methodology_pages(site: Path, check: bool) -> int:
     files = sorted(p for p in d.rglob("*") if p.is_file() and p.suffix != ".html")
     body = ('<h1 id="settlement-finality-methodology-frozen-v1-2">Settlement-finality methodology (frozen v1.2)</h1>\n'
             f'<p class="lead">{esc(METHODOLOGY_EXPLAINER.split(". ", 1)[0])}.</p>\n'
-            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>') + '</p>\n'
+            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>').replace("listed under results/.", 'listed under <a href="../results/">results/</a>.') + '</p>\n'
             f'<ul class="dir">{"".join(links)}</ul>\n' + family.PLACEHOLDER_MACHINE)
     machine = [{"href": str(p.relative_to(d)), "path": f"methodology/{p.relative_to(d)}", "note": ""} for p in files]
     rc |= page(site, "methodology/index.html", body, title="Settlement-finality methodology (frozen v1.2)", posture="none",
@@ -749,10 +749,18 @@ def glossary_page(site: Path, check: bool) -> int:
         if ch not in [l for l, _ in letters]:
             letters.append((ch, family.slug(e["term"])))
     az = "".join(f'<li><a href="#{slug}">{esc(ch)}</a></li>' for ch, slug in letters)
-    dl = "".join(f'<dt id="{family.slug(e["term"])}">{esc(e["term"])}</dt><dd>{esc(e["text"])}</dd>' for e in entries)
+    # One list per letter, each followed by a link back to the letter index (a p may not sit inside a dl);
+    # the link reads "Index ^", the caret hidden from screen readers so they announce "Index"; it uses the
+    # family's .back class, as the capabilities page's "Back to the table" does.
+    groups = "".join(
+        '<dl class="glossary">'
+        + "".join(f'<dt id="{family.slug(e["term"])}">{esc(e["term"])}</dt><dd>{esc(e["text"])}</dd>'
+                  for e in entries if e["term"][0].upper() == ch)
+        + '</dl>\n<p class="back"><a href="#letter-index">Index <span aria-hidden="true">^</span></a></p>\n'
+        for ch, _slug in letters)
     body = ('<h1 id="glossary">Glossary</h1>\n'
-            f'<ul class="az" aria-label="Terms by first letter">{az}</ul>\n'
-            f'<dl class="glossary">{dl}</dl>\n' + family.PLACEHOLDER_MACHINE)
+            f'<ul class="az" id="letter-index" aria-label="Terms by first letter">{az}</ul>\n'
+            + groups + family.PLACEHOLDER_MACHINE)
     machine = [{"href": "../index.json", "path": "index.json", "note": "the machine index of every served surface"}]
     return page(site, "glossary/index.html", body, title="Glossary", posture="none", machine=machine, marker=None, check=check,
                 description="Plain-word definitions of the terms used on the oracle's capability and measurement pages.")
