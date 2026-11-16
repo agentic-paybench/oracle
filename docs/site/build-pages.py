@@ -730,7 +730,7 @@ def methodology_pages(site: Path, check: bool) -> int:
     files = sorted(p for p in d.rglob("*") if p.is_file() and p.suffix != ".html")
     body = ('<h1 id="settlement-finality-methodology-frozen-v1-2">Settlement-finality methodology (frozen v1.2)</h1>\n'
             f'<p class="lead">{esc(METHODOLOGY_EXPLAINER.split(". ", 1)[0])}.</p>\n'
-            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>') + '</p>\n'
+            '<p>' + esc(METHODOLOGY_EXPLAINER.split(". ", 1)[1]).replace("10.17605/OSF.IO/XGFUJ", '<a href="https://doi.org/10.17605/OSF.IO/XGFUJ">10.17605/OSF.IO/XGFUJ</a>').replace("listed under results/.", 'listed under <a href="../results/">results/</a>.') + '</p>\n'
             f'<ul class="dir">{"".join(links)}</ul>\n' + family.PLACEHOLDER_MACHINE)
     machine = [{"href": str(p.relative_to(d)), "path": f"methodology/{p.relative_to(d)}", "note": ""} for p in files]
     rc |= page(site, "methodology/index.html", body, title="Settlement-finality methodology (frozen v1.2)", posture="none",

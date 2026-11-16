@@ -6,8 +6,9 @@ appear here or are implied. Tier-1 measured dimensions land on their own schedul
 with pre-registered methodology; Tier-2 factual facts fill in as sourced.
 
 ## Tier-1 measured dimensions (pre-registered, phased)
-- Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface); named-rail measurements on test networks published at `results/` on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/XGFUJ> (method) and <https://doi.org/10.17605/OSF.IO/UETFW> (test-network data).
-- Authorization latency: pre-registered (methodology frozen and anchored); named-rail measurements published at `results/` on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
+- Settlement finality: live now (methodology plus frozen harness plus fixtures; no league table on the public surface); named-rail measurements on test networks published at [results/](results/) on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/XGFUJ> (method) and <https://doi.org/10.17605/OSF.IO/UETFW> (test-network data).
+- Authorization latency: pre-registered (methodology frozen and anchored); named-rail measurements published at [results/](results/) on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/UFQG5>.
+- Conformance checks: pre-registered (method and analysis plan frozen and anchored); named-rail counts on test networks published at [results/](results/) on this site, as a measurement and not a recommendation; no figures are repeated on this page. Pre-registration: <https://doi.org/10.17605/OSF.IO/BMT8P>.
 - Additional measured dimensions: under methodology development; each has its method and analysis plan frozen and externally anchored before any result is published.
 
 ## Tier-2 factual coverage (documented facts per rail; "pending" where not yet sourced)
