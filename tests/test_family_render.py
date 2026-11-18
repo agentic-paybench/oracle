@@ -62,12 +62,13 @@ def _generated_pages(site: Path):
 
 def test_results_pages_carry_the_marker_before_the_doctype(site_with_results):
     """Each findings page is declared; the results index is not (it names no
-    rail and reports no finding; 2026-10-18)."""
+    rail and reports no finding; 2026-10-18), and neither is the pointer page at
+    the old address of a superseded version (one paragraph, no finding)."""
     pages = sorted((site_with_results / "results").glob("*.html"))
     assert any(p.name != "index.html" for p in pages)
     for p in pages:
         text = p.read_text(encoding="utf-8")
-        if p.name == "index.html":
+        if p.name in ("index.html", "dim04-half-b-conformance.level1.html"):
             assert not text.startswith("<!-- posture-class"), p
             for s in MEASUREMENT:
                 assert s not in text, s

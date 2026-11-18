@@ -463,7 +463,18 @@ def dim01_reader(body: str) -> str:
 # reply address, the email and the payhelm links as links; soft break
 # points in each 64-character hash; and a focusable, labelled region on every
 # table box, as on the DIM-01 page.
-DIM04_READER = {"dim04-half-b-conformance.level1.md"}
+# Version 1.1 (surface pass 5) is rendered by this reader; version 1.0 is a
+# Markdown-only record (superseded in docs/results-labels.tsv), not rendered.
+DIM04_READER = {"dim04-conformance-checks.v1.1.level1.md"}
+# Addresses on this site that the version 1.1 record names, each a link to
+# itself (markup only; the text unchanged): the glossary, in "Reading the
+# counts", and the version 1.0 record, in the version line.
+DIM04_SELF_LINKS = ("https://oracle.agentic-paybench.dev/glossary/",
+                    "https://oracle.agentic-paybench.dev/results/dim04-half-b-conformance.level1.md")
+# The old page address of version 1.0 (Decision 6 (a), 2026-11-17): a family page
+# (posture none, no marker, not a result page) whose body is one paragraph.
+DIM04_POINTER = {"dim04-half-b-conformance.level1.md": ("Conformance checks (DIM-04), version 1.0",
+                  "This address held version 1.0 of the conformance checks report. The current version is version 1.1: https://oracle.agentic-paybench.dev/results/dim04-conformance-checks.v1.1.level1.html. Version 1.0 is kept unaltered as the record: https://oracle.agentic-paybench.dev/results/dim04-half-b-conformance.level1.md.")}
 
 
 def dim04_reader(body: str) -> str:
@@ -474,6 +485,9 @@ def dim04_reader(body: str) -> str:
     body = re.sub(r"(?<![\"\w])(https://github\.com/agentic-paybench/payhelm/blob/[^\s<),]+)",
                   r'<a href="\1">\1</a>', body)
     body = re.sub(r"\b([0-9a-f]{64})\b", lambda m: "<wbr>".join(m.group(1)[i:i + 16] for i in range(0, 64, 16)), body)
+    for url in DIM04_SELF_LINKS:
+        assert body.count(url) <= 1
+        body = body.replace(url, f'<a href="{url}">{url}</a>', 1)
     parts = re.split(r'(<div class="table-scroll">)', body)
     heading = "Table"
     for i, part in enumerate(parts):
@@ -572,6 +586,15 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
         ]
         rc |= page(site, f"results/{md.with_suffix('.html').name}", body, title=title or md.stem, posture="none",
                    machine=machine, marker=marker, check=check)
+    for md in results_md:
+        if md.name in DIM04_POINTER and md not in current_md:
+            ptitle, ptext = DIM04_POINTER[md.name]
+            pbody = esc(ptext)
+            for url in re.findall(r"https://\S+?(?=\.(?:\s|$))", ptext):
+                assert pbody.count(url) == 1
+                pbody = pbody.replace(url, f'<a href="{url}">{url}</a>', 1)
+            rc |= page(site, f"results/{md.with_suffix('.html').name}", f"<p>{pbody}</p>\n", title=ptitle,
+                       posture="none", machine=None, marker=None, check=check)
     if results_md:
         # De-declared (2026-10-18): the index names no rail and
         # reports no finding, so it carries no gate marker, no posture sentences
@@ -581,8 +604,8 @@ def build(site: Path, labels_path: Path | None, check: bool, assembled: bool = T
                 "Settlement finality (DIM-01) on test networks, five rails. Version 1.0, for the confirmatory run of 2026-10-27 to 2026-10-28.",
             "dim02-authorization-latency.v1.1.level1.md":
                 "Authorization-primitive latency (DIM-02), six rails. Version 1.1 (2026-10-01) is current; version 1.0 is kept unaltered as the record.",
-            "dim04-half-b-conformance.level1.md":
-                "Conformance checks (DIM-04 Half B) on test networks, five rails. Version 1.0, for the confirmatory run of 2026-11-12.",
+            "dim04-conformance-checks.v1.1.level1.md":
+                "Conformance checks (DIM-04) on test networks, five rails. Version 1.1 (2026-11-18) is current; version 1.0 is kept unaltered as the record.",
         }
         lis = []
         for md in current_md:
