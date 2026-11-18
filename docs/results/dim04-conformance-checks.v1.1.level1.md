@@ -2,19 +2,15 @@ posture-class: level1-measurement
 
 # Conformance checks (DIM-04) on test networks: named-rail counts
 
-Version 1.1, dated 2026-11-18, for the confirmatory run of 2026-11-12. Version 1.1 adds a new title and four opening sections, and places the version 1.0 opening paragraph, unchanged, under the heading Provenance; no count, cell or sentence of the report below changes. Version 1.0 is kept unaltered as the record at https://oracle.agentic-paybench.dev/results/dim04-half-b-conformance.level1.md. This artefact is frozen per dated run: a correction or a re-measurement is published as a new dated version and this one is kept.
-
 ## What this page is
 
-This page reports the conformance checks of the PayBench dimension DIM-04 for five named payment rails. A conformance check tests, on a rail's test deployment as Everyday AI Ltd (the company, below) runs it, whether a rule the rail's own documentation states (a bound) holds when the check makes something go wrong: the same payment presented twice, a payment presented after its deadline, a payment flow interrupted part way. No cell recorded a VIOLATED repetition on these test deployments, that is, a repetition in which the documented bound did not hold. One cell is incomplete: check 2b on Machine Payments Protocol on Tempo, where the test network refused the resent payment in all 20 attempts but with a refusal text not among the data pre-registration's reason entries, so no attempt counted and this run establishes neither that the bound held on that rail nor that it did not (section 3).
+This page reports the conformance checks of the PayBench dimension DIM-04 for five named payment rails. A conformance check tests whether a rule the rail's own documentation states (a bound) holds when the check makes something go wrong: the same payment presented twice, a payment presented after its deadline, a payment flow interrupted part way.
 
-## Provenance
-
-The data pre-registration is the signed git tag `paybench-dim4-halfb-prereg-v1` in the public payhelm repository (https://github.com/agentic-paybench/payhelm/blob/paybench-dim4-halfb-prereg-v1/paybench/methodology/dim4-halfb-PRE-REGISTRATION.md), registered on the Open Science Framework with digital object identifier 10.17605/OSF.IO/BMT8P (https://doi.org/10.17605/OSF.IO/BMT8P), its manifest anchored by an OpenTimestamps proof in Bitcoin blocks 975195 and 975221 and by Rekor transparency-log entry 3773957892. It is called "the registration" below.
+No cell recorded a VIOLATED repetition on the test deployments checked, that is, a repetition in which the documented bound did not hold; one cell is incomplete (section 3).
 
 ## Scope of the measurement
 
-Every count below comes from the company's own confirmatory run of 2026-11-12 on five test networks (Spark regtest, Tempo Moderato testnet, Base Sepolia, Solana devnet and Stellar testnet), from one vantage. The company was the only payer and the only payee of every payment, using test tokens with no monetary value; no funds moved on any production network. The checks test each rail's software stack as the company runs it on those test networks. They say nothing about any mainnet, production facilitator or production service, and GCP with AP2, which settles nothing, is measured by no check.
+Every count below comes from the confirmatory run of 2026-11-12 by Everyday AI Ltd (the company, below) on five test networks (Spark regtest, Tempo Moderato testnet, Base Sepolia, Solana devnet and Stellar testnet), from one vantage. The company was the only payer and the only payee of every payment, using test tokens with no monetary value; no funds moved on any production network. The checks test each rail's software stack as the company runs it on those test networks. They say nothing about any mainnet, production facilitator or production service, and GCP with AP2, which settles nothing, is measured by no check.
 
 ## What was checked
 
@@ -32,7 +28,20 @@ The documented statement each check tests, quoted with its source and the date i
 
 ## Reading the counts
 
-Each rail's table in section 3 has one row per cell. Kind says what the cell can detect (registration, section 4.9): a network-enforcement detector can be VIOLATED only if the test network breaks its own documented rule, so its HELD result confirms that rule on that test network and is expected; library or service behaviour is genuinely open on the software the company runs; a descriptive observation has no documented bound and records whether an event was observed. K is the number of valid repetitions the cell needs; Attempts counts every try. Valid counts the repetitions that decided an outcome; k counts those in which the documented bound held (HELD), or, for a descriptive cell, gives observed yes and observed no. VIOLATED counts repetitions in which the bound did not hold. VOID and NOT EXERCISED count attempts that could not decide an outcome, by cause; each is replaced by a further attempt, up to twice K attempts in all. Complete means the cell reached K valid repetitions. What a count does and does not say is stated in section 1; HELD, VIOLATED, VOID, NOT EXERCISED and the count are also defined in the glossary (https://oracle.agentic-paybench.dev/glossary/).
+Each rail's table in section 3 has one row per cell.
+
+- Kind says what the cell can detect (registration, section 4.9): a network-enforcement detector can be VIOLATED only if the test network breaks its own documented rule, so its HELD result confirms that rule on that test network and is expected; library or service behaviour is genuinely open on the software the company runs; a descriptive observation has no documented bound and records whether an event was observed.
+- K is the number of valid repetitions the cell needs; Attempts counts every try.
+- Valid counts the repetitions that decided an outcome; k counts those in which the documented bound held (HELD), or, for a descriptive cell, gives observed yes and observed no.
+- VIOLATED counts repetitions in which the bound did not hold.
+- VOID and NOT EXERCISED count attempts that could not decide an outcome, by cause; each is replaced by a further attempt, up to twice K attempts in all.
+- Complete means the cell reached K valid repetitions.
+
+What a count does and does not say is stated in section 1; HELD, VIOLATED, VOID, NOT EXERCISED and the count are also defined in the glossary (https://oracle.agentic-paybench.dev/glossary/).
+
+## Provenance
+
+The data pre-registration is the signed git tag `paybench-dim4-halfb-prereg-v1` in the public payhelm repository (https://github.com/agentic-paybench/payhelm/blob/paybench-dim4-halfb-prereg-v1/paybench/methodology/dim4-halfb-PRE-REGISTRATION.md), registered on the Open Science Framework with digital object identifier 10.17605/OSF.IO/BMT8P (https://doi.org/10.17605/OSF.IO/BMT8P), its manifest anchored by an OpenTimestamps proof in Bitcoin blocks 975195 and 975221 and by Rekor transparency-log entry 3773957892. It is called "the registration" below.
 
 ## 1. What this report covers
 
@@ -347,3 +356,5 @@ The evidence limit of Machine Payments Protocol on Lightning is stated beside it
 ## 11. Corrections and right of reply
 
 Any operator of a rail or facilitator named on this page may respond through the structured right-of-reply channel at https://reply.agentic-paybench.dev/. Replies about a factual data error, a methodology defect, a mischaracterisation, a confidentiality objection, or a jurisdictional objection are reviewed before publication; replies about methodology framing, a change since the measurement window, or the scope of the environment tested are published promptly with a badge saying the review is pending. The response cap and visibility policy is linked from that page. Corrections to anything here are also welcome by email at mblake@everydayai.link.
+
+Version 1.1, dated 2026-11-18, for the confirmatory run of 2026-11-12. Version 1.1 adds a new title and four opening sections, and places the version 1.0 opening paragraph, unchanged, under the heading Provenance; no count, cell or sentence of the report above changes. Version 1.0 is kept unaltered as the record at https://oracle.agentic-paybench.dev/results/dim04-half-b-conformance.level1.md. This artefact is frozen per dated run: a correction or a re-measurement is published as a new dated version and this one is kept.
